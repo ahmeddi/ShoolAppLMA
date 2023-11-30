@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] { display: none; }
+
+.font-cairo {
+  font-family: 'Cairo', sans-serif;
+}
+
+@layer base {
+
+    .inputs {
+      @apply h-9 w-60 text-sm caret-teal-600  border-gray-300 focus:border-teal-400 focus:ring-1 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200 focus:ring-teal-500  rounded  ;
+    }
+
+    .radio {
+      @apply  text-teal-600 rounded-full  border-gray-500 focus:border-teal-400 focus:ring-1 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 focus:ring-teal-500    ;
+    }
+
+    .check {
+      @apply w-4 h-4 text-teal-600 bg-gray-100 rounded dark:text-teal-500 focus:ring-teal-500 dark:focus:ring-teal-600 dark:ring-offset-gray-800 focus:ring-2 ;
+    }
+
+    .labels {
+        @apply block font-semibold text-xs text-gray-700 dark:text-gray-50 ;
+      }
+
+      .reds {
+        @apply ring-1 ring-red-600 dark:ring-red-300 ;
+      }
+
+      .danger {
+        @apply text-red-700 dark:text-red-300 text-xs font-semibold ;
+      }
+
+      .textearea {
+        @apply appearance-none inputs   h-16  w-full ;
+      }
+
+      .days {
+        @apply bg-white px-3 py-1 rounded-sm  border-gray-300 border dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200;
+      }
+
+      .daysselceted {
+        @apply bg-teal-600 text-white dark:bg-gray-50 dark:text-gray-800;
+      }
+
+
+      .btn {
+        @apply mt-3 w-full inline-flex justify-center rounded-md border dark:border-gray-500 shadow-sm px-4 py-2 focus:outline-none bg-teal-600 hover:bg-teal-800 text-white dark:text-gray-900 dark:bg-gray-100 dark:hover:bg-gray-200 font-bold sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm;
+      }
+
+      .btn-s {
+        @apply w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 focus:outline-none bg-gray-100 border-gray-400 hover:bg-gray-50 text-gray-500 dark:text-gray-200 dark:border-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 sm:ml-3 sm:w-auto sm:text-sm;
+      }
+
+      .cancel {
+        @apply absolute top-0 left-0 z-50 flex items-center justify-center w-8 h-8 text-teal-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-50;
+      }
+
+      .rllt {
+        @apply  rtl:text-right ltr:text-left ;
+      }
+  }
