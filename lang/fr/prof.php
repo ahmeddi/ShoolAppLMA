@@ -57,6 +57,10 @@ return [
 
     'prof-del' => 'Supprimer',
 
+    'prof-class-mats' => 'Droits',
+
+
+
     
 
 
