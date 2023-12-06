@@ -37,4 +37,9 @@ class Classe extends Model
     {
         return $this->belongsToMany(Time::class, 'horaires');
     }
+
+    public function profs()
+    {
+        return $this->belongsToMany(Prof::class, 'prof_classes_results', 'classe_id', 'prof_id');
+    }
 }

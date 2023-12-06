@@ -10,6 +10,9 @@ class EtudiantController extends Controller
 {
         public function attetud($locale,$ids)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
        
         $etudiant = Etudiant::find($ids);
 
@@ -44,6 +47,9 @@ class EtudiantController extends Controller
 
     public function note($locale,$ids)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
             
         $etudiant = Etudiant::find($ids);
 
@@ -78,6 +84,9 @@ class EtudiantController extends Controller
 
     public function etudiantEco($locale,$ids)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
         if (auth()->user()->parent_id){
             abort(403);
         }
@@ -97,7 +106,7 @@ class EtudiantController extends Controller
 
     public function frais($locale,$etud)
     {
-        if (auth()->user()->parent_id){
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof'){
             abort(404);
         }
 
@@ -113,6 +122,9 @@ class EtudiantController extends Controller
 
     public function show($locale,$etud)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
 
 
         $etudiant = Etudiant::find($etud);

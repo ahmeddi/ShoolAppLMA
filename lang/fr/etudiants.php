@@ -60,6 +60,9 @@ return [
  'soir' => 'Cours du soir',
 
 
+ 'notes' => 'Note',
+ 'obs' => 'Observation'
+
 
 
 

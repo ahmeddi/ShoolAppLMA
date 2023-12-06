@@ -12,6 +12,9 @@ return [
     'dev/exam' => 'Devoir/Examen',
     'note' => 'Note',
 
+    'save' => 'Enregistrer',
+
+
 
 
 

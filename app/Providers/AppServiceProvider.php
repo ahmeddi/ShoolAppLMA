@@ -48,12 +48,14 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('prof', function ($user) {
-            return $user->role === 'prof' || $user->role === 'admin' ;
+            return $user->role === 'prof' ;
         });
 
       Gate::define('parent', function ($user) {
             return $user->role == 'parent' and $user->wh ;
         });
+
+        
 
         Gate::define('dir_or_prof', function ($user) {
             return $user->role === 'dir' || $user->role === 'prof' || $user->role === 'admin';

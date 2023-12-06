@@ -10,7 +10,7 @@ class EmpController extends Controller
     
     public function compt($locale, $ids)
     {   
-         if (auth()->user()->role == 'parent'){
+         if (auth()->user()->role == 'parent' or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -29,7 +29,7 @@ class EmpController extends Controller
 
     public function honhoraire($locale, $ids)
     {
-         if (auth()->user()->role == 'parent'){
+         if (auth()->user()->role == 'parent' or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -48,7 +48,7 @@ class EmpController extends Controller
 
     public function paiements($locale, $ids)
     {
-         if (auth()->user()->role == 'parent'){
+         if (auth()->user()->role == 'parent' or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -67,7 +67,7 @@ class EmpController extends Controller
 
     public function remises($locale, $ids)
     {
-         if (auth()->user()->role == 'parent'){
+         if (auth()->user()->role == 'parent' or auth()->user()->role == 'prof'){
             abort(403);
         }
 

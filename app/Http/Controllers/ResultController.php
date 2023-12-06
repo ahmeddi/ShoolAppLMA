@@ -6,6 +6,7 @@ use App\Models\Mat;
 use App\Models\Classe;
 use App\Models\Etudiant;
 use App\Models\Examen;
+use App\Models\Prof;
 use App\Models\Semestre;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,24 @@ class ResultController extends Controller
         if (auth()->user()->parent_id){
             abort(403);
         }
+
+        $prof = Prof::find(auth()->user()->prof_id);
+
+        if ($prof) {
+
+         //   dd($prof->mats);
+
+            if(!($prof->mats->whereIn('id', [$mat])->count())){
+
+                return abort(403);
+            }
+            if(!($prof->classes->whereIn('id', [$classe])->count())){
+
+                return abort(403);
+            }
+        
+        }
+        
 
          $classe = Classe::with('etuds')->get()->find($classe);
  
@@ -52,7 +71,7 @@ class ResultController extends Controller
  
     public function bulltin($locale, $etud, $sem)
     {
-        if (auth()->user()->parent_id){
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -71,7 +90,7 @@ class ResultController extends Controller
  
     public function result($etud)
     {
-        if (auth()->user()->parent_id){
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof'){
             abort(403);
         }
         

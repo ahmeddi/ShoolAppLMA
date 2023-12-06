@@ -10,6 +10,10 @@ class ProfController extends Controller
 {
     public function show($locale,$ids)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
+
         if (auth()->user()->role == 'parent'){
             abort(403);
         }
@@ -28,7 +32,7 @@ class ProfController extends Controller
 
     public function emp($locale, $ids)
     {
-         if (auth()->user()->role == 'parent'){
+         if (auth()->user()->role == 'parent' or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -46,7 +50,7 @@ class ProfController extends Controller
 
     public function att($locale,$ids)
     {
-         if (auth()->user()->role == 'parent'){
+         if (auth()->user()->role == 'parent' or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -68,7 +72,7 @@ class ProfController extends Controller
 
     public function attemp($locale, $ids)
     {
-         if (auth()->user()->role == 'parent'){
+         if (auth()->user()->role == 'parent' or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -90,7 +94,7 @@ class ProfController extends Controller
 
     public function compt($locale, $ids)
     {
-         if (auth()->user()->role == 'parent'){
+         if (auth()->user()->role == 'parent' or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -108,7 +112,7 @@ class ProfController extends Controller
 
     public function honhoraire($locale, $ids)
     {
-        if (auth()->user()->role == 'parent' || auth()->user()->role == 'dir' || auth()->user()->role == 'sur'){
+        if (auth()->user()->role == 'parent' || auth()->user()->role == 'dir' || auth()->user()->role == 'sur' || auth()->user()->role == 'prof'){
             abort(403);
         }
         $idss =  Prof::find($ids);
@@ -125,7 +129,7 @@ class ProfController extends Controller
 
     public function paiements($locale, $ids)
     {
-        if (auth()->user()->role == 'parent' || auth()->user()->role == 'dir' || auth()->user()->role == 'sur'){
+        if (auth()->user()->role == 'parent' || auth()->user()->role == 'dir' || auth()->user()->role == 'sur' || auth()->user()->role == 'prof'){
             abort(403);
         } 
 
@@ -143,7 +147,7 @@ class ProfController extends Controller
 
     public function remises($locale, $ids)
     {
-        if (auth()->user()->role == 'parent' || auth()->user()->role == 'dir' || auth()->user()->role == 'sur'){
+        if (auth()->user()->role == 'parent' || auth()->user()->role == 'dir' || auth()->user()->role == 'sur' || auth()->user()->role == 'prof'){
             abort(403);
         }
         
@@ -158,6 +162,23 @@ class ProfController extends Controller
          }
 
     }
+    
+    public function classeMats($locale, $ids)
+    {
+        if (auth()->user()->role == 'parent' || auth()->user()->role == 'dir' || auth()->user()->role == 'sur' || auth()->user()->role == 'prof'){
+            abort(403);
+        }
+        
+        $idss =  Prof::find($ids);
 
+        if ($idss) 
+        {
+         return view('ProfClasseMats',['ids'=> $idss,]);
+         }
+         else {
+             abort(404);
+         }
+
+    }
 
 }

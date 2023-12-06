@@ -24,6 +24,10 @@ class Prof extends Model
         'jardin',
         'primaire',
         'lycee',
+        'visible',
+        'password',
+        'whcode',
+
     ];
 
     use HasFactory, SoftDeletes;
@@ -31,5 +35,15 @@ class Prof extends Model
     public function hours()
     {
     	return $this->hasMany(Attandp::class);
+    }
+
+    public function classes()
+    {
+    	return $this->belongsToMany(Classe::class, 'prof_classes_results', 'prof_id', 'classe_id');
+    }
+
+    public function mats()
+    {
+    	return $this->belongsToMany(Mat::class, 'prof_mats_results', 'prof_id', 'mat_id');
     }
 }

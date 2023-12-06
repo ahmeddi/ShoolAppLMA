@@ -1,35 +1,40 @@
 <div >
-    <table class="w-full divide-y divide-gray-200 dark:divide-gray-600 rounded-t-xl overflow-hidden">
-        
+    <table dir="{{ app()->getLocale() }}" class="w-full divide-y divide-gray-200 dark:divide-gray-600 rounded-t-xl overflow-hidden">
         <tbody class="bg-white dark:bg-gray-900 py-2 ">
+            <thead>
+                <tr class="rllt text-gray-900 dark:text-gray-50 ">
+                    <th class=" px-4 text-sm">{{ __('etudiants.etud') }}</th>
+                    <th class=" px-2 text-sm">{{ __('etudiants.notes') }}</th>
+                    <th class=" px-2 text-sm">{{ __('etudiants.obs') }}</th>
+                </tr>
+            </thead>
     
                 @foreach ($classe->etuds as $index => $Etud)
                     <tr class="h-10 w-full py-2">
-                        <td class="px-2 py-2  flex ">
-
-                            <div class=" flex space-x-2 items-center">
-                                <label for="mat{{ $index }}"  class="flex items-center  w-60">
-                                    <div class="flex space-x-2 mx-4 ">
-                                        <div class="flex flex-col">
-                                            <div class="text-sm font-semibold text-gray-900 dark:text-gray-200">
-                                                <span class=""> </span>
-                                                {{ $Etud->nb   }} - {{ $Etud->nom   }} 
-                                            </div>
+                        <td>
+                            <label for="mat{{ $index }}"  class="flex items-center  w-60">
+                                <div class="flex space-x-2 mx-4 ">
+                                    <div class="flex flex-col">
+                                        <div class=" text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                            <span> </span>
+                                            {{ $Etud->nb   }} - @if ( app()->getLocale() == 'ar')
+                                            {{ $Etud->nom }}
+                                        @else
+                                            {{ $Etud->nomfr   }}
+                                            
+                                        @endif 
                                         </div>
                                     </div>
-                                </label>
-                                <input   wire:model.defer='note.{{ $index }}' class="inputs h-8 font-mono  @error('titre') reds @enderror" type="text"   required  />  
-                                <input   wire:model.defer='noteText.{{ $index }}' class="inputs h-8 font-mono  @error('titre') reds @enderror" type="text"   required  />  
+                                </div>
+                            </label>
+                        </td>
+                        <td>
+                            <input   wire:model.defer='note.{{ $index }}' class="inputs w-16 h-8 font-mono  @error('titre') reds @enderror" type="number"   required  />  
+                        </td>
+                        <td>
+                            <input   wire:model.defer='noteText.{{ $index }}' class="inputs  w-40 lg:w-64 h-8 font-mono  @error('titre') reds @enderror" type="text"   required  />  
 
-                            </div>
-  
-                        </td>
-                        <td class="w-fit">
-                            <div class="col-span-2flex flex-col space-y-2">
-                            </div>
-                        </td>
-                        
-                        
+                        </td>      
                     </tr>
                 @endforeach
   
@@ -37,7 +42,7 @@
     </table>
     <div class='px-10  flex space-x-3 justify-end items-center w-full'>
        <button wire:loading.remove wire:click='save'  type="button" class="mt-3 w-full inline-flex justify-center rounded-md border dark:border-gray-500 shadow-sm px-4 py-2 focus:outline-none bg-teal-600 hover:bg-teal-800 text-white dark:text-gray-900 dark:bg-gray-100 dark:hover:bg-gray-200 font-bold sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-         حفظ
+        {{ __('result.save') }}
        </button>
        <div wire:loading>
             <div role="status">

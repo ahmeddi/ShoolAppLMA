@@ -20,6 +20,20 @@
             @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap');
         </style>
 
+        <style>
+            #nprogress .bar {
+                background: #0d9488 !important;
+            }
+
+            #nprogress .spinner-icon {
+            border-top-color: #0d9488 !important;
+            border-left-color: #0d9488 !important;
+            }
+         </style>
+
+
+
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -79,7 +93,9 @@
             }"
             class="font-sans antialiased">
             @cannot('parent')
-                    <div class="h-screen sticky   border-0  top-0 print:hidden">@livewire('navigation-menu')</div>
+                @cannot('prof')
+                <div class="h-screen sticky   border-0  top-0 print:hidden">@livewire('navigation-menu')</div>
+                @endcannot
             @endcannot
         <div class=" relative h-min-screen w-full bg-gray-200 dark:bg-gray-700 ">
 

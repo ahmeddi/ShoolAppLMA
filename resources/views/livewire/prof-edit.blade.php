@@ -51,11 +51,14 @@
                   </div>
 
                   <div class="flex flex-col space-y-1">
-                      <div class="flex justify-between">
-                        <label   class="labels">{{ __('prof.prof-wh') }}:</label>
-                        @error('tel2') <span class="danger">{{ $message }}</span> @enderror  
-                      </div>
-                      <input dir="ltr" lang="fr" x-model="tel2" x-mask="99 99 99 99" wire:model.defer='tel2' class="inputs @error('tel2') reds @enderror" type="text" required  />
+                    <div class="flex justify-between">
+                      <label   class="labels">{{ __('prof.prof-wh') }}:</label>
+                      @error('tel2') <span class="danger">{{ $message }}</span> @enderror  
+                    </div>
+                    <div  dir="ltr" class=" flex w-full">
+                      <input dir="ltr" lang="fr"  wire:model='whcode'  class="inputs w-2/6 mx-1 px-2 @error('whcode') reds @enderror" type="number"  required  />
+                      <input dir="ltr" lang="fr" x-model="tel2" x-mask="99 99 99 99 99 99 99" wire:model.defer='tel2' class="inputs w-4/6 @error('whcode') reds @enderror" type="text" required  />
+                    </div>                  
                   </div>
 
 
@@ -79,35 +82,10 @@
 
                               {{-- 2nd rows --}}
               <div class="grid lg:grid-cols-2 gap-x-6 gap-y-3 px-12  justify-items-center sm:grid-cols-1 ">
-                  <div class="flex flex-col space-y-1 col-span-2 w-full">
-                      <div class="flex justify-between">
-                        <label   class="labels">{{ __('prof.prof-tysal') }}:</label>
-                        @error('ts') <span class="danger">{{ $message }}</span> @enderror  
-                      </div>
-                      <select x-model="select"  wire:model.defer='ts'  class="inputs w-full @error('ts') reds @enderror" name="sexe"  required >
-                          <option class="text-sm font-medium" >-----</option>
-                          <option class="text-sm" value="1" >{{ __('prof.prof-fix') }}</option>
-                          <option class="text-sm" value="2" >{{ __('prof.prof-rela') }}</option>
-                      </select>
-                  </div>
-
-                  <div x-show="select == 1"  class="flex flex-col space-y-1 col-span-2 w-full">
-                      <div class="flex justify-between">
-                        <label for="eid"  class="labels">{{ __('prof.prof-sal') }}:</label>
-                        @error('ms') <span class="danger">{{ $message }}</span> @enderror  
-                      </div>
-                    <input wire:model.defer='ms' class="inputs w-full @error('ms') reds @enderror" type="number"   required  />    
-                  </div>
 
                   
 
-                  <div class="flex flex-col space-y-1 col-span-2 w-full">
-                      <div class="flex justify-between">
-                        <label for="eid"  class="labels">{{ __('prof.prof-diplom') }}:</label>
-                        @error('diplom') <span class="danger">{{ $message }}</span> @enderror  
-                      </div>
-                    <input wire:model.defer='diplom' class="inputs w-full @error('diplom') reds @enderror" type="text"   required  />    
-                  </div>
+
 
                   <div class="w-full flex justify-between col-span-2">
                     <div class=" flex space-x-1 items-center">
@@ -129,9 +107,23 @@
                       <label for="primaire"  class="flex items-center ">
                           <div class="flex space-x-2 mx-2 ">
                               <div class="flex flex-col">
+                                  <div class="text-sm capitalize font-semibold text-gray-900 dark:text-gray-200">
+                                      <span class=""> </span>
+                                      élémentaire 
+                                  </div>
+                              </div>
+                          </div>
+                      </label>
+                    </div>
+
+                    <div class=" flex space-x-1 items-center">
+                      <input id="college" wire:model='college' type="checkbox" @if ($college == 1) checked  @endif value="" class=" peer check " >
+                      <label for="college"  class="flex items-center ">
+                          <div class="flex space-x-2 mx-2 ">
+                              <div class="flex flex-col">
                                   <div class="text-sm font-semibold text-gray-900 dark:text-gray-200">
                                       <span class=""> </span>
-                                          Primaire 
+                                      College 
                                   </div>
                               </div>
                           </div>
@@ -157,7 +149,7 @@
                   @can('admin')
                       <div class="flex flex-col space-y-1 w-full">
                         <div class="flex justify-between">
-                          <label   class="labels"></label>
+                          <label   class="labels opacity-0"> {{ 'text' }}</label>
                           @error('list') <span class="danger">{{ $message }}</span> @enderror  
                         </div>
                         <select  wire:model='list'  class="inputs @error('list') reds @enderror" name="list"  required >
@@ -166,6 +158,38 @@
                         </select>
                       </div>   
                     @endcan
+
+                    <div class="flex justify-center items-center w-full">
+                      <div class="flex flex-col space-y-1  w-4/6">
+                        <div class="flex justify-between">
+                          <label   class="labels">{{ __('parent.pass') }}:</label>
+                        </div>
+                        <input dir="ltr" disabled  lang="fr" wire:model.defer='pass' class="inputs w-full text-center" type="text" required  />
+                      </div>
+                      @if ($pass)
+                        <div class="flex flex-col space-y-1 mx-1  w-2/6">
+                          <div class=" justify-between opacity-0">
+                            <label   class="labels">text:</label>
+                          </div>
+                          <button wire:click='sent'  type="button" class="inputs w-full inline-flex justify-center rounded-md border dark:border-gray-500 px-5 py-1 focus:outline-none bg-teal-600 hover:bg-teal-800 text-white dark:text-gray-900 dark:bg-gray-100 dark:hover:bg-gray-200 font-bold  text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="text-text-50 " fill="currentColor" width="24" height="24" xmlns:v="https://vecta.io/nano">
+                              <path d="M.057 24l1.687-6.163C.703 16.033.156 13.988.157 11.891.16 5.335 5.495 0 12.05 0c3.181.001 6.167 1.24 8.413 3.488s3.481 5.236 3.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 0 1-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347s-1.758-.868-2.031-.967-.47-.149-.669.149-.768.967-.941 1.165-.347.223-.644.074-1.255-.462-2.39-1.475c-.883-.788-1.48-1.761-1.653-2.059s-.018-.458.13-.606c.134-.133.297-.347.446-.521s.2-.296.3-.495.05-.372-.025-.521-.669-1.611-.916-2.206c-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074 2.095 3.2 5.076 4.487c.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413s.248-1.29.173-1.414z"></path>
+                            </svg>
+                          </button>                      
+                        </div>
+                      @endif
+                      
+                      
+                    </div>
+                    
+
+                  <div class="flex flex-col space-y-1 col-span-2 w-full">
+                    <div class="flex justify-between">
+                      <label for="eid"  class="labels">{{ __('prof.prof-diplom') }}:</label>
+                      @error('diplom') <span class="danger">{{ $message }}</span> @enderror  
+                    </div>
+                  <input wire:model.defer='diplom' class="inputs w-full @error('diplom') reds @enderror" type="text"   required  />    
+                </div>
               </div>
 
               

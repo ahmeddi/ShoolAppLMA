@@ -36,6 +36,9 @@ Route::middleware([
         if (auth()->user()->role == 'parent') {
             return redirect('ar/Parent/' . auth()->user()->parent_id);
         }
+        if (auth()->user()->role == 'prof') {
+            return redirect('ar/Result');
+        }
         return redirect('ar/dashboard');
     }
 });
@@ -193,6 +196,9 @@ Route::middleware([
 
   Route::get('/Prof/{id}/Compt/Remises', [ProfController::class,"remises"])
   ->name('ProfRemises');
+
+  Route::get('/Prof/{id}/ClasseMats', [ProfController::class,"classeMats"])
+  ->name('ProfClasseMats');
 
 
 

@@ -31,7 +31,8 @@
             <select  wire:model.defer="profsSelected"   class="inputs @error('cls') reds @enderror">
               <option value="">-----</option>
                     <option value="jardin"> Jardin </option>
-                    <option value="primaire"> Primaire </option>
+                    <option value="primaire"> Élémentaire </option>
+                    <option value="college"> College </option>
                     <option value="lycee"> Lycée </option>
             </select>
         </div>

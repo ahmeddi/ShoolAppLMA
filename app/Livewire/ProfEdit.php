@@ -3,11 +3,13 @@
 namespace App\Livewire;
 
 use App\Models\Prof;
+use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Js;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Rule;
+use App\Services\WhatsappApiService;
 
 class ProfEdit extends Component
 {
@@ -34,6 +36,10 @@ class ProfEdit extends Component
     public $jardin=0;
     public $primaire=0;
     public $lycee=0;
+    public $college=0;
+
+    public $pass;
+    public $whcode;
 
 
 
@@ -47,6 +53,8 @@ class ProfEdit extends Component
     'tel1'   => 'required|unique:profs,tel1,'. $this->mid,
     'nni'   => 'nullable|unique:profs,nni,'. $this->mid,
     'se'   => 'nullable|unique:profs,se,'. $this->mid,
+    'whcode'   => 'required',
+
     ];}
 
 
@@ -69,6 +77,11 @@ class ProfEdit extends Component
         $this->jardin = $prof->jardin;
         $this->primaire = $prof->primaire;
         $this->lycee = $prof->lycee;
+        $this->college = $prof->college;
+
+        $this->whcode = $prof->whcode;
+        $this->pass = $prof->password;
+
         
 
         $this->mid = $prof->id;
@@ -84,6 +97,7 @@ class ProfEdit extends Component
         $this->jardin ? $this->jardin = 1 : $this->jardin = 0;
         $this->primaire ? $this->primaire = 1 : $this->primaire = 0;
         $this->lycee ? $this->lycee = 1 : $this->lycee = 0;
+        $this->college ? $this->college = 1 : $this->college = 0;
 
       
 
@@ -127,15 +141,79 @@ class ProfEdit extends Component
             $prof->jardin = $this->jardin;
             $prof->primaire = $this->primaire;
             $prof->lycee = $this->lycee;
+            $prof->college = $this->college;
+              $prof->whcode = $this->whcode;
 
 
 
            $prof->save();
+
+           
+           $user = User::where('prof_id', $prof->id)->first();
+
+           $password = Str::random(8);
+   
+   
+           if (!$user) 
+           {
+               User::create([
+                   'name'   => $prof->tel1,
+                   'password'  => bcrypt($password),
+                   'role' => 'prof',
+                   'tel' => $prof->tel,
+                   'whatsapp' => $prof->tel2,
+                   'list' => 1,
+                   'visible' => 0,
+                   'wh' => 1,
+                   'prof_id' => $prof->id,
+                 ]);
+   
+                 $prof->update([
+                   'password'   => $password,
+                 ]);
+   
+                 $this->pass = $prof->password;
+   
+   
+           }
+           else
+           {
+               $user->update([
+                   'name'   => $prof->tel1,
+                   'parent_id' => $prof->id,
+                   'password'   => bcrypt($prof->password),
+                   'visible' => 0,
+                 ]);
+   
+                   $prof->update([
+                       'password'   => $this->pass,
+                   ]);
+           }
    
           $this->dispatch('refresh');
           $this->visible = false;
 
     }
+
+    function sent()
+    {
+        if ($this->tel1) {
+            $this->tel1 = Str::replace(' ', '', $this->tel1);
+        }
+        if ( $this->tel2) {
+            $this->tel2 = Str::replace(' ', '', $this->tel2);
+        }
+        
+        $create = new WhatsappApiService();
+
+        $create->sentPass(
+        $this->tel1,
+        $this->whcode,
+        $this->tel2,
+        $this->pass);
+        
+    }
+
 
     #[Js]
     public function close()

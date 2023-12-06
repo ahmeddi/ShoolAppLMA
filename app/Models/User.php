@@ -34,6 +34,8 @@ class User extends Authenticatable
         'visible',
         'parent_id',
         'wh',
+        'prof_id',
+
         
     ];
 

@@ -10,6 +10,9 @@ class ParentController extends Controller
 {
     function show($locale,$data)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
 
          $parentt = Parentt::find($data);
 
@@ -31,6 +34,10 @@ class ParentController extends Controller
 
     public function frais($locale,$data)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
+
         $parentt = Parentt::find($data);
 
 
@@ -56,6 +63,10 @@ class ParentController extends Controller
 
     public function paiements($locale,$data)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
+
         $parentt = Parentt::find($data);
 
 
@@ -79,6 +90,11 @@ class ParentController extends Controller
 
     public function remises($locale,$data)
     {
+
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
+        
         $parentt = Parentt::find($data);
 
         if ($parentt) { 

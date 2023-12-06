@@ -11,6 +11,9 @@ class JornsController extends Controller
 {
     public function show($locale, $ids)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
         
         $class = Classe::find($ids);
     
@@ -28,6 +31,10 @@ class JornsController extends Controller
 
     public function showc()
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
+
         $Classs = Classe::select('id', 'nom')->get();
 
         if ($Classs) {
@@ -43,7 +50,7 @@ class JornsController extends Controller
 
     public function list($locale,$id)
     {
-        if (auth()->user()->parent_id){
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -61,7 +68,7 @@ class JornsController extends Controller
 
     public function result($locale,$id, $sem)
     {
-        if (auth()->user()->parent_id){
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -84,7 +91,7 @@ class JornsController extends Controller
 
     public function showp($locale,$ids)
     {
-        if (auth()->user()->parent_id){
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -100,7 +107,7 @@ class JornsController extends Controller
 
     public function class($locale, $ids)
     {
-        if (auth()->user()->parent_id){
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof'){
             abort(403);
         }
 
@@ -114,7 +121,7 @@ class JornsController extends Controller
 
     public function attds()
     {
-        if (auth()->user()->parent_id){
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof'){
             abort(403);
         }
         return view('Attds',);
@@ -123,6 +130,10 @@ class JornsController extends Controller
 
     public function soir($locale, $ids)
     {
+        if (auth()->user()->role == 'prof'){
+            abort(403);
+        }
+        
         
         $class = Classe::find($ids);
     
@@ -135,16 +146,4 @@ class JornsController extends Controller
         
 
     }
-    
-    public function Horaires($locale, $ids)
-    {
-        $Classs = Classe::find($ids);
-
-        if ($Classs) {
-            return view('ClasseHoraires',['Classs' => $Classs]);
-        } else {
-           abort(404);
-        }
-    }
-
 }
