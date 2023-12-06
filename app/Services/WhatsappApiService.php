@@ -76,7 +76,7 @@ class WhatsappApiService
 
     function sentPass($tel,$code,$wh,$pass)  
     {
-        dd($this->site);
+       // dd($this->site);
         $web = $this->site; 
 
         $phone = $code . $wh;
