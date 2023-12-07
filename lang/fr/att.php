@@ -4,7 +4,7 @@ return [
 
     // Etuds
     'nom' => 'Nom',
-    'add' => 'Ajouter un Enregistrement',
+    'add' => 'Ajouter un enregistrement',
     'date' => 'Date',
     'hours' => 'Nb d\'heures',
 
@@ -25,7 +25,7 @@ return [
 
     'sja' => 'Registre des absences',
 
-    'tot' => 'Total des Heures',
+    'tot' => 'Total des heures',
 
     'save' => 'Sauvegarder',
     'whatsapp' => ' WhatsApp',

@@ -10,14 +10,15 @@ return [
     'whatsapp' => 'WhatsApp',
     'adresse' => 'Adresse',
 
-    'edit' => 'Modifier les Données',
+    'edit' => 'Modifier les données',
 
-    'add' => 'Ajouter un nouvel Entreprise',
+    'add' => 'Ajouter un nouvel entreprise',
 
-    'edit' => 'Modifier les Données',
+    'edit' => 'Modifier les données',
 
     'entreprises' => 'Entreprises',
     'entreprise' => 'Entreprise',
+
 
 
 

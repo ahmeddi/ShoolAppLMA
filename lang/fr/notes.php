@@ -4,25 +4,25 @@ return [
 
 
     'notes' => 'Rapports',
-    'add' => 'Ajouter une Rapport',
+    'add' => 'Ajouter un Rapport',
     'nb' => 'Numéro d\'appel',
     'etud' => 'Étudiant',
     'classe' => 'Classe',
     'note' => 'Rapport',
     'date' => 'Date',
-    'titr' => 'Titre de la Rapport',
-    'text' => 'Texte de la Rapport',
+    'titr' => 'Titre du Rapport',
+    'text' => 'Texte du Rapport',
     'prof' => 'Professeur',
     'emp' => 'Professeur',
     'son' => 'Auteur',
     'pos' => 'Poste',
-
+    
     'clo' => 'Fermer',
-
+    
     'lang' => 'Langue',
     'fr' => 'Français',
     'ar' => 'العربية',
-
+    
 
 
 ];

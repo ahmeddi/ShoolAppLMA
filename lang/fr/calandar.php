@@ -3,19 +3,20 @@
 return [
 
 
-    'month' => 'Cette Mois',
-    'year' => 'Cette Année',
-    'pastM' => 'Mois Passé',
-    'week' => 'Cette Semaine',
+    'month' => 'Ce mois',
+    'year' => 'Cette année',
+    'pastM' => 'mois précédent',
+    'week' => 'Cette semaine',
     'tous' => 'Tous',
-    'n_month' => 'Mois Prochain',
-    'day' => 'Cette Jour',
+    'n_month' => 'Mois prochain',
+    'day' => 'Ce jour',
     'p-day' => 'Hier ',
 
 
     'date' => 'Date',
     'hours' => 'Heures',
     'classe' => 'Classe',
+
     
 
 

@@ -9,7 +9,7 @@ return [
     'year' => 'Année',
     'mont' => 'Montant',
 
-    'add' => 'Ajouter un Paiement',
+    'add' => 'Ajouter un paiement',
     'art' => 'Rubrique',
 
     'sal' => 'Salaire',
@@ -17,18 +17,19 @@ return [
     'bonis' => 'Motivation',
     'det' => 'Détails',
 
-    'etud' => 'Etudiant',
+    'etud' => 'Étudiant',
     'motif' => 'Rubrique',
 
-    'add-frais' => 'Ajouter une Frais',
+    'add-frais' => 'Ajouter une frais',
 
     'frais' => 'Frais d\'inscription',
-    'monthly' => 'Frais Mensuel',
-    'month' => 'Frais du Mois',
+    'monthly' => 'Frais mensuel',
+    'month' => 'Frais du mois',
 
     'note' => 'Note',
 
-    'paiement' => 'Ajouter un Paiement',
+    'paiement' => 'Ajouter un paiement',
+
     
 
 

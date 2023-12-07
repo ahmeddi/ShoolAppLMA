@@ -58,7 +58,7 @@ return [
 
     'prof-del' => 'حذف',
 
-    'prof-class-mats' => 'المواد و الاقسام',
+    'prof-class-mats' => 'صلاحيات النتائج',
 
 
 

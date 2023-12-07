@@ -3,16 +3,20 @@
 return [
 
     // Etuds
-    'result' => 'Resultat',
+    'result' => 'Résultat',
     'class' => 'Classe',
-    'mat' => 'Matiere',
+    'mat' => 'Matière',
     'sem' => 'Trimestre',
     'dev' => 'Devoir',
-
+    
     'dev/exam' => 'Devoir/Examen',
     'note' => 'Note',
-
+    
     'save' => 'Enregistrer',
+    
+    'result_add' => 'Ajouter un Résultat',
+    
+
 
 
 
