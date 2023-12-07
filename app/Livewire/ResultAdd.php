@@ -3,12 +3,13 @@
 namespace App\Livewire;
 
 use App\Models\Mat;
+use App\Models\Prof;
 use App\Models\Classe;
 use App\Models\Examen;
-use App\Models\Prof;
-use App\Models\Semestre;
 use Livewire\Component;
+use App\Models\Semestre;
 use Livewire\Attributes\Rule;
+use App\Models\ProfClassesResult;
 
 class ResultAdd extends Component
 {
@@ -75,20 +76,15 @@ class ResultAdd extends Component
 
             $prof = Prof::find(auth()->user()->prof_id);
 
-            if (($prof->classes->whereIn('id', [$this->classe])->count() == 0)) {
-
+            if (ProfClassesResult::where('prof_id', $prof->id)->where('classe_id', $this->classe)->count() == 0) {
                 $this->addError('classe', $profclassmsg);
                 return;
             }
 
-            if (($prof->mats->whereIn('id', [$this->mat])->count() == 0)) {
-
+            if (ProfClassesResult::where('prof_id', $prof->id)->where('mat_id', $this->mat)->count() == 0) {
                 $this->addError('mat', $profmatmsg);
                 return;
             }
-
-
-
     
         }
 

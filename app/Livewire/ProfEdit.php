@@ -152,9 +152,8 @@ class ProfEdit extends Component
            $user = User::where('prof_id', $prof->id)->first();
 
            $password = Str::random(8);
-   
-   
-           if (!$user) 
+
+           if (!$user or $user->parent_id ) 
            {
                User::create([
                    'name'   => $prof->tel1,

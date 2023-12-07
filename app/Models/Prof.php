@@ -44,6 +44,6 @@ class Prof extends Model
 
     public function mats()
     {
-    	return $this->belongsToMany(Mat::class, 'prof_mats_results', 'prof_id', 'mat_id');
+    	return $this->belongsToMany(Mat::class, 'prof_classes_results', 'prof_id', 'mat_id');
     }
 }

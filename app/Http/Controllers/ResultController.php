@@ -14,7 +14,9 @@ class ResultController extends Controller
 {
     public function show($locale,$classe, $mat, $dev)
     {
+        
         if (auth()->user()->parent_id){
+            
             abort(403);
         }
 
