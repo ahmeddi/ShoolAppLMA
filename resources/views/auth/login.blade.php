@@ -20,18 +20,18 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
             <div>
-                <label for="eid" for="auths" class="labels w-full  flex justify-end font-bold"> :المستخدم </label>
+                <label for="eid" for="auths" class="labels w-full  flex justify-start font-bold"> Utilisateur: </label>
                 <input id="auths" name="auths"  class="mt-1 inputs w-full rounded-md h-10  " type="text"   required autocomplete="current-password" />       
             </div>
 
             <div class="mt-4">
-                <label for="eid" for="password" class="labels w-full flex justify-end font-bold" >: كلمة المرور </label>
+                <label for="eid" for="password" class="labels w-full flex justify-start font-bold" >Mot de passe:                </label>
                 <input id="password" name="password"  class="mt-1 inputs w-full rounded-md h-10  " type="password"   required autocomplete="current-password" />       
             </div>
 
-            <div class="flex  justify-start mt-4">
+            <div class="flex  justify-end mt-4">
                 <x-button class=" text-md bg-teal-700 hover:bg-teal-900">
-                    {{ __(' تسجيل الدخول') }}
+                    {{ __('Se connecter') }}
                 </x-button>
             </div>
         </form>
