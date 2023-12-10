@@ -147,16 +147,28 @@
                   </div>
 
                   @can('admin')
-                      <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                          <label   class="labels opacity-0"> {{ 'text' }}</label>
-                          @error('list') <span class="danger">{{ $message }}</span> @enderror  
+                        <div class="flex w-full">
+                          <div class="flex flex-col space-y-1 w-1/2">
+                            <div class="flex justify-between">
+                              <label   class="labels opacity-0"> {{ 'text' }}</label>
+                              @error('list') <span class="danger">{{ $message }}</span> @enderror  
+                            </div>
+                            <select  wire:model='list'  class="inputs w-28 @error('list') reds @enderror" name="list"  required >
+                                <option  class="text-sm" value="1">{{ __('etudiants.liste') }}</option>
+                                <option class="text-sm" value="0"> {{ __('etudiants.nliste') }}  </option>
+                            </select>
+                            </div>  
+                          <div class="flex flex-col space-y-1 w-1/2">
+                            <div class="flex justify-between">
+                              <label   class="labels opacity-0"> {{ 'text' }}</label>
+                              @error('wh') <span class="danger">{{ $message }}</span> @enderror  
+                            </div>
+                            <select  wire:model='wh'  class="inputs w-28 @error('wh') reds @enderror" name="wh"  required >
+                                <option  class="text-sm" value="1">{{ __('etudiants.activ') }}</option>
+                                <option class="text-sm" value="0"> {{ __('etudiants.desactiv') }}  </option>
+                            </select>
+                          </div>  
                         </div>
-                        <select  wire:model='list'  class="inputs @error('list') reds @enderror" name="list"  required >
-                            <option  class="text-sm" value="1">{{ __('etudiants.liste') }}</option>
-                            <option class="text-sm" value="0"> {{ __('etudiants.nliste') }}  </option>
-                        </select>
-                      </div>   
                     @endcan
 
                     <div class="flex justify-center items-center w-full">

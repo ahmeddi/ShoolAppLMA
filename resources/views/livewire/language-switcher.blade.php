@@ -8,7 +8,7 @@
 
 <div class="text-sm mx-8">
     
-        <button wire:click='switchLocale("{{ $locale  }}","{{ $currentUri  }}")' > {{ $str }}</button>
+        <button x-on:click="userDropdownOpen = false" wire:click='switchLocale("{{ $locale  }}","{{ $currentUri  }}")' > {{ $str }}</button>
 
     
 </div>

@@ -10,12 +10,14 @@ use Livewire\Attributes\Rule;
 
 class EtudSemes extends Component
 {
-    protected $listeners = ['opensems' => 'open','opensemsclass' => 'openclass',];
+    // protected $listeners = ['opensems' => 'open', 'opensemsclass' => 'openclass', 'openRecomendation' => 'openRecomendation'];
 
     public $visible = false;
 
-    public $sems = [] ;
-    public $class = false ;
+    public $sems = [];
+    public $class = false;
+
+    public $recos = false;
 
 
     #[Rule('required')]
@@ -23,35 +25,45 @@ class EtudSemes extends Component
 
     public $eid;
 
+    function mount()
+    {
+
+        $this->sems = Semestre::get(['id', 'nom', 'nomfr']);
+    }
 
 
-    #[On('opensemsclass')] 
-    public function openclass($id) 
-    {      
-        $this->sems = Semestre::get(['id','nom','nomfr']);
 
+    #[On('opensemsclass')]
+    public function openclass($id)
+    {
         $this->visible = true;
 
         $this->eid = $id;
 
         $this->class = true;
+    }
 
+    #[On('openRecomendation')]
+    public function openRecomendation($id)
+    {
+        $this->recos = true;
+
+        $this->eid = $id;
+
+        $this->visible = true;
     }
 
 
-    #[On('open')] 
-    public function open($id) 
-    {      
-        
+    #[On('open')]
+    public function open($id)
+    {
+
         $this->resetErrorBag();
         $this->resetValidation();
-
-        $this->sems = Semestre::get(['id','nom','nomfr']);
 
         $this->visible = true;
 
         $this->eid = $id;
-
     }
 
     public function save()
@@ -64,16 +76,18 @@ class EtudSemes extends Component
 
         $local = app()->getLocale();
 
+        if ($this->recos) {
+
+            return $this->redirect('/' . $local . '/Classe/Recomendations/' . $this->eid . '/Sem/' . $this->sem, navigate: true);
+        }
+
         if ($this->class) {
 
-            return $this->redirect('/'.$local.'/Classe/Results/'.$this->eid.'/Sem/'.$this->sem, navigate: true);
-
+            return $this->redirect('/' . $local . '/Classe/Results/' . $this->eid . '/Sem/' . $this->sem, navigate: true);
         } else {
 
-            return $this->redirect('/'.$local.'/Resultat/Etudiant/'.$this->eid.'/Sem/'.$this->sem, navigate: true);
-
+            return $this->redirect('/' . $local . '/Resultat/Etudiant/' . $this->eid . '/Sem/' . $this->sem, navigate: true);
         }
-        
     }
 
 

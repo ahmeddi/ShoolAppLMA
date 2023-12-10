@@ -91,9 +91,15 @@
         </tr>
     @endforeach
   
+    
         </tbody>
     </table>
-  <div class="mt-2"> {{ $etudiants->links() }}</div>
+  <div class="mt-2  "> 
+    <span class=" text-gray-800 dark:text-gray-50 text-sm">
+        {{-- {{ __('etudiants.nliste') }}: {{ $etudiants->links() and $actives ?  "($actives)" : ''  }} --}}
+    </span>
+    {{ $etudiants->links() }}
+  </div> 
    
  </div>
 

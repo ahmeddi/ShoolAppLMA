@@ -8,16 +8,19 @@ use Illuminate\Support\Facades\Gate;
 
 class ParentController extends Controller
 {
-    function show($locale,$data)
+    function show($locale, $data)
     {
-        if (auth()->user()->role == 'prof'){
+        //dd('here controller');
+
+        if (auth()->user()->role == 'prof') {
             abort(403);
         }
 
-         $parentt = Parentt::find($data);
 
-        if ($parentt) { 
-            if(auth()->user()->role == 'parent'){
+        $parentt = Parentt::find($data);
+
+        if ($parentt) {
+            if (auth()->user()->role == 'parent') {
                 if (Gate::allows('view', $parentt)) {
                     return view('Parent', ['Parent' => $parentt]);
                 } else {
@@ -25,26 +28,24 @@ class ParentController extends Controller
                 }
             }
             return view('Parent', ['Parent' => $parentt]);
-            
         } else {
             abort(404);
         }
-        
     }
 
-    public function frais($locale,$data)
+    public function frais($locale, $data)
     {
-        if (auth()->user()->role == 'prof'){
+        if (auth()->user()->role == 'prof') {
             abort(403);
         }
 
         $parentt = Parentt::find($data);
 
 
-        if ($parentt) { 
-            if(auth()->user()->role == 'parent'){
+        if ($parentt) {
+            if (auth()->user()->role == 'parent') {
                 if (Gate::allows('view', $parentt)) {
-                    return view('ParentFrais',['data' => $parentt,]);
+                    return view('ParentFrais', ['data' => $parentt,]);
                 } else {
                     abort(403);
                 }
@@ -53,27 +54,25 @@ class ParentController extends Controller
             if (auth()->user()->role == 'dir' || auth()->user()->role == 'sur') {
                 abort(403);
             }
-            return view('ParentFrais',['data' => $parentt,]);
-            
+            return view('ParentFrais', ['data' => $parentt,]);
         } else {
             abort(404);
         }
-
     }
 
-    public function paiements($locale,$data)
+    public function paiements($locale, $data)
     {
-        if (auth()->user()->role == 'prof'){
+        if (auth()->user()->role == 'prof') {
             abort(403);
         }
 
         $parentt = Parentt::find($data);
 
 
-        if ($parentt) { 
-            if(auth()->user()->role == 'parent'){
+        if ($parentt) {
+            if (auth()->user()->role == 'parent') {
                 if (Gate::allows('view', $parentt)) {
-                    return view('ParentPaiements',['data' => $parentt,]);
+                    return view('ParentPaiements', ['data' => $parentt,]);
                 } else {
                     abort(403);
                 }
@@ -81,26 +80,25 @@ class ParentController extends Controller
             if (auth()->user()->role == 'dir' || auth()->user()->role == 'sur') {
                 abort(403);
             }
-            return view('ParentPaiements',['data' => $parentt,]);
-            
+            return view('ParentPaiements', ['data' => $parentt,]);
         } else {
             abort(404);
         }
     }
 
-    public function remises($locale,$data)
+    public function remises($locale, $data)
     {
 
-        if (auth()->user()->role == 'prof'){
+        if (auth()->user()->role == 'prof') {
             abort(403);
         }
-        
+
         $parentt = Parentt::find($data);
 
-        if ($parentt) { 
-            if(auth()->user()->role == 'parent'){
+        if ($parentt) {
+            if (auth()->user()->role == 'parent') {
                 if (Gate::allows('view', $parentt)) {
-                    return view('ParentRemises',['data' => $parentt,]);
+                    return view('ParentRemises', ['data' => $parentt,]);
                 } else {
                     abort(403);
                 }
@@ -108,8 +106,7 @@ class ParentController extends Controller
             if (auth()->user()->role == 'dir' || auth()->user()->role == 'sur') {
                 abort(403);
             }
-            return view('ParentRemises',['data' => $parentt,]);
-            
+            return view('ParentRemises', ['data' => $parentt,]);
         } else {
             abort(404);
         }

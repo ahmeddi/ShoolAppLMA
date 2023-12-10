@@ -13,10 +13,10 @@ use App\Models\ProfClassesResult;
 
 class ResultAdd extends Component
 {
-    public $classes =[];
-    public $sems =[];
-    public $exams =[];
-    public $mats =[];
+    public $classes = [];
+    public $sems = [];
+    public $exams = [];
+    public $mats = [];
 
     #[Rule('required')]
     public $classe, $exam, $mat, $sem;
@@ -24,43 +24,57 @@ class ResultAdd extends Component
 
     public function mount()
     {
-        $this->classes = Classe::all('nom','id');
-        $this->mats = Mat::all('nom','id');
-        
+        $profId = auth()->user()->prof_id;
+        $data = $profId ? $this->getMatsAndClassesForProf($profId) : $this->getAllMatsAndClasses();
 
-        $this->sems = Semestre::with('examens')->get();    
+        $this->mats = $data['mats'];
+        $this->classes = $data['classes'];
 
+        $this->sems = Semestre::with('examens')->get();
     }
 
-    function update()  
+    private function getMatsAndClassesForProf($profId)
+    {
+        $prof = Prof::with('mats', 'classes')->find($profId);
+        return [
+            'mats' => $prof->mats->unique('id'),
+            'classes' => $prof->classes->unique('id')
+        ];
+    }
+
+    private function getAllMatsAndClasses()
+    {
+        return [
+            'mats' => Mat::all('nom', 'id'),
+            'classes' => Classe::all('nom', 'id')
+        ];
+    }
+
+    function update()
     {
         if ($this->sem) {
             $this->exams =  Semestre::find($this->sem)->examens;
-
         } else {
             $this->exams = [];
         }
-        
-
-
     }
 
     public function save()
     {
-
-
-         $this->resetErrorBag();
-         $this->resetValidation();
+        $this->resetErrorBag();
+        $this->resetValidation();
 
         $this->validate();
 
 
-        $class =  Classe::find($this->classe);
+        $class =  Classe::with('mats')->find($this->classe);
 
         $msg = 'القسم لا يدرس هذه المادة';
         $msg2 = 'Le classe n\'enseigne pas cette matière';
 
         app()->getLocale() == 'ar' ? $msg = $msg : $msg = $msg2;
+
+        $local = app()->getLocale();
 
         $local = app()->getLocale();
 
@@ -72,6 +86,11 @@ class ResultAdd extends Component
         $profclassmsg2 = 'La classe n\'est pas de la compétence du professeur';
         $local == 'ar' ? $profclassmsg = $profclassmsg1 : $profclassmsg = $profclassmsg2;
 
+        $profmatclsmsg1 = 'الاستاذ لا يدرس هذه المادة لهاذا القسم';
+        $profmatclsmsg2 = 'Le professeur n\'enseigne pas cette matière à cette classe';
+
+        $local == 'ar' ? $profmatclsmsg = $profmatclsmsg1 : $profmatclsmsg = $profmatclsmsg2;
+
         if (auth()->user()->role == 'prof') {
 
             $prof = Prof::find(auth()->user()->prof_id);
@@ -82,34 +101,39 @@ class ResultAdd extends Component
             }
 
             if (ProfClassesResult::where('prof_id', $prof->id)->where('mat_id', $this->mat)->count() == 0) {
+                dd(1);
                 $this->addError('mat', $profmatmsg);
                 return;
             }
-    
+
+            if (
+                ProfClassesResult::where('prof_id', $prof->id)
+                ->where('mat_id', $this->mat)
+                ->where('classe_id', $this->classe)
+                ->count() == 0
+            ) {
+
+                $this->addError('classe', $profmatclsmsg);
+                return;
+            }
         }
-
-
-
 
 
 
         if ($class->mats->whereIn('id', [$this->mat])->count()) {
-
-            return $this->redirect('/'.$local.'/Resultat/Class/'.$this->classe.'/Mats/'.$this->mat.'/Dev/'.$this->exam, navigate: true);
-
-          //  return redirect(app()->getLocale().'/Resultat/Class/'.$this->classe.'/Mats/'.$this->mat.'/Dev/'.$this->exam);
+            return $this->redirect('/' . $local . '/Resultat/Class/' . $this->classe . '/Mats/' . $this->mat . '/Dev/' . $this->exam, navigate: true);
         } else {
             $this->addError('mats', $msg);
             return;
         }
-
     }
 
-    private function validateRelation($relation, $value, $field, $errorMsg) {
-       
+    private function validateRelation($relation, $value, $field, $errorMsg)
+    {
+
         if (($relation->whereIn('id', [$value])->count() == 0)) {
 
-            
+
             $this->addError($field, $errorMsg);
             return;
         }

@@ -1,6 +1,5 @@
 @php
     $locale = app()->getLocale();
-    $currentUri = request()->getRequestUri();
 @endphp
 
 <div>
@@ -16,7 +15,7 @@
                     class="px-4 mx-3 inline py-3 w-40 text-sm text-center font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-green bg-teal-600 active:bg-teal-600 hover:bg-teal-700">
                         {{ __('err.err4') }}
                     </button>
-                    <a href="{{url(app()->getLocale().'/dashboard')}}"
+                    <a href="/{{  $locale }}"
                           class="px-4 mx-3 inline py-3 w-40 text-center text-sm font-medium leading-5 shadow text-teal-600 transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-green ring-1 ring-teal-600 bg-white active:bg-teal-50 hover:bg-teal-50">
                         {{ __('err.err3') }}
                     </a >

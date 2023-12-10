@@ -18,41 +18,42 @@ class EtudEdit extends Component
     public $visible = false;
 
 
-    #[Rule('required')] 
-    public $nom,$nomfr;
+    #[Rule('required')]
+    public $nom, $nomfr;
 
     public $ddn;
     public $soir;
 
-    public $textColors = []; 
+    public $textColors = [];
 
 
     public $nc;
 
-    #[Rule('required|not_in:0')] 
+    #[Rule('required|not_in:0')]
     public $sexe;
 
     public $nni;
 
 
-    #[Rule('required')] 
+    #[Rule('required')]
     public $nb;
 
     public $nbs;
 
-    #[Rule('required|not_in:0')] 
+    #[Rule('required|not_in:0')]
 
-    public $cls,$mid;
+    public $cls, $mid;
 
     public $etud;
 
     public $list;
 
 
+
     public function num()
     {
         $class = Classe::find($this->cls);
-    
+
         if (!$class) {
             $this->nbs = '';
         } elseif ($class->etuds->count()) {
@@ -68,13 +69,13 @@ class EtudEdit extends Component
 
 
 
-    #[On('open')] 
-    public function open($id) 
-    {      
+    #[On('open')]
+    public function open($id)
+    {
         $this->resetErrorBag();
         $this->resetValidation();
 
-         $etud = Etudiant::find($id);
+        $etud = Etudiant::find($id);
 
         $this->nom = $etud->nom;
         $this->nomfr = $etud->nomfr;
@@ -90,7 +91,6 @@ class EtudEdit extends Component
         $this->mid = $etud->id;
 
         $this->visible = true;
-
     }
 
     public function submit()
@@ -102,25 +102,24 @@ class EtudEdit extends Component
         $this->validate();
 
 
-           $etud = Etudiant::find($this->mid);
+        $etud = Etudiant::find($this->mid);
 
-           $etud->nom = $this->nom;
-           $etud->nomfr = $this->nomfr;
-           $etud->nni = $this->nni;
-           $etud->ddn = $this->ddn;
-           $etud->nc = $this->nc;
-           $etud->sexe = $this->sexe;
-           $etud->classe_id = $this->cls ;
-           $etud->nb = $this->nb ;
-           $etud->list = $this->list ;
-            $etud->soir = $this->soir ;
+        $etud->nom = $this->nom;
+        $etud->nomfr = $this->nomfr;
+        $etud->nni = $this->nni;
+        $etud->ddn = $this->ddn;
+        $etud->nc = $this->nc;
+        $etud->sexe = $this->sexe;
+        $etud->classe_id = $this->cls;
+        $etud->nb = $this->nb;
+        $etud->list = $this->list;
+        $etud->soir = $this->soir;
 
-           $etud->save();
+        $etud->save();
 
-   
-          $this->dispatch('refresh');
-          $this->visible = false;
 
+        $this->dispatch('refresh');
+        $this->visible = false;
     }
 
     #[Js]
@@ -130,7 +129,7 @@ class EtudEdit extends Component
             $wire.visible = false;
         JS;
     }
-    
+
     public function render()
     {
 
@@ -139,5 +138,4 @@ class EtudEdit extends Component
 
         return view('livewire.etud-edit');
     }
-
 }

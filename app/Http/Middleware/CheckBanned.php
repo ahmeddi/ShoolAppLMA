@@ -16,10 +16,11 @@ class CheckBanned
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->check() && (!auth()->user()->wh)){
-         //   Auth::logout();
+        if (auth()->check() && (!auth()->user()->wh)) {
+            //   Auth::logout();
 
-            auth()->logout();
+            Auth::guard('web')->logout();
+
 
             $request->session()->invalidate();
 
@@ -35,7 +36,6 @@ class CheckBanned
             }
 
             return redirect()->route('login')->with('error', $msg);
-
         }
 
         return $next($request);

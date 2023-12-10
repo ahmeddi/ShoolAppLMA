@@ -4,15 +4,15 @@ return [
 
     'etuds' => 'Les étudiants',
     //view
-    
+
     'etuds-add' => 'Ajouter un étudiant',
-    
+
     //etud table
     'etud' => 'Étudiant',
     'nb' => 'Numéro d\'appel',
     'ns' => 'Numéro scolaire',
     'prent' => 'Parent',
-    
+
     //etuds add
     'add-nom' => 'Nom en arabe',
     'add-nomfr' => 'Nom en français',
@@ -29,10 +29,10 @@ return [
     'add-photo' => 'Photo',
     'add-changer' => 'Modifier',
     'add-remove' => 'Supprimer',
-    
+
     'add-cancel' => 'Annuler',
     'add-save' => 'Enregistrer',
-    
+
     //etud profil
     'profil-photo' => 'Changer l\'image',
     'profil-classe' => 'Classe :',
@@ -40,7 +40,7 @@ return [
     'profil-ddn' => 'Date de naissance :',
     'profil-nni' => 'Numéro national :',
     'profil-ns' => 'Numéro scolaire :',
-    
+
     'profil-edit' => 'Modifier les informations',
     'profil-jorns' => 'Emploi du temps',
     'profil-pres' => 'Absences',
@@ -49,17 +49,21 @@ return [
     'profil-bull' => 'Bulletin',
     'profil-result' => 'Résultats',
     'profil-del' => 'Supprimer l\'étudiant',
-    
+
     'liste' => 'Liste',
     'nliste' => 'Non Liste',
-    
+
     'cot' => 'Frais scolaires',
-    
+
     'soir' => 'Cours du soir',
-    
+
     'notes' => 'Note',
     'obs' => 'Observation',
-    
+
+    'activ' => 'Activé',
+    'desactiv' => 'Désactivé',
+
+
 
 
 

@@ -13,63 +13,53 @@ use App\Services\WhatsappApiService;
 class Whatsapp extends Component
 {
     public $Classes = [];
-    public $cls ;
+    public $cls;
 
-    #[Rule('required',as: ' ')] 
+    #[Rule('required', as: ' ')]
     public $msg;
 
 
     public $profs;
     public $emps;
     public $parent;
-    public $profsSelected ;
+    public $profsSelected;
 
-    function mount() 
+    function mount()
     {
         $this->Classes = Classe::all('id', 'nom');
-        
     }
 
-    function send() 
+    function send()
     {
 
         $this->validate();
 
-        if ($this->emps) 
-        {
-                $this->emp();
+        if ($this->emps) {
+            $this->emp();
         }
 
-        if ($this->profs) 
-        {
+        if ($this->profs) {
             $this->prof();
         }
-        if ($this->parent) 
-        {
-        $this->parent();
-        }
-        elseif ($this->cls) 
-         {
-           $classes = Classe::with('etuds.parent')->find($this->cls);
-           $etuds = $classes->etuds;
+        if ($this->parent) {
+            $this->parent();
+        } elseif ($this->cls) {
+            $classes = Classe::with('etuds.parent')->find($this->cls);
+            $etuds = $classes->etuds;
 
-           foreach ($etuds as $etud) {
-               $code = $etud->parent->whcode;
-               $phone = $code . $etud->parent->whatsapp;
+            foreach ($etuds as $etud) {
+                $code = $etud->parent->whcode;
+                $phone = $code . $etud->parent->whatsapp;
 
-               $create = new WhatsappApiService();
+                $create = new WhatsappApiService();
 
-               $create->sendCurlRequest(
+                $create->sendCurlRequest(
                     $phone,
-                   $this->msg,
-               );
-           }
+                    $this->msg,
+                );
+            }
+        } elseif ($this->profsSelected) {
 
-           
-         }
-         elseif ($this->profsSelected) 
-         {
-            
             $profs = Prof::where($this->profsSelected, 1)->get();
 
             $create = new WhatsappApiService();
@@ -79,21 +69,22 @@ class Whatsapp extends Component
                 if ($prof->tel2 == null) {
                     continue;
                 }
-                $code = '222';
+
+                $whcode = $prof->whcode;
+
+                $code = $whcode;
                 $phone = $code . $prof->tel2;
 
                 $create->sendCurlRequest(
-                     $phone,
+                    $phone,
                     $this->msg,
                 );
             }
-         }
-
-
+        }
     }
 
 
-    function emp() 
+    function emp()
     {
         $emps = Emp::all();
 
@@ -111,14 +102,13 @@ class Whatsapp extends Component
             $phone = $code . $emp->tel2;
 
             $create->sendCurlRequest(
-                 $phone,
+                $phone,
                 $this->msg,
             );
         }
-        
     }
 
-    function prof() 
+    function prof()
     {
         $emps = Prof::all();
 
@@ -133,14 +123,13 @@ class Whatsapp extends Component
             $phone = $code . $emp->tel2;
 
             $create->sendCurlRequest(
-                 $phone,
+                $phone,
                 $this->msg,
             );
         }
-        
     }
 
-    function parent() 
+    function parent()
     {
         $parts = Parentt::all();
 
@@ -158,11 +147,10 @@ class Whatsapp extends Component
             $phone = $code . $part->whatsapp;
 
             $create->sendCurlRequest(
-                 $phone,
+                $phone,
                 $this->msg,
             );
         }
-        
     }
 
 

@@ -14,26 +14,27 @@ class Classe extends Model
         'prix',
         'moy',
         'soir',
-    ]; 
+    ];
 
     public function etuds()
     {
+        //order this by name fr
         return $this->hasMany(Etudiant::class)
-        ->where(function ($query) {
-            $query->whereNull('list')
-                ->orWhere('list', 0);
-        })
-        ->orderByRaw('CAST(nb AS UNSIGNED) ASC');
+            ->where(function ($query) {
+                $query->whereNull('list')
+                    ->orWhere('list', 0);
+            })
+            ->orderBy('nomfr', 'ASC');
     }
 
     public function mats()
     {
         return $this->belongsToMany(Mat::class, 'proportions')
             ->withPivot('foix', 'tot');
-         //   ->withTimestamps();
+        //   ->withTimestamps();
     }
-    
-        public function times()
+
+    public function times()
     {
         return $this->belongsToMany(Time::class, 'horaires');
     }

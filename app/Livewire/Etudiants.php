@@ -11,25 +11,30 @@ class Etudiants extends Component
 {
     use WithPagination;
 
+    public $actives;
 
- 
-    public $search='';
+
+
+    public $search = '';
 
     public function updatingSearch()
     {
         $this->resetPage();
     }
 
-    #[On('refresh')] 
+    #[On('refresh')]
     public function render()
     {
-        
-        $etudiants = Etudiant::where('nom', 'like', '%'.$this->search.'%')
-        ->orWhere('nomfr', 'like', '%'.$this->search.'%')
-        ->orWhere('id', 'like', '%'.$this->search.'%')
-        ->with(['classe:id,nom'])
-        ->orderBy('id', 'desc')
-        ->paginate(5);
-        return view('livewire.etudiants',['etudiants' => $etudiants]);
+
+        $etudiants = Etudiant::where('nom', 'like', '%' . $this->search . '%')
+            ->orWhere('nomfr', 'like', '%' . $this->search . '%')
+            ->orWhere('id', 'like', '%' . $this->search . '%')
+            ->with(['classe:id,nom'])
+            ->orderBy('id', 'desc')
+            ->paginate(5);
+
+        $this->actives = Etudiant::whereNot('list', 1)->count();
+
+        return view('livewire.etudiants', ['etudiants' => $etudiants]);
     }
 }

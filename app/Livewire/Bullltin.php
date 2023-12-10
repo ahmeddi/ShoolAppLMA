@@ -10,15 +10,18 @@ use App\Models\Etudiant;
 use App\Models\Semestre;
 use App\Models\Classement;
 use App\Models\Proportion;
+use App\Models\Recomadation;
 
 class Bullltin extends Component
 {
-    public $etud, $sem, $mats, $results = [], $number, $classe, $tot = 0, $totmat =0, $moy, $classmoy, $tots, $note;
+    public $etud, $sem, $mats, $results = [], $number, $classe, $tot = 0, $totmat = 0, $moy, $classmoy, $tots, $note;
     public $header;
     public $moy_classe = 0;
-    public $etuds =0;
-    public $classMats =0;
+    public $etuds = 0;
+    public $classMats = 0;
     public $finalnote = '';
+
+    public $recomendation;
 
 
     public function mount()
@@ -27,11 +30,17 @@ class Bullltin extends Component
         $this->calculateResults();
         $this->calculateTotals();
         $this->calculateNote();
-        
+
         $this->header = Profil::find(1)->header;
 
-
-       
+        $this->recomendation = Recomadation::where(
+            'semestre_id',
+            $this->sem->id
+        )->where(
+            'etudiant_id',
+            $this->etud->id
+        )
+            ->value('note');
     }
 
     private function initializeData()
@@ -44,9 +53,6 @@ class Bullltin extends Component
 
         $this->etuds =  Classe::find($this->etud->classe->id)->etuds->count();
         $this->classMats = Classe::find($this->etud->classe->id)->mats->count();
-
-
-
     }
 
     private function calculateResults()
@@ -63,9 +69,9 @@ class Bullltin extends Component
                 $moy_classe = 0;
 
                 foreach ($this->sem->examens as $index => $dev) {
-                    
+
                     if ($index == 0) {
-                    //    dd($dev);
+                        //    dd($dev);
 
                         $notes =  $this->getNote(
                             $nom['id'],
@@ -83,9 +89,9 @@ class Bullltin extends Component
 
                     if ($exam && $exam->note) {
 
-                        
+
                         $arrn[] = $exam->note;
-                        $arrs += (double) $exam->note;
+                        $arrs += (float) $exam->note;
                         $devs++;
                     }
                 }
@@ -98,17 +104,17 @@ class Bullltin extends Component
                 $moys = !$this->classmoy ? ($devs ? round((floatval($arrs) + floatval($exan)) / ($devs + 1), 2) : '') : floatval($exan);
 
                 $moy_classe = Classement::where('semestre_id', $this->sem->id)
-                        ->where('classe_id', $this->classe)
-                        ->where('mat_id', $nom['id'])
-                        ->sum('note');
-                        
-                
-                
+                    ->where('classe_id', $this->classe)
+                    ->where('mat_id', $nom['id'])
+                    ->sum('note');
+
+
+
                 $moy_classe = $moy_classe / $this->etuds;
-                
-               // dd($moy_classe);
-               
-                
+
+                // dd($moy_classe);
+
+
 
                 return [
                     'nom' => $nom['nom'],
@@ -119,7 +125,7 @@ class Bullltin extends Component
                     'foix' => $foix,
                     'tot' => round(floatval($tot), 1),
                     'note' => $notes,
-                    'moy_classe' => $moy_classe ,
+                    'moy_classe' => $moy_classe,
                 ];
             });
         }
@@ -167,23 +173,22 @@ class Bullltin extends Component
             ->where('classe_id', $this->classe)
             ->where('etudiant_id', $this->etud->id)
             ->sum('note');
-        
+
 
         $this->tot = $tots / $this->classMats;
-      //  dd($this->tot);
-      
-                      $moy_classe = Classement::where('semestre_id', $this->sem->id)
-                        ->where('classe_id', $this->classe)
-                        ->sum('note');
-                        
-                // $this->classMats
-                        
+        //  dd($this->tot);
+
+        $moy_classe = Classement::where('semestre_id', $this->sem->id)
+            ->where('classe_id', $this->classe)
+            ->sum('note');
+
+        // $this->classMats
+
         $this->moy_classe = $moy_classe / $this->classMats;
-        
-   
-                
-               $this->moy_classe = $this->moy_classe / $this->etuds;
-              
+
+
+
+        $this->moy_classe = $this->moy_classe / $this->etuds;
     }
 
     private function calculateTotals()
@@ -204,10 +209,9 @@ class Bullltin extends Component
             }
 
             $this->number = Classement::where('semestre_id', $this->sem->id)
-            ->where('classe_id', $this->classe)
-            ->where('etudiant_id', $this->etud->id)
-            ->value('moy');
-
+                ->where('classe_id', $this->classe)
+                ->where('etudiant_id', $this->etud->id)
+                ->value('moy');
         }
     }
 
@@ -262,7 +266,7 @@ class Bullltin extends Component
 
     public function render()
     {
-            $this->classmoy ? $this->tots = $this->totmat : $this->tots = 20;
+        $this->classmoy ? $this->tots = $this->totmat : $this->tots = 20;
 
 
         return view('livewire.bullltin');

@@ -51,11 +51,14 @@
                     </div>
 
                     <div class="flex flex-col space-y-1">
-                        <div class="flex justify-between">
-                          <label   class="labels">{{ __('prof.prof-wh') }}:</label>
-                          @error('tel2') <span class="danger">{{ $message }}</span> @enderror  
-                        </div>
-                        <input dir="ltr" lang="fr" x-model="tel2" x-mask="99 99 99 99" wire:model.defer='tel2' class="inputs @error('tel2') reds @enderror" type="text" required  />
+                      <div class="flex justify-between">
+                        <label   class="labels">{{ __('prof.prof-wh') }}:</label>
+                        @error('tel2') <span class="danger">{{ $message }}</span> @enderror  
+                      </div>
+                      <div  dir="ltr" class=" flex w-full">
+                        <input dir="ltr" lang="fr"  wire:model='whcode'  class="inputs w-2/6 mx-1 px-2 @error('whcode') reds @enderror" type="number"  required  />
+                        <input dir="ltr" lang="fr" x-model="tel2" x-mask="99 99 99 99 99 99 99" wire:model.defer='tel2' class="inputs w-4/6 @error('whcode') reds @enderror" type="text" required  />
+                      </div>                  
                     </div>
 
 

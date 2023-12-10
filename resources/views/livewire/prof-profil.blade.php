@@ -34,7 +34,7 @@
                                             </div>    
                                     </td>
                                     <td  class="w-fit dark:text-teal-100 font-bold flex justify-center items-center">
-                                        <div dir="ltr" class=" dark:text-teal-100"> {{  chunk_split($prof->tel1, 2, ' ') }}  -  {{  chunk_split($prof->tel2, 2, ' ') }}</div>
+                                        <div dir="ltr" class=" dark:text-teal-100"> {{  chunk_split($prof->tel1, 2, ' ') }}  - {{ $prof->whcode }} {{  chunk_split($prof->tel2, 2, ' ') }}</div>
 
                                     </td>
                                 </tr>

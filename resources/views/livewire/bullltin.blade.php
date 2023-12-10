@@ -139,7 +139,11 @@
             Moyenne Classe
         </div>
     </div>
-    <div>
+    <div class=" mt-2  w-full justify-center items-center p-1 flex flex-col">
+        
+        <div class="rttl font-semibold">التوصيات -  Recommandations</div>
+        <div> {{ $recomendation }}</div>
+       
         
     </div>
     

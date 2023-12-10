@@ -26,8 +26,14 @@
                         <div> :Le </div>
                     </div> 
                     <div class=" w-full flex justify-between ">
-                        <div>توقيع المدير</div>
-                        <div>توقيع الوكيل</div>
+                        <div class=" flex flex-col">
+                            <div> توقيع المدير</div>
+                            <div>Signature du Directeur</div>
+                        </div>
+                        <div  class=" flex flex-col">
+                            <div>توقيع الوكيل</div>
+                            <div>Signature du Parent</div>
+                        </div>
                     </div>
                 </div>
             </div>
