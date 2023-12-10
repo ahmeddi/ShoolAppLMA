@@ -134,7 +134,6 @@
         </div>
 
 
-
         <div class="py-1 px-3 font-bold ">
             Moyenne Classe
         </div>

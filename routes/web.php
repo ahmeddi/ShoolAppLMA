@@ -39,7 +39,7 @@ Route::middleware([
                 return redirect('fr/Parent/' . auth()->user()->parent_id);
             }
             if (auth()->user()->role == 'prof') {
-                return redirect()->route('homes', ['locale' => 'ar']);
+                return redirect()->route('homes', ['locale' => 'fr']);
             }
 
             return redirect('ar/dashboard');
