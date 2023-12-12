@@ -57,15 +57,16 @@
                           <label for="eid"  class="labels"> {{ __('att.hours') }}  :</label>
                           @error('nbh') <span class="danger">{{ $message }}</span> @enderror  
                         </div>
-                        <select    wire:model.defer="nbh"   class="inputs w-full @error('nbh') reds @enderror">
-                            <option value="">-----</option>
-                             <option value="1"> 1 </option>
-                             <option value="2"> 2 </option>
-                             <option value="3"> 3 </option>
-                             <option value="4"> 4 </option>
-                             <option value="5"> 5 </option>
-                             <option value="6"> 6 </option>
-                          </select>       
+                        <input wire:model.defer='nbh' class="inputs w-full @error('nbh') reds @enderror" type="text"   required  />       
+       
+                    </div>
+
+                    <div class="flex flex-col col-span-2 space-y-1 w-full">
+                      <div class="flex justify-between">
+                        <label for="eid"  class="labels"> {{ __('att.det') }}  :</label>
+                        @error('note') <span class="danger">{{ $message }}</span> @enderror  
+                      </div>
+                      <textarea wire:model='note' class="textearea h-36 w-full @error('note') reds @enderror" type="text" required  ></textarea>
                     </div>
                 </div>
 

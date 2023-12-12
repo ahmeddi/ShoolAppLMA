@@ -41,18 +41,18 @@ class ClasseHoraires extends Component
 
     public function save()
     {
-        
+
         foreach ($this->Times as $index => $Time) {
             $proportion = Horaire::where('classe_id', $this->cid)
                 ->where('time_id', $Time->id)
                 ->first();
 
             if ($proportion) {
-            //    dd(1);
+                //    dd(1);
                 $this->updateProportion($proportion, $index);
             } else {
-              //  dd(2);
-              //  dd($index);
+                //  dd(2);
+                //  dd($index);
                 $this->createProportion($Time, $index);
             }
         }
@@ -60,20 +60,17 @@ class ClasseHoraires extends Component
 
     private function updateProportion($proportion, $index)
     {
-        if ($this->times[$index]) 
-        {
-        
-        } 
-        else {
+        if ($this->times[$index]) {
+        } else {
             $proportion->delete();
         }
     }
 
     private function createProportion($Time, $index)
     {
-     //   dd($index);
+        //   dd($index);
         if ($this->times[$index]) {
-         //   dd(3);
+            //   dd(3);
             Horaire::create([
                 'classe_id' => $this->cid,
                 'time_id' => $Time->id,

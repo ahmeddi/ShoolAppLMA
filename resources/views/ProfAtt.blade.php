@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-100 leading-tight">
-            {{ __('att.sj') }} - {{ $prof->nom }}  
+        <h2 class="font-semibold text-xl text-gray-800  dark:text-gray-100 leading-tight">
+            {{ __('att.sj') }} - {{ app()->getLocale() == 'ar' ? $prof->nom : $prof->nomfr}}  
         </h2>
     </x-slot>
 

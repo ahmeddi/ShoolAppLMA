@@ -42,7 +42,7 @@ Route::middleware([
                 return redirect()->route('homes', ['locale' => 'fr']);
             }
 
-            return redirect('ar/dashboard');
+            return redirect('fr/dashboard');
         }
     });
 
@@ -513,9 +513,11 @@ Route::middleware([
         #Whatsapp --------------------------------------------------------
 
         Route::get('/Whatsapp', function () {
-            if (auth()->user()->role != 'admin') {
+
+            if (auth()->user()->role != 'admin' and auth()->user()->role != 'dir') {
                 abort(403);
             }
+
             return view('Whatsapp');
         })->name('Whatsapp');
     });

@@ -14,11 +14,11 @@ return [
     'class' => 'Classe',
     'hrs' => 'Heures d\'absence',
 
-    'profs' => 'Présence des enseignants',
+    'profs' => 'Absences  des enseignants',
     'prof' => 'Professeur',
     'mat' => 'Matière',
 
-    'sj' => 'Registre de présence',
+    'sj' => 'Registre des absences',
 
     'emps' => 'Absence des employés',
     'emp' => 'Employé',
@@ -29,6 +29,8 @@ return [
 
     'save' => 'Sauvegarder',
     'whatsapp' => ' WhatsApp',
+
+    'det' => 'Détails',
 
 
 ];

@@ -17,20 +17,21 @@ class AttndsProfsEdit extends Component
 {
     public $visible = false;
 
-    
-    #[Rule('required',as: ' ')] 
-    public $date,$nbh,$prof1,$mat,$classe;
 
-    public $Profs=[];
-    public $Mats=[];
-    public $Classes=[];
+    #[Rule('required', as: ' ')]
+    public $date, $nbh, $prof1, $mat, $classe;
+
+    public $Profs = [];
+    public $Mats = [];
+    public $Classes = [];
 
     public $att_id;
+    public $note;
 
 
     #[On('edit')]
-    public function open($id) 
-    {      
+    public function open($id)
+    {
         $this->resetErrorBag();
         $this->resetValidation();
 
@@ -41,34 +42,27 @@ class AttndsProfsEdit extends Component
         $this->prof1 = $att->prof_id;
         $this->mat = $att->mat_id;
         $this->classe = $att->classe_id;
+        $this->note = $att->note;
 
         $this->att_id = $id;
 
         $this->visible = true;
     }
 
-    function save()  
+    function save()
     {
         $prof = Prof::find($this->prof1);
 
-        $cond =   ProfClass::where('prof_id',$this->prof1)
-        ->where('mat_id',$this->mat)
-        ->where('classe_id',$this->classe)
-        ->get()->count();
+        $cond =   ProfClass::where('prof_id', $this->prof1)
+            ->where('mat_id', $this->mat)
+            ->where('classe_id', $this->classe)
+            ->get()->count();
 
-        $errmagar = 'الاستاذ لا يدرس هذه المادة لهاذا القسم';
-        $errmagfr = 'L\'enseignant n\'enseigne pas cette matière pour cette classe';
-        $errmsg = app()->getLocale() == 'ar' ? $errmagar : $errmagfr;
 
         $this->resetErrorBag();
         $this->resetValidation();
         $this->validate();
 
-        if ($cond == 0 and (($prof->ts == 2) or ($prof->ts == 3))) {
-            $this->addError('prof1', $errmsg);
-    
-            return ;
-          }
 
         $att =  Attandp::find($this->att_id);
 
@@ -77,6 +71,7 @@ class AttndsProfsEdit extends Component
         $att->prof_id = $this->prof1;
         $att->mat_id = $this->mat;
         $att->classe_id = $this->classe;
+        $att->note = $this->note;
 
         $att->save();
 
@@ -84,8 +79,6 @@ class AttndsProfsEdit extends Component
 
         $this->visible = false;
         $this->reset();
-
-        
     }
 
     #[Js]
@@ -96,12 +89,12 @@ class AttndsProfsEdit extends Component
         JS;
     }
 
-    
+
     public function render()
     {
-        $this->Profs = Prof::all('id','nom');
-        $this->Mats = Mat::all('id','nom');
-        $this->Classes = Classe::all('id','nom');
+        $this->Profs = Prof::all('id', 'nom', 'nomfr');
+        $this->Mats = Mat::all('id', 'nom');
+        $this->Classes = Classe::all('id', 'nom');
 
         return view('livewire.attnds-profs-edit');
     }

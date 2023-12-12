@@ -20,27 +20,29 @@ class ProfsAttListAdd extends Component
     public $prof1;
 
 
-    #[Rule('required',as: ' ')] 
-    public $date,$nbh,$mat,$classe;
+    #[Rule('required', as: ' ')]
+    public $date, $nbh, $mat, $classe;
 
-    public $Mats=[];
-    public $Classes=[];
+    public $Mats = [];
+    public $Classes = [];
+
+    public $note;
 
     #[On('pattl')]
-    public function open() 
-    {      
+    public function open()
+    {
         $this->resetErrorBag();
         $this->resetValidation();
 
         $this->resetExcept('prof1');
 
 
-        $this->date = Carbon::today()->format('Y-m-d') ;
+        $this->date = Carbon::today()->format('Y-m-d');
 
 
-        $this->Mats = Mat::all('id','nom');
-        $this->Classes = Classe::all('id','nom');
-        
+        $this->Mats = Mat::all('id', 'nom');
+        $this->Classes = Classe::all('id', 'nom');
+
 
 
         $this->visible = true;
@@ -51,61 +53,59 @@ class ProfsAttListAdd extends Component
     public function save()
     {
 
-      $prof = Prof::find($this->prof1);
+        $prof = Prof::find($this->prof1);
 
 
-      $cond =   ProfClass::where('prof_id',$this->prof1)
-                            ->where('mat_id',$this->mat)
-                            ->where('classe_id',$this->classe)
-                            ->get()->count();
+        $cond =   ProfClass::where('prof_id', $this->prof1)
+            ->where('mat_id', $this->mat)
+            ->where('classe_id', $this->classe)
+            ->get()->count();
 
         $errmagar = 'الاستاذ لا يدرس هذه المادة لهاذا القسم';
         $errmagfr = 'L\'enseignant n\'enseigne pas cette matière pour cette classe';
         $errmsg = app()->getLocale() == 'ar' ? $errmagar : $errmagfr;
 
-        
+
         $this->resetErrorBag();
         $this->resetValidation();
 
-       $this->validate();
+        $this->validate();
 
 
-       if ($cond == 0 && ($prof->ts == 2 || $prof->ts == 3)) 
-       {
-        $this->addError('classe', $errmsg);
+        if ($cond == 0 && ($prof->ts == 2 || $prof->ts == 3)) {
+            $this->addError('classe', $errmsg);
 
-        return ;
-         }
+            return;
+        }
 
-      $msgar = 'يوجد سجل لهذا اليوم';
-      $msgfr = 'Il y a un enregistrement pour ce jour';
-      $msg = app()->getLocale() == 'ar' ? $msgar : $msgfr;
+        $msgar = 'يوجد سجل لهذا اليوم';
+        $msgfr = 'Il y a un enregistrement pour ce jour';
+        $msg = app()->getLocale() == 'ar' ? $msgar : $msgfr;
 
-       if (Attandp::where('date',$this->date)
-                  ->where('prof_id',$this->prof1)
-                  ->where('mat_id',$this->mat)
-                  ->where('classe_id',$this->classe)
-                  ->count()) {
+        if (Attandp::where('date', $this->date)
+            ->where('prof_id', $this->prof1)
+            ->where('mat_id', $this->mat)
+            ->where('classe_id', $this->classe)
+            ->count()
+        ) {
             $this->addError('date', $msg);
-            return ;
-       } else {
-        
-        Attandp::create([
-            'prof_id'   => $this->prof1,
-            'nbh'  => $this->nbh,
-            'mat_id' => $this->mat,
-            'classe_id' => $this->classe,
-            'date' => $this->date,
-          ]);
+            return;
+        } else {
 
-          
-    $this->dispatch('refresh');
-    $this->resetExcept('prof1');
-    $this->visible = false;
+            Attandp::create([
+                'prof_id'   => $this->prof1,
+                'nbh'  => $this->nbh,
+                'mat_id' => $this->mat,
+                'classe_id' => $this->classe,
+                'date' => $this->date,
+                'note' => $this->note,
+            ]);
 
 
-       }
-       
+            $this->dispatch('refresh');
+            $this->resetExcept('prof1');
+            $this->visible = false;
+        }
     }
 
 

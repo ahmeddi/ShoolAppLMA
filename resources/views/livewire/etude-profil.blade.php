@@ -51,7 +51,7 @@
                                         <td class="w-fit dark:text-teal-100 font-bold flex justify-center items-center">
                                             <a wire:navigate class=" hover:underline dark:decoration-slate-50"  href="{{url(app()->getLocale().'/Parent/'.$etud->parent->id)}}">
                                                 <div  class=" dark:text-teal-100">
-                                                    {{ $etud->parent->nom  }} -
+                                                    {{  app()->getLocale() == 'ar' ? $etud->parent->nom : $etud->parent->nomfr }} -
                                                     <span dir="ltr">
                                                         {{  chunk_split($etud->parent->telephone, 2, ' ') }}
                                                     </span> 

@@ -15,6 +15,7 @@ class Attandp extends Model
         'prof_id',
         'mat_id',
         'classe_id',
+        'note',
     ];
 
     public function classe()
@@ -29,6 +30,6 @@ class Attandp extends Model
 
     public function prof()
     {
-        return $this->belongsTo(Prof::class,'prof_id','id');
+        return $this->belongsTo(Prof::class, 'prof_id', 'id');
     }
 }

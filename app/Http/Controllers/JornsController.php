@@ -142,6 +142,21 @@ class JornsController extends Controller
         }
     }
 
+    public function Horaires($locale, $ids)
+    {
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof') {
+            abort(403);
+        }
+
+        $Classs = Classe::find($ids);
+
+        if ($Classs) {
+            return view('ClasseHoraires', ['Classs' => $Classs]);
+        } else {
+            abort(404);
+        }
+    }
+
 
 
     public function recomendations($locale, $id, $sem)

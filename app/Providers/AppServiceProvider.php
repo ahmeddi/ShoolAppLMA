@@ -12,13 +12,13 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Register any application services.
      */
-
+    /*
      protected $policies = [
         User::class => UserPolicyPolicy::class,
         Etudiant::class => EtudiantPolicy::class,
         Parentt::class => ParenttPolicy::class,
     ];
-
+*/
     public function register(): void
     {
         //
@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    { 
+    {
         Gate::before(function ($user, $ability) {
             if ($user->role === 'super admin') {
                 return true; // Super admin can bypass other checks
@@ -37,25 +37,25 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('comps', [UserPolicy::class, 'isComps']);
         Gate::define('sur', [UserPolicy::class, 'isSur']);
-      //  Gate::define('dir', [UserPolicy::class, 'isDir']);
+        //  Gate::define('dir', [UserPolicy::class, 'isDir']);
 
         Gate::define('dir', function ($user) {
-            return $user->role === 'dir' || $user->role === 'admin' ;
+            return $user->role === 'dir' || $user->role === 'admin';
         });
 
         Gate::define('admin', function ($user) {
-            return $user->role === 'admin' ;
+            return $user->role === 'admin';
         });
 
         Gate::define('prof', function ($user) {
-            return $user->role === 'prof' ;
+            return $user->role === 'prof';
         });
 
-      Gate::define('parent', function ($user) {
-            return $user->role == 'parent' and $user->wh ;
+        Gate::define('parent', function ($user) {
+            return $user->role == 'parent' and $user->wh;
         });
 
-        
+
 
         Gate::define('dir_or_prof', function ($user) {
             return $user->role === 'dir' || $user->role === 'prof' || $user->role === 'admin';
@@ -99,7 +99,4 @@ class AppServiceProvider extends ServiceProvider
         });
         */
     }
-
-
-    
 }

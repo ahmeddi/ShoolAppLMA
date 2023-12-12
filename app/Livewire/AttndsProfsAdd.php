@@ -17,26 +17,27 @@ class AttndsProfsAdd extends Component
 {
     public $visible = false;
 
-    #[Rule('required',as: ' ')] 
-    public $date,$nbh,$prof1,$mat,$classe;
+    #[Rule('required', as: ' ')]
+    public $date, $nbh, $prof1, $mat, $classe;
 
-    public $Profs=[];
-    public $Mats=[];
-    public $Classes=[];
+    public $Profs = [];
+    public $Mats = [];
+    public $Classes = [];
+    public $note;
 
     #[On('openap')]
-    public function open() 
-    {      
+    public function open()
+    {
         $this->resetErrorBag();
         $this->resetValidation();
         $this->reset();
 
-        $this->date = Carbon::today()->format('Y-m-d') ;
+        $this->date = Carbon::today()->format('Y-m-d');
 
 
-        $this->Profs = Prof::all('id','nom');
-        $this->Mats = Mat::all('id','nom');
-        $this->Classes = Classe::all('id','nom');
+        $this->Profs = Prof::all('id', 'nom', 'nomfr');
+        $this->Mats = Mat::all('id', 'nom');
+        $this->Classes = Classe::all('id', 'nom');
 
 
         $this->visible = true;
@@ -47,12 +48,12 @@ class AttndsProfsAdd extends Component
     public function save()
     {
 
-      $prof = Prof::find($this->prof1);
+        $prof = Prof::find($this->prof1);
 
-      $cond =   ProfClass::where('prof_id',$this->prof1)
-                            ->where('mat_id',$this->mat)
-                            ->where('classe_id',$this->classe)
-                            ->get()->count();
+        $cond =   ProfClass::where('prof_id', $this->prof1)
+            ->where('mat_id', $this->mat)
+            ->where('classe_id', $this->classe)
+            ->get()->count();
 
         $errmagar = 'الاستاذ لا يدرس هذه المادة لهاذا القسم';
         $errmagfr = 'L\'enseignant n\'enseigne pas cette matière pour cette classe';
@@ -62,42 +63,28 @@ class AttndsProfsAdd extends Component
         $this->resetErrorBag();
         $this->resetValidation();
 
-       $this->validate();
+        $this->validate();
 
-
-       if ($cond == 0 and ($prof->ts == 2)) {
+        if ($cond == 0 and ($prof->ts == 2)) {
             $this->addError('prof1', $errmsg);
-        return ;
-      }
+            return;
+        }
 
-      $msgar = 'يوجد سجل لهذا اليوم';
-      $msgfr = 'Il y a un enregistrement pour ce jour';
-      $msg = app()->getLocale() == 'ar' ? $msgar : $msgfr;
 
-       if (Attandp::where('date',$this->date)
-                  ->where('prof_id',$this->prof1)
-                  ->where('mat_id',$this->mat)
-                  ->where('classe_id',$this->classe)
-                  ->count()) {
-            $this->addError('date', $msg);
-       } else {
-        
+
         Attandp::create([
             'prof_id'   => $this->prof1,
             'nbh'  => $this->nbh,
             'mat_id' => $this->mat,
             'classe_id' => $this->classe,
             'date' => $this->date,
-          ]);
-
-          
-    $this->dispatch('refresh');
-    $this->reset();
-    $this->visible = false;
+            'note' => $this->note,
+        ]);
 
 
-       }
-       
+        $this->dispatch('refresh');
+        $this->reset();
+        $this->visible = false;
     }
 
 
@@ -108,7 +95,7 @@ class AttndsProfsAdd extends Component
             $wire.visible = false;
         JS;
     }
-    
+
     public function render()
     {
         return view('livewire.attnds-profs-add');

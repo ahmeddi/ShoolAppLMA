@@ -93,7 +93,7 @@
                  
                     </td>
                     <td class="py-1 px-3 text-center font-mono">
-                        {{ $result['moy_classe']  }}
+                        {{    round(($result['moy_classe']), 2)  }}
                     </td>
                     
 

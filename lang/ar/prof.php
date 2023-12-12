@@ -32,7 +32,7 @@ return [
     'prof-info' => 'تعديل البيانات',
     'prof-jorns' => 'الجدول',
     'prof-class' => 'الأقسام',
-    'prof-pres' => 'سجل الحضور',
+    'prof-pres' => 'سجل الغياب',
     'prof-compt' => 'الحسابات المالية',
 
 

@@ -22,10 +22,15 @@
                           @error('prof1') <span class="danger">{{ $message }}</span> @enderror  
 
                         </div>
-                        <select    wire:model="prof1"   class="inputs w-full @error('prof1') reds @enderror">
+                        <select    wire:model.defer="prof1"   class="inputs w-full @error('prof1') reds @enderror">
                           <option value="">-----</option>
                               @foreach ($Profs as $Prof)
-                                  <option value="{{ $Prof->id }}"> {{ $Prof->nom }} </option>
+                                  <option value="{{ $Prof->id }}">
+                                    @if (app()->getLocale() == 'ar')
+                                        {{ $Prof->nom }}
+                                    @else
+                                        {{ $Prof->nomfr }}
+                                    @endif
                                @endforeach 
                         </select>
                     </div>
@@ -72,6 +77,15 @@
                         <input wire:model.defer='nbh' class="inputs w-full @error('nbh') reds @enderror" type="text"   required  />       
        
                     </div>
+
+                    <div class="flex flex-col col-span-2 space-y-1 w-full">
+                      <div class="flex justify-between">
+                        <label for="eid"  class="labels"> {{ __('att.det') }}  :</label>
+                        @error('note') <span class="danger">{{ $message }}</span> @enderror  
+                      </div>
+                      <textarea wire:model='note' class="textearea h-36 w-full @error('note') reds @enderror" type="text" required  ></textarea>
+                    </div>
+
                 </div>
 
             </div>  

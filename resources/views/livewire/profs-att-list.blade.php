@@ -98,6 +98,34 @@
                 @empty
                 @endforelse
 
+                <tr class="h-5 ">
+                    <td class="px-6 py-2">
+                        <div class="w-full  font-bold text-base text-gray-900 dark:text-gray-200">
+                                 {{app()->getLocale() == 'ar' ? 'المجموع' : 'Total'   }} 
+                        </div>
+                    </td>
+                    <td class="px-6 py-2">
+                        <div class="w-full text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                 
+                        </div>
+                    </td>
+                    <td class="px-6 py-2">
+                        <div class="w-full font-bold text-base text-gray-900 dark:text-gray-200">
+                                 {{ $tots  }} 
+                        </div>
+                    </td>
+                    <td class="px-6 py-2">
+                        <div class="w-full text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                 
+                        </div>
+                    </td>
+                    <td class="flex space-x-2 py-2 h-full items-center">
+                       
+                                                    
+                    </td>
+                </tr>
+                
+
   
         </tbody>
     </table>

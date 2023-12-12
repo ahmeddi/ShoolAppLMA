@@ -64,7 +64,7 @@
                                     <div class="flex flex-col">
                                         <div class="text-sm font-semibold text-gray-900 dark:text-gray-200">
                                             <span class=""> </span>
-                                            <a wire:navigate.hover href="{{url(app()->getLocale().'/Prof'.'/'.$attd->prof->id) }}"  class=" hover:underline underline-offset-2">
+                                            <a wire:navigate.hover href="{{url(app()->getLocale().'/Prof'.'/'.$attd->prof->id).'/Att' }}"  class=" hover:underline underline-offset-2">
                                                  @if (app()->getLocale() == 'ar') {{ $attd->prof->nom }}  @else {{ $attd->prof->nomfr }}  @endif
                                             </a>
                                         </div>
@@ -109,9 +109,9 @@
                             </div>                                
                         </td>
                     </tr>
-                    </tr>
                 @empty
                 @endforelse
+
 
   
         </tbody>
