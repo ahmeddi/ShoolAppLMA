@@ -2,7 +2,7 @@
 
 return [
 
-    'nb' => 'Numéro d\'appel',
+    'nb' => 'Matricule',
     'nom' => 'Nom',
 
     'prix' => 'Prix de la classe',
@@ -12,7 +12,7 @@ return [
     'list' => 'Liste des étudiants',
     'jorns' => 'Calendrier',
     'mats' => 'Matières',
-    'result' => 'Résultats',
+    'result' => 'Relèves',
 
     'class-nom' => 'Nom du classe',
     'class-res' => 'Méthode de calcul des résultats',

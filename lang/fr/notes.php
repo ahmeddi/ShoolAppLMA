@@ -5,7 +5,7 @@ return [
 
     'notes' => 'Rapports',
     'add' => 'Ajouter un Rapport',
-    'nb' => 'Numéro d\'appel',
+    'nb' => 'Matricule',
     'etud' => 'Étudiant',
     'classe' => 'Classe',
     'note' => 'Rapport',
@@ -16,13 +16,13 @@ return [
     'emp' => 'Professeur',
     'son' => 'Auteur',
     'pos' => 'Poste',
-    
+
     'clo' => 'Fermer',
-    
+
     'lang' => 'Langue',
     'fr' => 'Français',
     'ar' => 'العربية',
-    
+
 
 
 ];

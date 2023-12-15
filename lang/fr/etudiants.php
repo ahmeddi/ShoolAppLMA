@@ -9,7 +9,7 @@ return [
 
     //etud table
     'etud' => 'Étudiant',
-    'nb' => 'Numéro d\'appel',
+    'nb' => 'Matricule',
     'ns' => 'Numéro scolaire',
     'prent' => 'Parent',
 
@@ -25,7 +25,7 @@ return [
     'add-prename' => 'Nom du parent',
     'add-telephone' => 'Téléphone du parent',
     'add-classe' => 'Classe',
-    'add-nb' => 'Numéro d\'appel',
+    'add-nb' => 'Matricule',
     'add-photo' => 'Photo',
     'add-changer' => 'Modifier',
     'add-remove' => 'Supprimer',

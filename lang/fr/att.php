@@ -9,7 +9,7 @@ return [
     'hours' => 'Nb d\'heures',
 
     'etuds' => 'Absence des étudiants',
-    'nb' => '№ d\'appel',
+    'nb' => 'Matricule',
     'etud' => 'Étudiant',
     'class' => 'Classe',
     'hrs' => 'Heures d\'absence',

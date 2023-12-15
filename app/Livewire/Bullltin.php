@@ -79,33 +79,32 @@ class Bullltin extends Component
                         );
                     }
 
-                    if ($dev->devoir == 1) {
-                        $exan = $this->getExamResult($nom['id'], $dev->id);
-                        $this->finalnote = $exan;
-                        continue;
-                    }
-
                     $exam = $this->getDevResult($nom['id'], $dev->id);
 
-                    if ($exam && $exam->note) {
+                    if ($exam && ($exam->note != null) && $dev->devoir != 1) {
 
-
-                        $arrn[] = $exam->note;
-                        $arrs += (float) $exam->note;
-                        $devs++;
+                        if ($exam->note == -1) {
+                            $arrn[] = 'ABJ';
+                        } else {
+                            $arrn[] = $exam->note;
+                            $arrs += (float) $exam->note;
+                            $devs++;
+                        }
                     }
                 }
 
                 $foix = $this->getProportionFoix($nom['id']);
 
-                $devm = $devs ? $arrs / $devs : '';
-                $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs) + floatval($exan)) / ($devs + 1)) * $foix, 2) : '') : floatval($exan);
+                $devm =  $devs ? $arrs / $devs : 0;
+
+                $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs)) / ($devs)) * $foix, 2) : '') : floatval($exan);
                 $this->calculateTotal($tot, $foix);
-                $moys = !$this->classmoy ? ($devs ? round((floatval($arrs) + floatval($exan)) / ($devs + 1), 2) : '') : floatval($exan);
+                $moys = !$this->classmoy ? ($devs ? round((floatval($arrs)) / ($devs), 2) : '') : floatval($exan);
 
                 $moy_classe = Classement::where('semestre_id', $this->sem->id)
                     ->where('classe_id', $this->classe)
                     ->where('mat_id', $nom['id'])
+                    ->where('note', '>=', 0)
                     ->sum('note');
 
 
@@ -169,9 +168,12 @@ class Bullltin extends Component
         $this->tot += floatval($tot);
         $this->totmat += $foix;
 
+        //dd($this->totmat, $this->tot);
+
         $tots = Classement::where('semestre_id', $this->sem->id)
             ->where('classe_id', $this->classe)
             ->where('etudiant_id', $this->etud->id)
+            ->whereNot('note', '=', -1)
             ->sum('note');
 
 

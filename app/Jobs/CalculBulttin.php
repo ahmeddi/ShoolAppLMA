@@ -19,16 +19,26 @@ class CalculBulttin implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    
+
     protected $classeId;
     protected $semId;
-    protected $tot = 0, $totmat =0, $moy, $classmoy, $sem, $classe;
+    protected $tot = 0, $totmat = 0, $moy, $classmoy, $sem, $classe;
+    public $etud;
+    public $etuds = 0;
+    public $classMats = 0;
 
 
-    public function __construct(int $classeId, int $semId)
+    public function __construct(int $classeId, int $semId,)
     {
         $this->classeId = $classeId;
         $this->semId = $semId;
+
+        $this->etud = Etudiant::with('classe')->find($this->etud);
+        $this->sem = Semestre::find($this->sem);
+        $this->classe = $this->etud->classe->id;
+
+        $this->etuds =  Classe::find($this->etud->classe->id)->etuds->count();
+        $this->classMats = Classe::find($this->etud->classe->id)->mats->count();
     }
 
 
@@ -49,15 +59,15 @@ class CalculBulttin implements ShouldQueue
         $this->calculateTotals();
     }
 
- 
+
     private function calculateStudentResults(Etudiant $etudiant)
     {
         $mats = Classe::find($this->classeId)->mats;
-    
+
 
         if ($this->sem->examens->isNotEmpty()) {
 
-        $tots = 0;
+            $tots = 0;
             foreach ($mats as $mat) {
 
                 $nom = $mat->only('nom', 'id');
@@ -75,27 +85,29 @@ class CalculBulttin implements ShouldQueue
                     $exam = $this->getDevResult($etudiant->id, $nom['id'], $dev->id);
 
                     if ($exam && $exam->note) {
-                        $arrn[] = $exam->note;
-                        $arrs += (double) $exam->note;
-                        $devs++;
+
+                        if ($exam->note < 0) {
+                            $arrn[] = 'ABJ';
+                        } else {
+                            $arrn[] = $exam->note;
+                            $arrs += (float) $exam->note;
+                            $devs++;
+                        }
                     }
                 }
 
                 $foix = $this->getProportionFoix($nom['id']);
 
                 $devm = $devs ? $arrs / $devs : 0;
-                
-                //total point
-                $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs) + floatval($exan)) / ($devs + 1)) * $foix, 2) : '') : floatval($exan);
 
-                $tots += intval($tot) ;
-                
+                //total point
+                $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs)) / ($devs)) * $foix, 2) : '') : floatval($exan);
+
+                $tots += intval($tot);
             };
 
-            $this->addNote($tots,$etudiant->id);
-
+            $this->addNote($tots, $etudiant->id);
         }
-
     }
 
 
@@ -128,7 +140,7 @@ class CalculBulttin implements ShouldQueue
 
 
 
-    private function addNote($tots,$etudiantId)
+    private function addNote($tots, $etudiantId)
     {
         $classement = Classement::firstOrCreate([
             'etudiant_id' => $etudiantId,
@@ -143,16 +155,14 @@ class CalculBulttin implements ShouldQueue
     private function calculateTotals()
     {
         $competitors = Classement::where('semestre_id', $this->sem->id)
-        ->where('classe_id', $this->classe->id)
-        ->orderBy('note', 'desc')
-        ->get();
+            ->where('classe_id', $this->classe->id)
+            ->orderBy('note', 'desc')
+            ->get();
 
 
-        foreach ($competitors as $key => $competitor) 
-        {
+        foreach ($competitors as $key => $competitor) {
             $competitor->moy = $key + 1;
             $competitor->save();
         }
     }
-
 }

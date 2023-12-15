@@ -3,9 +3,11 @@
         <div class=" bg-white shadow-md p-3 dark:bg-gray-900 rounded-md">
                 <div  class="flex space-x-4 justify-between  text-center text-gray-500  ">
                     <div class="flex  items-center">
-                        <div> <button @class(['days w-24 text-sm','daysselceted' => $t_month,])  class="days w-40 text-sm " wire:click="thisMonth" >{{ __('calandar.month') }}</button></div> 
-                        <div> <button  @class(['days  w-28 text-sm','daysselceted' => $p_month,]) class="days" wire:click="pastMonth" >{{ __('calandar.pastM') }}</button> </div> 
-                        <div> <button @class(['days   text-sm','daysselceted' => $all,])  class="days" wire:click="alls" >{{ __('calandar.tous') }}</button> </div>
+                        <select wire:change='selectDate' wire:model='dateSelected'  class="inputs w-40 mx-3 "   required >
+                            <option  class="text-sm"  value="1">{{ __('calandar.month') }}</option>
+                            <option class="text-sm" value="2">{{ __('calandar.pastM') }}</option>
+                            <option class="text-sm" value="3">{{ __('calandar.tous') }}</option>
+                        </select>
                         <select wire:change='fetchData' wire:model='sortBy'  class="inputs w-32 mx-3 "   required >
                             <option  class="text-sm" value="1">{{ __('compt.Paiement') }}</option>
                             <option class="text-sm" value="2">{{ __('compt.Solde+') }}</option>

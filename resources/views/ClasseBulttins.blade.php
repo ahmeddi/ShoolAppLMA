@@ -17,7 +17,7 @@
         <div  class="m-2 print:m-0" >
             <div class="p-1 flex items-center flex-col w-full space-y-4 print:space-y-0  ">
                 @forelse ($lists as $list)
-                    <div class=" relative flex justify-center items-center  h-[297mm] w-[210mm] p-5 bg-white dark:bg-gray-900 overflow-hidden print:shadow-none">
+                    <div class=" relative flex flex-col justify-center items-center  h-[297mm] w-[210mm] p-5 bg-white dark:bg-gray-900 overflow-hidden print:shadow-none">
                             {{-- <div class="  absolute print:flex flex top-3  justify-center w-full h-full">
                                 <img  src="{{ asset('storage/head/02.jpg') }}"  class=" object-cover h-32  w-fit p-2 " >    
                             </div> --}}
@@ -26,16 +26,25 @@
                                 @livewire('bullltin',['etud' => $list->id,'sem' => $sem,], key($list->id))
                             </div> 
     
-                            <div class=" absolute z-10 w-full bottom-28   px-20 text-lg text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
+                            <div class=" w-full h-40   px-20 text-base text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
+                                <div class=" w-full flex justify-between font-semibold text-sm text-center ">
+                                    <div class=" flex flex-col space-y-1">
+                                        <div>توقيع المدير</div>
+                                        <div> Signature du Directeur</div>
+                                    </div>
+
+                                    <div class=" flex flex-col space-y-1">
+                                        <div>توقيع الوكيل</div>
+                                        <div> Signature du Parent</div>
+                                    </div>
+                                </div>
                                 <div class="w-full p-4 flex ltr:flex-row-reverse  justify-center items-center"> 
-                                <div>بتاريخ  </div>
+                                    <div>بتاريخ  
+
+                                    </div>
                                     <div class=" mx-4 font-bold">{{ \Carbon\Carbon::now()->format('d-m-Y') }}</div>
                                     <div> Le </div>
                                 </div> 
-                                <div class=" w-full flex justify-between ">
-                                    <div> La Signature du Directeur                                    </div>
-                                    <div> La Signature de Parent</div>
-                                </div>
                             </div>
                     </div>
                 @empty

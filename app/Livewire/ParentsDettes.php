@@ -10,125 +10,117 @@ use Livewire\Component;
 
 class ParentsDettes extends Component
 {
-    public $Dettes= [];
+  public $Dettes = [];
 
-    public $date;
-    public $day1, $day2;
+  public $date;
+  public $day1, $day2;
 
-    public $t_month;
-    public $p_month;
-    public $all;
+  public $t_month;
+  public $p_month;
+  public $all;
 
-    public $classes = [];
+  public $classes = [];
 
-    public $selectedClasseId;
+  public $selectedClasseId;
 
-    public $orderByOption;
+  public $orderByOption;
 
-    public $sortBy = '1';
+  public $sortBy = '1';
 
-    public $parents = [];
+  public $parents = [];
 
-
-
-
-
-
-   public function mount()
-   {
-      
-
-
-      $this->selectedClasseId = '*';
-
-      $this->thisMonth();
-
-      
-
-      
- 
-    }
+  public $dateSelected;
 
 
 
 
 
-      public function thisMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->copy()->endOfMonth()->format('Y-m-d') ;
+
+  public function mount()
+  {
 
 
 
-        $this->date =[$from, $to];
-        
-        $this->reset(['day1','day2',]);
+    $this->selectedClasseId = '*';
 
-        $this->t_month = true;
-        $this->p_month = false;
-        $this->all = false;
+    $this->dateSelected = '1';
 
-        $this->fetchData();
-
-
-      }
+    $this->thisMonth();
+  }
 
 
 
-      public function randday()
-      {
-        $from = Carbon::parse($this->day1)->format('Y-m-d');
-        $to = Carbon::parse($this->day2)->format('Y-m-d');
 
 
-        $this->date =[$from, $to];
-
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-
-        $this->fetchData();
+  public function thisMonth()
+  {
+    $now = Carbon::now();
+    $from = $now->startOfMonth()->format('Y-m-d');
+    $to = $now->copy()->endOfMonth()->format('Y-m-d');
 
 
-      }
 
-      public function pastMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->copy()->subMonthNoOverflow()->startOfMonth()->format('Y-m-d');
-        $to = $now->copy()->subMonthNoOverflow()->endOfMonth()->format('Y-m-d');
+    $this->date = [$from, $to];
 
+    $this->reset(['day1', 'day2',]);
 
-        $this->date = [$from, $to];
+    $this->t_month = true;
+    $this->p_month = false;
+    $this->all = false;
 
-        $this->reset(['day1', 'day2']);
-
-        $this->t_month = false;
-        $this->p_month = true;
-        $this->all = false;
-
-        $this->fetchData();
+    $this->fetchData();
+  }
 
 
-      }
 
-      public function alls()
-      {
-          $now = Carbon::now();
-          $from = Carbon::parse('1-1-2000')->format('Y-m-d') ;
-          $to = $now->format('Y-m-d') ;
-          $this->date =[$from, $to];
-  
-          $this->t_month = false;
-          $this->p_month = false;
-          $this->all = true;
+  public function randday()
+  {
+    $from = Carbon::parse($this->day1)->format('Y-m-d');
+    $to = Carbon::parse($this->day2)->format('Y-m-d');
 
-          $this->fetchData();
 
-      }
+    $this->date = [$from, $to];
 
-      /*
+    $this->t_month = false;
+    $this->p_month = false;
+    $this->all = false;
+
+    $this->fetchData();
+  }
+
+  public function pastMonth()
+  {
+    $now = Carbon::now();
+    $from = $now->copy()->subMonthNoOverflow()->startOfMonth()->format('Y-m-d');
+    $to = $now->copy()->subMonthNoOverflow()->endOfMonth()->format('Y-m-d');
+
+
+    $this->date = [$from, $to];
+
+    $this->reset(['day1', 'day2']);
+
+    $this->t_month = false;
+    $this->p_month = true;
+    $this->all = false;
+
+    $this->fetchData();
+  }
+
+  public function alls()
+  {
+    $now = Carbon::now();
+    $from = Carbon::parse('1-1-2000')->format('Y-m-d');
+    $to = $now->format('Y-m-d');
+    $this->date = [$from, $to];
+
+    $this->t_month = false;
+    $this->p_month = false;
+    $this->all = true;
+
+    $this->fetchData();
+  }
+
+  /*
       public function solde()
       {
           $totalFrais = $this->etuds->flatMap(function ($etudiant) {
@@ -142,68 +134,69 @@ class ParentsDettes extends Component
       }
       */
 
-
-
-      public function fetchData()
-      {
-
-
-        
-        $query = Parentt::with(['etuds.frais', 'remises', 'paiements']);
-
-
-
-        if ($this->selectedClasseId != '*') {
-          $query->whereHas('etuds.classe', function ($subQuery) {
-              $subQuery->where('id', $this->selectedClasseId);
-          });
-        }
-
-        $parents = $query->get();
-
-        $parents = $parents->map(function ($parent) {
-            $paiementsSum = $parent->paiements->sum('montant');
-            
-            $totalFrais = $parent->etuds->flatMap(function ($etudiant) {
-                return $etudiant->frais;
-            })->sum('montant');
-
-            $totalRemises = $parent->remises->sum('montant');
-            $solde = -$totalFrais + $totalRemises + $paiementsSum;
-
-            $paiments = PaiementParent::where('parent_id', $parent->id)
-              ->whereBetween('date', [$this->date[0], $this->date[1]])
-              ->sum('montant');
-
-
-         //   dd($paiments);
-           // $paiments = $parent->paiements->whereDate('date', $this->date)->sum('montant');
+  function selectDate()
+  {
+    if ($this->dateSelected == '1') {
+      $this->thisMonth();
+    } elseif ($this->dateSelected == '2') {
+      $this->pastMonth();
+    } elseif ($this->dateSelected == '3') {
+      $this->alls();
+    } elseif ($this->dateSelected == '4') {
+      $this->randday();
+    }
+  }
 
 
 
-            // Add solde to the Parentt model
-            $parent->setAttribute('paiements_sum', $paiments)->setAttribute('solde', $solde);
+  public function fetchData()
+  {
 
-            return $parent;
 
-            
-        });
+    $query = Parentt::with(['etuds.frais', 'remises', 'paiements']);
 
-        if ($this->sortBy === '1') {
-            // Sort by "Paiements"
-            $parents = $parents->sortByDesc('paiements_sum');
-        } elseif ($this->sortBy === '2') {
-            // Sort by "Solde +"
-            $parents = $parents->sortByDesc('solde');
-        } elseif ($this->sortBy === '3') {
-            // Sort by "Solde -"
-            $parents = $parents->sortBy('solde');
-        }
+
+
+    if ($this->selectedClasseId != '*') {
+      $query->whereHas('etuds.classe', function ($subQuery) {
+        $subQuery->where('id', $this->selectedClasseId);
+      });
+    }
+
+    $parents = $query->get();
+
+    $parents = $parents->map(function ($parent) {
+      $paiementsSum = $parent->paiements->sum('montant');
+
+      $totalFrais = $parent->etuds->flatMap(function ($etudiant) {
+        return $etudiant->frais;
+      })->sum('montant');
+
+      $totalRemises = $parent->remises->sum('montant');
+      $solde = -$totalFrais + $totalRemises + $paiementsSum;
+
+      $paiments = PaiementParent::where('parent_id', $parent->id)
+        ->whereBetween('date', [$this->date[0], $this->date[1]])
+        ->sum('montant');
+
+      $parent->setAttribute('paiements_sum', $paiments)->setAttribute('solde', $solde);
+
+      return $parent;
+    });
+
+    if ($this->sortBy === '1') {
+      // Sort by "Paiements"
+      $parents = $parents->sortByDesc('paiements_sum');
+    } elseif ($this->sortBy === '2') {
+      // Sort by "Solde +"
+      $parents = $parents->sortByDesc('solde');
+    } elseif ($this->sortBy === '3') {
+      // Sort by "Solde -"
+      $parents = $parents->sortBy('solde');
+    }
 
     $this->parents = $parents;
-
-   
-}
+  }
 
 
 
@@ -212,11 +205,11 @@ class ParentsDettes extends Component
 
 
 
-    public function render()
-    {
+  public function render()
+  {
 
-      $this->classes = Classe::select('id', 'nom')->get();
-/*
+    $this->classes = Classe::select('id', 'nom')->get();
+    /*
         $query = [];
         Paiement::whereBetween('date', $this->date);
 
@@ -235,6 +228,6 @@ class ParentsDettes extends Component
 
 
 
-        return view('livewire.parents-dettes');
-    }
+    return view('livewire.parents-dettes');
+  }
 }

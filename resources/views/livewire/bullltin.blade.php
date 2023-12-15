@@ -33,7 +33,7 @@
 
                 
         </table>
-        <div class=" w-32  h-fit overflow-hidden p-1 mx-1 rounded-md ">
+        <div class=" w-28  h-fit overflow-hidden p-1 mx-1 rounded-md ">
             @if ($etud->image)
                 <img src="{{ asset('storage/'.$etud->image) }}" class="h-full w-auto object-cover "    />
             @else 
@@ -45,8 +45,8 @@
         </div>
     </div>
     
-    <div class="w-full m-4 flex font-semibold text-2xl  justify-center dark:text-gray-50 print:dark:text-gray-900">
-         كشف الدرجات - Bulletin de Notes
+    <div class="w-full m-3 flex font-semibold text-xl  justify-center dark:text-gray-50 print:dark:text-gray-900">
+         كشف الدرجات - Relèves de Notes
     </div>
 
     <table class="w-full  text-xs text-right text-gray-900  dark:text-gray-400">
@@ -55,15 +55,15 @@
                     <div>المادة</div>
                     <div>Matiere</div>
                 </th>
-                <th scope="col" class="py-1 px-3 text-center border border-gray-900"> 
+                <th scope="col" class="py-1 px-3 w-48 text-center border border-gray-900"> 
                     <div>  الإختبارات</div>
                     <div>Evaluation </div>
                 </th>
-                <th scope="col" class="py-1 px-3 text-center">
+                <th scope="col" class="py-1 px-3 w-20 text-center">
                     <div> المعدل </div>
                     <div>Moyenne </div>
                 </th>
-                <th scope="col" class="py-1 px-3 text-center">   
+                <th scope="col" class="py-1 px-3 w-28 text-center">   
                     <div>     معدل القسم </div>
                     <div>Moyenne Classe </div>
                 </th>
@@ -78,7 +78,7 @@
             @forelse ($results as $result)
 
                 <tr class="border border-gray-900 divide-y divide-x divide-gray-900 w-full even:bg-gray-100 dark:even:bg-gray-800 dark:odd:bg-gray-900 bg-white  dark:bg-gray-800 ">
-                    <th scope="row" class="py-1 px-3 font-medium print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white  border border-gray-900">
+                    <th scope="row" class="py-1 px-3 font-bold print:dark:text-gray-700 print:text-gray-700 text-gray-900 whitespace-nowrap dark:text-white  border border-gray-900">
                         {{   $result['nom']  }}
                     </th>
                     <td class="py-1 px-3  font-mono">
@@ -86,9 +86,7 @@
                     </td>
                     <td class="py-1 px-3 text-center font-mono">
 
-                        @if ($result['devm'])
                              {{  round($result['devm'], 2) }}
-                        @endif
                         
                  
                     </td>
@@ -115,7 +113,7 @@
         <div class="px-3">
              المعدل العام
         </div>
-        <div class=" font-bold   text-center justify-center items-center ">
+        <div class="  font-extrabold  text-center justify-center items-center ">
              {{  round(($tot), 1), }}
         </div>
         <div class="px-3">
@@ -138,7 +136,7 @@
             Moyenne Classe
         </div>
     </div>
-    <div class=" mt-2  w-full justify-center items-center p-1 flex flex-col">
+    <div class=" mt-2  text-gray-900 dark:text-gray-50 w-full justify-center items-center p-1 flex flex-col">
         
         <div class="rttl font-semibold">التوصيات -  Recommandations</div>
         <div> {{ $recomendation }}</div>

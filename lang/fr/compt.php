@@ -20,7 +20,7 @@ return [
     'etud' => 'Étudiant',
     'motif' => 'Rubrique',
 
-    'add-frais' => 'Ajouter une frais',
+    'add-frais' => 'Ajouter des frais',
 
     'frais' => 'Frais d\'inscription',
     'monthly' => 'Frais mensuel',

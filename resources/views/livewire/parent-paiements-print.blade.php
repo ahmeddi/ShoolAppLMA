@@ -33,7 +33,7 @@
                     <div class="text-gray-700 text-sm  font-semibold mb-2 w-full flex justify-between">
                         <div>
                             <span>{{ __('print.recu') }}</span> 
-                            <span class=" font-bold mx-2">{{ $sexe == 1 ? 'Mr' : 'Mlle' }} {{  $nomfr  }}</span>
+                            <span class=" font-bold mx-2">{{ $sexe == 1 ? 'M.' : 'Mlle' }} {{  $nomfr  }}</span>
                         </div>
                         <div dir="rtl">
                             <span>{{ __('print.recuar') }}:</span> 
@@ -45,6 +45,8 @@
                             <span>{{ __('print.montant') }}:</span> 
                             <span class=" font-bold mx-2"> {{ $montant }} MRU, <span class=" text-sm font-semibold">{{ $chiffre }} {{ __('print.oug') }}</span> </span>
                         </div>
+                    </div>
+                    <div class="text-gray-700 text-sm  font-semibold mb-2 w-full flex justify-end">
                         <div dir="rtl">
                             <span >{{ __('print.montantar') }}:</span> 
                             <span class=" font-bold mx-2"> {{ $montant }}, <span class=" text-sm font-semibold">{{ $chiffrear }} {{ __('print.ougar') }}</span> </span>
@@ -54,7 +56,7 @@
                 <div class=" h-2 opacity-0">
 
                 </div>
-                <div class="mx-2">
+                <div class="mt-4">
                     <div class="text-gray-700 text-sm  font-semibold mb-2 w-full flex justify-between ">
                         <div>
                             <span>{{ __('print.caissier') }}:</span> 

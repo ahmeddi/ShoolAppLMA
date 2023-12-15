@@ -3,7 +3,7 @@
 return [
 
     // Etuds
-    'recu' => 'Reçu de :',
+    'recu' => 'Reçu de:',
     'recp' => 'Reçu de paiement',
     'recun' => 'Reçu N° #',
     'date' => 'Date',
@@ -12,16 +12,16 @@ return [
     'sig' => 'Signature',
     'oug' => 'Ouguiya',
     'caissier' => 'Caissier',
-    
+
+
     'recuar' => 'وصل من',
     'recpar' => 'وصل دفع',
-    'recun' => 'وصل رقم ',
+    'recunar' => 'وصل رقم ',
     'datear' => 'التاريخ',
     'montantar' => 'المبلغ',
     'benefar' => 'المستفيد',
     'sigar' => 'التوقيع',
     'ougar' => 'أوقية',
-    
 
 
 
