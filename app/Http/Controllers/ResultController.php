@@ -101,6 +101,10 @@ class ResultController extends Controller
 
     public function notes($locale, $etud)
     {
+        if (auth()->user()->prof) {
+            abort(403);
+        }
+
 
         $etudiant = Etudiant::find($etud);
 

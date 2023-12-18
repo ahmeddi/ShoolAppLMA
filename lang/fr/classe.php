@@ -5,14 +5,14 @@ return [
     'nb' => 'Matricule',
     'nom' => 'Nom',
 
-    'prix' => 'Prix de la classe',
+    'prix' => 'Frais mensuels',
     'tb' => 'Nombre de tables',
     'etuds' => 'Nombre d\'étudiants',
     'edit' => 'Modifier les données',
     'list' => 'Liste des étudiants',
     'jorns' => 'Calendrier',
     'mats' => 'Matières',
-    'result' => 'Relèves',
+    'result' => 'Bulletins',
 
     'class-nom' => 'Nom du classe',
     'class-res' => 'Méthode de calcul des résultats',

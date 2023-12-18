@@ -38,5 +38,11 @@ class Result extends Model
     {
         return $this->belongsTo(Examen::class);
     }
-    
+
+    public function scopeSem($query, $sem)
+    {
+        return $query->whereHas('examen', function ($q) use ($sem) {
+            $q->where('semestre_id', $sem);
+        });
+    }
 }

@@ -26,7 +26,13 @@
                         <select   wire:model="etud"   class="inputs w-full @error('etud') reds @enderror">
                           <option value="">-----</option>
                           @foreach ($etuds as $key => $etud)
-                          <option value="{{  $etud->id }}"> {{ $etud->nom }} </option>
+                          <option value="{{  $etud->id }}">
+                            @if (app()->getLocale() == 'ar')
+                                {{  $etud->nom }}
+                            @else
+                                {{  $etud->nomfr }}
+                            @endif
+                          </option>
                           @endforeach 
                         </select>     
                       </div>

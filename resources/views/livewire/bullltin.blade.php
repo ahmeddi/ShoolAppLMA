@@ -1,9 +1,12 @@
 <div dir="rtl" class=" flex flex-col space-y-2 w-full h-full">
     <img wire:model='header' src="{{ asset('storage'.'/'.$header) }}" class="h-28 w-auto object-cover mb-3 "    />
 
-    <div class="w-full flex mb-1 rounded-md p-2 border border-gray-700">
+    <div class="w-full mb-2 flex  font-extrabold text-lg text-center  justify-center dark:text-gray-50 print:dark:text-gray-900">
+        كشف الدرجات - Bulletin de Notes
+    </div>
+    <div class="w-full flex mb-1 rounded-md p-2 border border-gray-600">
 
-        <table class="w-full mb-1 text-sm text-right text-gray-600 rounded-t-md overflow-hidden dark:text-gray-200">  
+        <table class="w-full mb-1 text-sm text-right text-gray-800 rounded-t-md overflow-hidden dark:text-gray-200">  
                 <tr class="  ">
                     <td class="w-1/6">الإسم:</td>
                     <td class="w-fit text-center font-bold">  {{ $etud->nom }} - {{ $etud->nomfr }} </td>
@@ -29,9 +32,7 @@
                     <td class="w-1/6">  </td>
                     <td class="w-fit text-center font-bold">  {{  $sem->nom }} - {{ $sem->nomfr }}  </td>
                     <td class="w-1/6 text-left">  </td>
-                </tr>
-
-                
+                </tr>     
         </table>
         <div class=" w-28  h-fit overflow-hidden p-1 mx-1 rounded-md ">
             @if ($etud->image)
@@ -45,17 +46,15 @@
         </div>
     </div>
     
-    <div class="w-full m-3 flex font-semibold text-xl  justify-center dark:text-gray-50 print:dark:text-gray-900">
-         كشف الدرجات - Relèves de Notes
-    </div>
+    
 
     <table class="w-full  text-xs text-right text-gray-900  dark:text-gray-400">
             <tr class="text-xs  divide-y divide-x divide-gray-900 dark:bg-gray-800 bg-gray-100 border border-gray-900">
                 <th scope="col" class="py-1 px-3 border border-gray-900">   
                     <div>المادة</div>
-                    <div>Matiere</div>
+                    <div>Matière</div>
                 </th>
-                <th scope="col" class="py-1 px-3 w-48 text-center border border-gray-900"> 
+                <th scope="col" class="py-1 px-3 w-40 text-center border border-gray-900"> 
                     <div>  الإختبارات</div>
                     <div>Evaluation </div>
                 </th>
@@ -63,9 +62,9 @@
                     <div> المعدل </div>
                     <div>Moyenne </div>
                 </th>
-                <th scope="col" class="py-1 px-3 w-28 text-center">   
+                <th scope="col" class="py-1 px-3 w-24 text-center">   
                     <div>     معدل القسم </div>
-                    <div>Moyenne Classe </div>
+                    <div>Moy Classe </div>
                 </th>
 
                 <th scope="col" class="py-1 px-3 text-center">   
@@ -117,7 +116,7 @@
              {{  round(($tot), 1), }}
         </div>
         <div class="px-3">
-            Moyenne generale
+            Moyenne générale
         </div>
     </div>
 
@@ -138,8 +137,10 @@
     </div>
     <div class=" mt-2  text-gray-900 dark:text-gray-50 w-full justify-center items-center p-1 flex flex-col">
         
-        <div class="rttl font-semibold">التوصيات -  Recommandations</div>
-        <div> {{ $recomendation }}</div>
+        <div class="text-center font-bold ">التوصيات -  Recommandations</div>
+        <div class=" text-center font-semibold text-sm"> 
+            {{ $recomendation }}
+        </div>
        
         
     </div>

@@ -6,6 +6,7 @@
                     <div class=" w-full p-1">
                         <div class="w-full flex flex-col mx-3 space-y-1">
 
+                            @cannot('parent')
                             @can('dir')
                                     <div class=" w-full flex justify-end">
                                         <button  wire:click="$dispatch('edit',{ id: {{ $ids }} })" class="flex mb-2 bg-teal-500 text-teal-50 p-2 rounded  ">
@@ -48,7 +49,7 @@
                               
 
                         
-                                @cannot('parent')
+                               
                                     <div class="bg-white dark:bg-gray-900 rounded-md shadow-md  sm:w-full  sm:h-12  lg:h-24 lg:w-48">
                                         <a  wire:navigate.hover href="{{url(app()->getLocale().'/Parent'.'/'.$ids.'/Remises') }}" class="h-full w-full">
                                             <div class="  w-full  flex items-center mb-1  ">

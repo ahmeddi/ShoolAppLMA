@@ -13,7 +13,7 @@ return [
     'profs' => 'Professeurs',
     'classes' => 'Classes',
 
-    'result' => 'Résultats',
+    'result' => 'Relevés',
     'emps' => 'Employés',
 
     'atdds' => 'Présence/Absence',
