@@ -29,7 +29,7 @@
                 </div> 
                 <div class="flex flex-col">
                     <label for="eid"  class="labels opacity-0">{{ __('result.mat') }} :</label>
-                    <select wire:change='filterResults' wire:model='score'  class="inputs w-32 "   required >
+                    <select wire:change='filterResults' wire:model='score'  class="inputs w-20 "   required >
                         <option  class="text-sm" value="*">{{ __('compt.Tous') }}</option>
                         <option class="text-sm" value="1">{{ "+10" }}</option>
                         <option class="text-sm" value="2">{{ "-10" }}</option>
