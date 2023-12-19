@@ -1,5 +1,5 @@
-<div class="flex m-1 h-full space-x-2  ">
-    <div class=" relative w-full h-full   ">
+<div class="flex w-full  ">
+    <div class=" relative w-full ">
         <div class="w-full  ">
             <div class="flex w-auto  mb-4  ">
                 <div class="flex w-full  justify-between text-teal-900">
@@ -8,7 +8,7 @@
 
                             @cannot('parent')
                             @can('dir')
-                                    <div class=" w-full flex justify-end">
+                                    <div class=" w-auto mx-4  flex justify-end">
                                         <button  wire:click="$dispatch('edit',{ id: {{ $ids }} })" class="flex mb-2 bg-teal-500 text-teal-50 p-2 rounded  ">
                                             <div class="mx-2">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -85,18 +85,14 @@
                                 </div>
                             @endcan
 
-                           
-
-                            
-
                             <div class="mt-4 p-1">
                                 <table class="w-full overflow-x-auto table-auto divide-y divide-gray-200 dark:divide-gray-600 rounded-t-xl overflow-hidden">
                                     <thead class="bg-gray-100  dark:bg-gray-900 w-full">
                                         <tr class="w-full " >
-                                            <th scope="col" class="ltr:text-left rtl:text-right px-12 py-3  text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            <th scope="col" class="ltr:text-left rtl:text-right px-12 py-3 w-2/3  text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                                 {{ __('etudiants.etud') }}
                                             </th>
-                                            <th scope="col" class="px-6 py-3  text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                                            <th scope="col" class="px-6 py-3 lg:flex hidden  text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                                 {{ __('etudiants.nb') }}
                                             </th>
                                         </tr>
@@ -107,7 +103,7 @@
 
                                         <tr @class(['h-4','w-full','text-center','bg-red-500/20' => $etudiant->list, 'dark:bg-red-900/30' => $etudiant->list])  >
 
-                                                <td class="px-6 py-3 w-1/2 whitespace-nowrap">
+                                                <td class="px-6 py-3 w-2/3 whitespace-nowrap">
                                                     <a wire:navigate.hover href="{{url(app()->getLocale().'/Etudiant'.'/'.$etudiant->id) }}" class=" hover:underline" >
                                                         <div class="flex items-center w-full">
                                                             <div class="flex-shrink-0 h-10 w-10 mx-4 text-gray-300 dark:text-gray-600 rounded-full overflow-hidden">
@@ -135,7 +131,7 @@
                                                         </div>
                                                     </a>
                                                 </td>
-                                                <td class="px-6 py-3 whitespace-nowrap">
+                                                <td class="px-6 lg:flex hidden py-3 w-fit whitespace-nowrap">
                                                     <a wire:navigate.hover href="{{url(app()->getLocale().'/Etudiant'.'/'.$etudiant->id) }}" class=" hover:underline" >
                                                         <div class="text-sm text-gray-900 dark:text-gray-300"> {{ $etudiant->nb }}</div>
                                                         <div  class="text-sm text-gray-900 dark:text-gray-300"> {{  $etudiant->classe->nom  }}</div>

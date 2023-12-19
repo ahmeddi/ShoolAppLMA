@@ -9,9 +9,9 @@
         </h2>
     </x-slot>
 
-    <div class="py-2 ">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-4">
-            <div class="flex flex-col space-y-2  overflow-hidden  p-4 sm:rounded-lg">
+    <div class="py-2 w-full ">
+        <div class="w-fit lg:w-full ">
+            <div class="flex flex-col space-y-2  overflow-hidden sm:rounded-lg">
                 <div> @livewire('parent-profil',[ 'Parent' => $Parent ]) </div>
                 <div> @livewire('etud-par-add',[ 'prId' => $Parent->id ]) </div> 
                 <div> @livewire('parent-edit') </div> 

@@ -45,8 +45,8 @@
     </div> 
     @if ($results->count() > 0)
 
-    <div class="w-full  ">
-            <table class="w-full  overflow-hidden my-6 text-sm rllt text-gray-800 dark:text-gray-100 rounded-lg shadow-md">
+    <div class="w-full  relative ">
+            <table wire:loading.class="opacity-50"  class="w-full   overflow-hidden my-6 text-sm rllt text-gray-800 dark:text-gray-100 rounded-lg shadow-md">
                 <thead>
                     <tr class="bg-gray-100 dark:bg-gray-900 rounded-t-lg">
                         <th scope="col" class="px-6 py-2  ">
