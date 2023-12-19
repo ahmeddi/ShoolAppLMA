@@ -1,8 +1,8 @@
 <div class=" mx-2">
     <div class=" bg-white shadow-md p-3 dark:bg-gray-900 rounded-md">
         <div  class="flex space-x-4 justify-between  text-center text-gray-500  ">
-            <div class="flex  items-center">
-                <div class="flex flex-col mx-1">
+            <div class=" grid gap-2 grid-cols-2 lg:grid-cols-4  items-center">
+                <div class="flex flex-col">
                     <label for="eid"  class="labels rllt">{{ __('result.sem') }} :</label>
                     <select wire:change='filterResults' wire:model='sem'  class="inputs  w-32 "   required >
                         <option  class="text-sm" value="*">{{ __('compt.Tous') }}</option>
@@ -18,7 +18,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="flex flex-col mx-1">
+                <div class="flex flex-col">
                     <label for="eid"  class="labels rllt">{{ __('result.mat') }} :</label>
                     <select wire:change='filterResults' wire:model='mat'  class="inputs w-32 "   required >
                         <option  class="text-sm" value="*">{{ __('compt.Tous') }}</option>
@@ -29,7 +29,7 @@
                 </div> 
                 <div class="flex flex-col">
                     <label for="eid"  class="labels opacity-0">{{ __('result.mat') }} :</label>
-                    <select wire:change='filterResults' wire:model='score'  class="inputs w-20 "   required >
+                    <select wire:change='filterResults' wire:model='score'  class="inputs w-32 "   required >
                         <option  class="text-sm" value="*">{{ __('compt.Tous') }}</option>
                         <option class="text-sm" value="1">{{ "+10" }}</option>
                         <option class="text-sm" value="2">{{ "-10" }}</option>
