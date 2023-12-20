@@ -26,7 +26,14 @@
                                 @livewire('bullltin',['etud' => $list->id,'sem' => $sem,], key($list->id))
                             </div> 
     
-                            <div class=" w-full h-40   px-20 text-base text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
+                            <div class=" w-full h-48  px-20 text-base text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
+                                <div class="w-full p-4 flex ltr:flex-row-reverse  justify-center items-center"> 
+                                    <div>بتاريخ  
+
+                                    </div>
+                                    <div class=" mx-4 font-bold">{{ \Carbon\Carbon::now()->format('d-m-Y') }}</div>
+                                    <div> Le </div>
+                                </div> 
                                 <div class=" w-full flex justify-between font-semibold text-sm text-center ">
                                     <div class=" flex flex-col space-y-1">
                                         <div>توقيع المدير</div>
@@ -38,13 +45,7 @@
                                         <div> Signature du Parent</div>
                                     </div>
                                 </div>
-                                <div class="w-full p-4 flex ltr:flex-row-reverse  justify-center items-center"> 
-                                    <div>بتاريخ  
-
-                                    </div>
-                                    <div class=" mx-4 font-bold">{{ \Carbon\Carbon::now()->format('d-m-Y') }}</div>
-                                    <div> Le </div>
-                                </div> 
+                                
                             </div>
                     </div>
                 @empty

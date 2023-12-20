@@ -19,8 +19,8 @@
                 <div> 
                     @livewire('bullltin',['etud' => $etud,'sem' => $sem,])
                 </div> 
-                <div dir="rtl" class=" hidden print:block absolute z-10 w-full bottom-28   px-20 text-lg text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
-                    <div class="w-full p-4 flex  justify-center items-center"> 
+                <div dir="rtl" class=" hidden print:block absolute z-10 w-full bottom-20   px-20 text-lg text-gray-700 print:dark:text-gray-900   dark:text-gray-100">
+                    <div class="w-full p-3 flex  justify-center items-center"> 
                     <div>بتاريخ :  </div>
                         <div class=" mx-4 font-bold">{{ \Carbon\Carbon::now()->format('d-m-Y') }}</div>
                         <div> :Le </div>

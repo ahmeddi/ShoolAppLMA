@@ -1,5 +1,5 @@
 <div dir="rtl" class=" flex flex-col space-y-2 w-full h-full">
-    <img wire:model='header' src="{{ asset('storage'.'/'.$header) }}" class="h-28 w-auto object-cover mb-3 "    />
+    <img wire:model='header' src="{{ asset('storage'.'/'.$header) }}" class="h-24 w-auto object-cover mb-2 "    />
 
     <div class="w-full mb-2 flex  font-extrabold text-lg text-center  justify-center dark:text-gray-50 print:dark:text-gray-900">
         كشف الدرجات - Bulletin de Notes
