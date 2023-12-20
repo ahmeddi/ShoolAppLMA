@@ -101,9 +101,14 @@ class Bullltin extends Component
 
                 $devm =  $devs ? $arrs / $devs : 0;
 
+                if ($this->abs == 1) {
+                    $devm = -1;
+                }
+
                 $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs)) / ($devs)) * $foix, 2) : '') : floatval($exan);
                 $this->calculateTotal($tot, $foix, $this->abs);
                 $moys = !$this->classmoy ? ($devs ? round((floatval($arrs)) / ($devs), 2) : '') : floatval($exan);
+
 
                 $moy_classe = Classement::where('semestre_id', $this->sem->id)
                     ->where('classe_id', $this->classe)

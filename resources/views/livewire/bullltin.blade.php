@@ -85,7 +85,12 @@
                     </td>
                     <td class="py-1 px-3 text-center font-mono">
 
-                             {{  round($result['devm'], 2) }}
+                        @if ($result['devm'] == -1)
+                            
+                        @else
+                        {{  round($result['devm'], 2) }}
+                        @endif
+                             
                         
                  
                     </td>
