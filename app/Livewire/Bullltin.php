@@ -20,6 +20,7 @@ class Bullltin extends Component
     public $etuds = 0;
     public $classMats = 0;
     public $finalnote = '';
+    public $abs = 0;
 
     public $recomendation;
 
@@ -64,6 +65,7 @@ class Bullltin extends Component
                 $arrs = 0;
                 $exan = 0;
                 $devs = 0;
+                $abs = 0;
 
                 $notes = '';
                 $moy_classe = 0;
@@ -85,10 +87,12 @@ class Bullltin extends Component
 
                         if ($exam->note == -1) {
                             $arrn[] = 'ABJ';
+                            $this->abs = 1;
                         } else {
                             $arrn[] = $exam->note;
                             $arrs += (float) $exam->note;
                             $devs++;
+                            $this->abs = 0;
                         }
                     }
                 }
@@ -98,7 +102,7 @@ class Bullltin extends Component
                 $devm =  $devs ? $arrs / $devs : 0;
 
                 $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs)) / ($devs)) * $foix, 2) : '') : floatval($exan);
-                $this->calculateTotal($tot, $foix);
+                $this->calculateTotal($tot, $foix, $this->abs);
                 $moys = !$this->classmoy ? ($devs ? round((floatval($arrs)) / ($devs), 2) : '') : floatval($exan);
 
                 $moy_classe = Classement::where('semestre_id', $this->sem->id)
@@ -163,10 +167,15 @@ class Bullltin extends Component
         return !$this->classmoy ? ($foix ? floatval($foix->foix) : 1) : floatval($foix->tot);
     }
 
-    private function calculateTotal($tot, $foix)
+    private function calculateTotal($tot, $foix, $abs)
     {
-        $this->tot += floatval($tot);
-        $this->totmat += $foix;
+        // $this->tot += floatval($tot);
+
+        $abs == 1 ? $this->classMats -= 1 :  $this->tot += floatval($tot);
+
+        // $this->totmat += $foix;
+
+        $abs == 1 ? $this->totmat += 0 :  $this->totmat += $foix;
 
         //dd($this->totmat, $this->tot);
 
@@ -187,8 +196,6 @@ class Bullltin extends Component
         // $this->classMats
 
         $this->moy_classe = $moy_classe / $this->classMats;
-
-
 
         $this->moy_classe = $this->moy_classe / $this->etuds;
     }

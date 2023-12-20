@@ -64,8 +64,6 @@ class EtudResult extends Component
     public function render()
     {
 
-        return view(
-            'livewire.etud-result',
-        );
+        return view('livewire.etud-result',);
     }
 }

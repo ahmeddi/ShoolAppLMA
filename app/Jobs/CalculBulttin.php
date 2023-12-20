@@ -26,6 +26,7 @@ class CalculBulttin implements ShouldQueue
     public $etud;
     public $etuds = 0;
     public $classMats = 0;
+    public $obs = 0;
 
 
     public function __construct(int $classeId, int $semId,)
@@ -88,10 +89,12 @@ class CalculBulttin implements ShouldQueue
 
                         if ($exam->note < 0) {
                             $arrn[] = 'ABJ';
+                            $this->obs = 1;
                         } else {
                             $arrn[] = $exam->note;
                             $arrs += (float) $exam->note;
                             $devs++;
+                            $this->obs = 0;
                         }
                     }
                 }
@@ -103,7 +106,9 @@ class CalculBulttin implements ShouldQueue
                 //total point
                 $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs)) / ($devs)) * $foix, 2) : '') : floatval($exan);
 
-                $tots += intval($tot);
+                // $tots += intval($tot);
+
+                $this->obs == 1 ?  $tots += 0 : $tots += intval($tot);
             };
 
             $this->addNote($tots, $etudiant->id);
