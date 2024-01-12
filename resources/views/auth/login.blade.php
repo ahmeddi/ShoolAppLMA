@@ -21,7 +21,7 @@
             @csrf
             <div>
                 <label for="eid" for="auths" class="labels w-full  flex justify-start font-bold"> Utilisateur: </label>
-                <input id="auths" name="auths"  class="mt-1 inputs w-full rounded-md h-10  " type="text"   required autocomplete="current-password" />       
+                <input id="auths" name="auths"  class="mt-1 inputs w-full rounded-md h-10  " type="text"   required autocomplete="auths" />       
             </div>
 
             <div class="mt-4">
