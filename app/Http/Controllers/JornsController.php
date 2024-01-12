@@ -183,4 +183,19 @@ class JornsController extends Controller
             abort(404);
         }
     }
+
+    public function results($locale, $ids)
+    {
+        if (auth()->user()->parent_id or auth()->user()->role == 'prof') {
+            abort(403);
+        }
+
+        $Classs = Classe::find($ids);
+
+        if ($Classs) {
+            return view('ClasseResults', ['Classs' => $Classs]);
+        } else {
+            abort(404);
+        }
+    }
 }

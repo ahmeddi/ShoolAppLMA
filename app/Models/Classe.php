@@ -43,4 +43,9 @@ class Classe extends Model
     {
         return $this->belongsToMany(Prof::class, 'prof_classes_results', 'classe_id', 'prof_id');
     }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class, 'class_id', 'id');
+    }
 }

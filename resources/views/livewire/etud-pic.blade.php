@@ -2,7 +2,7 @@
     <x-dialog-modal wire:model.defer='visible' >
         <x-slot name='title'>
             <div class='text-lg font-bold text-green-900 dark:text-gray-100 px-12 '>
-                Ajoute Formation
+                {{ __('etudiants.change-pic') }}
             </div>
             
         </x-slot>
@@ -17,12 +17,12 @@
                       <div class="flex justify-between h-10 w-full">
                         <div>
                           <label class="block  labels">
-                            Photo
+                            
                           </label>
                         </div>
                         <div class="flex space-x-2">
                           <button type="button" @click="$refs.btn.click()" class="px-2  w-20  bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-400 rounded-md text-xs font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 focus:outline-none  ">
-                            Changer
+                            {{ __('etudiants.change') }}
                           </button>
                           @if ($photo or $phototemp)
                               <button type="button" wire:click='remove' class=" text-red-500 hover:text-red-600 focus:outline-none  ">

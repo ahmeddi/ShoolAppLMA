@@ -12,7 +12,8 @@ return [
     'list' => 'Liste des étudiants',
     'jorns' => 'Calendrier',
     'mats' => 'Matières',
-    'result' => 'Bulletins',
+    'result' => 'Résultats',
+    'bult' => 'Bulletins',
 
     'class-nom' => 'Nom du classe',
     'class-res' => 'Méthode de calcul des résultats',
@@ -44,6 +45,11 @@ return [
     'time' => 'Horaires',
 
     'recom' => 'Recommandations',
+
+    'filtre' => 'Filtrer',
+
+
+
 
 
 ];

@@ -63,6 +63,16 @@ return [
     'activ' => 'Activé',
     'desactiv' => 'Désactivé',
 
+    'change-pic' => 'Changer l\'image',
+
+    'change' => 'Changer',
+
+    'carte' => 'Carte',
+
+    'carte-jaune' => 'Carte jaune',
+    'cartes-jaunes' => '2 Cartes jaunes',
+    'carte-rouge' => 'Carte rouge',
+
 
 
 

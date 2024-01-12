@@ -29,6 +29,8 @@ class EtudEdit extends Component
 
     public $nc;
 
+    public $card;
+
     #[Rule('required|not_in:0')]
     public $sexe;
 
@@ -90,6 +92,8 @@ class EtudEdit extends Component
 
         $this->mid = $etud->id;
 
+        $this->card = $etud->card;
+
         $this->visible = true;
     }
 
@@ -114,6 +118,8 @@ class EtudEdit extends Component
         $etud->nb = $this->nb;
         $etud->list = $this->list;
         $etud->soir = $this->soir;
+
+        $etud->card = $this->card;
 
         $etud->save();
 

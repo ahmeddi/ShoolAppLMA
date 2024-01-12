@@ -97,17 +97,17 @@
                     </div>
 
                     @can('dir')
-                      <div class=" flex space-x-2 items-center w-full">
-                        <input value="true" id="{{ $soir }}"  wire:model='soir' type="checkbox" @if($soir) checked @endif class="check w-6 h-6" >
-                        <label for="{{ $soir }}"  class="flex items-center">
-                            <div class="flex space-x-2 mx-4 ">
-                                <div class="flex flex-col">
-                                    <div class="text-sm font-semibold text-gray-900 dark:text-gray-200" >
-                                       {{ __('etudiants.soir') }}
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
+                    <div class="flex flex-col space-y-1">
+                      <div class="flex justify-between">
+                        <label   class="labels">{{ __('etudiants.carte') }}:</label>
+                        @error('sexe') <span class="danger">{{ $message }}</span> @enderror  
+                      </div>
+                      <select  wire:model='card'  class="inputs @error('card') reds @enderror" name="card"  required >
+                          <option class="text-sm" value="0" >-----</option>
+                          <option  class="text-sm" value="1">{{ __('etudiants.carte-jaune') }}</option>
+                          <option class="text-sm" value="2">{{ __('etudiants.cartes-jaunes') }}</option>
+                          <option class="text-sm" value="3">{{ __('etudiants.carte-rouge') }}</option>
+                      </select>
                     </div>
                     @endcan
                     
@@ -116,7 +116,7 @@
                     @can('admin')
                       <div class="flex flex-col space-y-1">
                         <div class="flex justify-between">
-                          <label   class="labels"></label>
+                          <label   class="labels opacity-0">{{ __("etudiants.carte") }}</label>
                           @error('list') <span class="danger">{{ $message }}</span> @enderror  
                         </div>
                         <select  wire:model='list'  class="inputs @error('list') reds @enderror" name="list"  required >

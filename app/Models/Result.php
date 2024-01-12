@@ -45,4 +45,10 @@ class Result extends Model
             $q->where('semestre_id', $sem);
         });
     }
+
+    public function proportions()
+    {
+        return  $this->belongsTo(Proportion::class, 'mat_id', 'mat_id')
+            ->where('classe_id', $this->class_id);
+    }
 }

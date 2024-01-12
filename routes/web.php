@@ -163,6 +163,9 @@ Route::middleware([
 
         Route::get('/Classe/{id}/Horaires', [JornsController::class, "Horaires"]);
 
+        Route::get('/Classe/{id}/Results', [JornsController::class, "results"]);
+
+
 
 
         #Matieres --------------------------------------------------------

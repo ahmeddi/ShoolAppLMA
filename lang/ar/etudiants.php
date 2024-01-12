@@ -72,6 +72,16 @@ return [
     'activ' => 'مفعل',
     'desactiv' => 'غير مفعل',
 
+    'change-pic' => 'تغيير الصورة',
+
+    'change' => 'تغيير',
+
+    'carte' => 'بطاقة',
+
+    'carte-jaune' => 'بطاقة صفراء',
+    'cartes-jaunes' => 'بطاقتان صفراوتان',
+    'carte-rouge' => 'بطاقة حمراء',
+
 
 
 
