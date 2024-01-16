@@ -3,7 +3,7 @@
         <x-slot name='title'>
             <div class='relative w-full px-12 text-lg font-bold text-green-900 dark:text-gray-50 '>
               <div>
-                {{ __('classe.classes-add') }}
+                
                </div> 
                <button wire:click="close" class="absolute top-0 rtl:left-2 ltr:right-2 z-20 flex items-center justify-center w-8 h-8 text-green-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-50">
                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"  viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -11,26 +11,25 @@
                        </svg>
                </button>
             </div>
+            
         </x-slot>
 
          <x-slot name='content'>
             <div class="flex flex-col space-y-4 ">
       
-                <div class="grid lg:grid-cols-2 gap-x-6 gap-y-3 px-12  justify-items-center sm:grid-cols-1 ">
-                    <div class="flex flex-col space-y-1 ">
+                <div class="w-full px-12  justify-items-center sm:grid-cols-1 ">
+                    <div class="flex flex-col space-y-1 col-span-2 w-full">
                         <div class="flex justify-between">
-                          <label for="eid"  class="labels">{{ __('att.date') }}   :</label>
-                          @error('date') <span class="danger ">{{ $message }}</span> @enderror  
+                          <label for="eid"  class="labels">{{ __('etudiants.badges') }} :</label>
+                          @error('nom') <span class="danger ">{{ $message }}</span> @enderror  
                         </div>
-                        <input wire:model.defer='date' class="inputs  col-span-2 @error('date') reds @enderror" type="date"   required  />       
-                    </div>
-                    <div class="flex flex-col space-y-1 ">
-                        <div class="flex justify-between">
-                          <label for="eid"  class="labels"> {{ __('att.hours') }}   :</label>
-                          @error('nbh') <span class="danger ">{{ $message }}</span> @enderror  
-                        </div> 
-                          <input wire:model.defer='nbh' class="inputs  col-span-2 @error('nbh') reds @enderror" type="number"   required  />       
-     
+                        <select   wire:model.defer="nom"   class="inputs w-full @error('nom') reds @enderror">
+                            <option value="">-----</option>
+                                @forelse ($badges as $value)
+                                    <option value="{{ $value->id }}"> {{ $value->name }} </option>
+                                @empty
+                                @endforelse 
+                          </select>       
                     </div>
                 </div>
 
@@ -50,7 +49,7 @@
                
              </div>
              <div class='px-10  flex space-x-3 justify-end items-center w-full'>
-  
+
               <button  wire:click="close" type="button" class="w-full inline-flex justify-center rounded-md  shadow-sm px-4 py-2 focus:outline-none bg-white border-teal-600 border hover:bg-gray-50 text-teal-700 dark:text-gray-200 dark:border-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700 sm:ml-3 sm:w-auto sm:text-sm">
                 {{ __('etudiants.add-cancel') }} 
               </button>

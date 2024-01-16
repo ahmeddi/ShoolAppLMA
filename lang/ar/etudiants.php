@@ -79,8 +79,12 @@ return [
     'carte' => 'بطاقة',
 
     'carte-jaune' => 'بطاقة صفراء',
-    'cartes-jaunes' => 'بطاقتان صفراوتان',
+    'cartes-jaunes' => 'بطاقة برتغالية',
     'carte-rouge' => 'بطاقة حمراء',
+
+    'badges' => 'شارات',
+
+    'add-badges' => 'إضافة شارة',
 
 
 

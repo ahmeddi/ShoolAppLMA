@@ -70,8 +70,12 @@ return [
     'carte' => 'Carte',
 
     'carte-jaune' => 'Carte jaune',
-    'cartes-jaunes' => '2 Cartes jaunes',
+    'cartes-jaunes' => 'Carte orange',
     'carte-rouge' => 'Carte rouge',
+
+    'badges' => 'Badges',
+
+    'add-badges' => 'Ajouter un badge',
 
 
 

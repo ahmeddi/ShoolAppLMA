@@ -119,6 +119,9 @@ Route::middleware([
         Route::get('/Etudiant/{id}/Frais', [EtudiantController::class, "frais"])
             ->name('EtudiantFrais');
 
+        Route::get('/Etudiant/{etud}/Badges', [EtudiantController::class, "badges"])
+            ->name('EtudBadges');
+
 
 
         #Classes --------------------------------------------------------

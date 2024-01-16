@@ -31,36 +31,38 @@ class Etudiant extends Model
 
     public function classe()
     {
-    	return $this->belongsTo(Classe::class)->orderBy('id','desc');
+        return $this->belongsTo(Classe::class)->orderBy('id', 'desc');
     }
 
     public function parent()
     {
-    	return $this->belongsTo(Parentt::class)->orderBy('id','desc');
+        return $this->belongsTo(Parentt::class)->orderBy('id', 'desc');
     }
 
     public function hours()
     {
-    	return $this->hasMany(Attande::class);
+        return $this->hasMany(Attande::class);
     }
 
     public function notes()
     {
-    	return $this->hasMany(Note::class);
+        return $this->hasMany(Note::class);
     }
 
 
     public function frais()
     {
-    	return $this->hasMany(Fraisetud::class,'etudiant_id','id');
+        return $this->hasMany(Fraisetud::class, 'etudiant_id', 'id');
     }
 
 
     public function results()
     {
-       return $this->hasMany(Result::class);                           
+        return $this->hasMany(Result::class);
     }
 
-
-
+    public function badges()
+    {
+        return $this->belongsToMany(Badge::class, 'badge_etuds', 'etudiant_id', 'badge_id')->orderBy('id');
+    }
 }
