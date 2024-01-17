@@ -1,5 +1,5 @@
 <div class="w-full h-full px-2  ">
-    <div class= "flex justify-between mb-5">
+    <div class= "flex justify-between mx-3 ">
         <button wire:click="$dispatch('open')" class='focus:outline-none px-4 py-2 dark:text-gray-900 dark:bg-gray-100 text-white rounded-md hover:outline-none bg-teal-600 hover:bg-teal-800' >
             {{ __('devoirs.devoir-add') }}
         </button>
