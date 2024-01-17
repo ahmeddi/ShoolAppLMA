@@ -526,4 +526,10 @@ Route::middleware([
 
             return view('Whatsapp');
         })->name('Whatsapp');
+
+
+        #Devoirs --------------------------------------------------------
+        Route::get('/Devoirs', function () {
+            return view('Devoirs');
+        })->name('Devoirs');
     });

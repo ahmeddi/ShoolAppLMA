@@ -9,11 +9,13 @@ class Examen extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['nom', 'nomfr', 'semestre_id', 'date', 'devoir'];
+
     public $timestamps = false;
 
 
     public function sem()
     {
-    	return $this->belongsTo(Semestre::class,'semestre_id','id');
+        return $this->belongsTo(Semestre::class, 'semestre_id', 'id');
     }
 }

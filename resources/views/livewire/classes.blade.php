@@ -29,7 +29,7 @@
                                         <a wire:navigate.hover  href="{{url(app()->getLocale().'/Classe'.'/'.$Class->id) }}" class="h-full w-full font-semibold hover:underline">
                                             <div class="text-sm font-semibold text-gray-900 dark:text-gray-200">
                                                 {{ $Class->nom   }} 
-                                       </div>
+                                            </div>
                                         </a>
                                     </div>
                                 </div>

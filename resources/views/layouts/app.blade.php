@@ -113,6 +113,14 @@
                         {{ $header }}
                     </div>
                     <div class="flex flex-row-reverse items-center">
+                        <div class=" w-full h-full p-2 flex justify-center items-center">
+                            {{-- Dark Mode --}}
+                            <button  x-cloak x-on:click="darkMode = !darkMode;" class="bg-gray-500 dark:bg-gray-50  h-8 w-8 p-1 shrink-0  flex rounded-full justify-center items-center align-middle">
+                                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 20 20" class="fill-gray-100 dark:fill-gray-900 h-6 w-6" >
+                                    <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
                             <!-- User Dropdown -->
                                 <div class="relative inline-block">
                                     <!-- Dropdown Toggle Button -->
@@ -170,14 +178,49 @@
                                     <div
                                         class="divide-y w-full divide-gray-100 rounded bg-white ring-1 ring-black ring-opacity-5 dark:divide-gray-700 dark:bg-gray-900 dark:ring-gray-700"
                                     >
-                                    <div class=" w-full h-full p-2 flex justify-center items-center">
-                                        {{-- Dark Mode --}}
-                                        <button  x-cloak x-on:click="darkMode = !darkMode" class="bg-gray-500 dark:bg-gray-50  h-8 w-8 p-1 shrink-0  flex rounded-full justify-center items-center align-middle">
-                                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 20 20" class="fill-gray-100 dark:fill-gray-900 h-6 w-6" >
-                                                <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
-                                            </svg>
-                                        </button>
-                                    </div>
+                                    @can('prof')
+                                        <div class="space-y-1 p-2 w-full justify-center text-center">
+                                            <a
+                                                x-on:click="userDropdownOpen = false,mobileSidebarOpen = false" 
+                                                role="menuitem"
+                                                wire:navigate  href='/' 
+                                                class="flex w-full justify-center text-center items-center gap-2 rounded px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:bg-gray-100 focus:text-gray-700 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100 dark:focus:bg-gray-800 dark:focus:text-gray-100"
+                                            >
+                                                <span>{{ __('navlink.home') }}</span>
+                                            </a>
+                                        </div>
+                                    @endcan
+
+                                    @can('parent')
+                                        @php
+                                            $etuds = [];
+                                            $parentId = auth()->user()->parent_id;
+                                            $parent = App\Models\Parentt::find($parentId);
+
+                                            if ($parent) {
+                                                $etuds = $parent->etuds;
+                                            }
+                                        @endphp
+
+                                        <div class="space-y-1 p-1 w-full justify-center text-center">
+
+                                            @forelse ($etuds as $etud)
+                                                <a
+                                                    x-on:click="userDropdownOpen = false,mobileSidebarOpen = false" 
+                                                    role="menuitem"
+                                                    wire:navigate href="{{url(app()->getLocale().'/Etudiant/'.$etud->id ) }}" 
+                                                    class="flex w-full justify-center text-center items-center gap-2 rounded px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:bg-gray-100 focus:text-gray-700 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100 dark:focus:bg-gray-800 dark:focus:text-gray-100"
+                                                >
+                                                    <span class=" flex flex-col">
+                                                        <span>{{ $etud->nom }}</span>
+                                                        <span>{{ $etud->nomfr }}</span>
+                                                    </span>
+                                                </a>
+                                            @empty 
+                                            @endforelse
+
+                                        </div>
+                                    @endcan
                                     <div
                                     class="flex w-full justify-center text-center items-center gap-2 rounded px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:bg-gray-100 focus:text-gray-700 focus:outline-none dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-gray-100 dark:focus:bg-gray-800 dark:focus:text-gray-100"
                                         >

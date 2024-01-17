@@ -68,7 +68,7 @@
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
-            <button wire:loading.remove wire:click='save'  type="button" class="btn h-10 ">
+            <button wire:loading.remove wire:target="save,update" wire:click='save'  type="button" class="btn h-10 ">
                 {{ __('result.result_add') }}
             </button>
         </div>
