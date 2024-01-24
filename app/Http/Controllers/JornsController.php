@@ -190,7 +190,7 @@ class JornsController extends Controller
             abort(403);
         }
 
-        $Classs = Classe::with('results', 'avg')->find($ids);
+        $Classs = Classe::with('results')->find($ids);
 
         if ($Classs) {
             return view('ClasseResults', ['Classs' => $Classs]);
