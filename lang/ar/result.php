@@ -17,6 +17,9 @@ return [
     'result_add' => 'اضافة نتيجة',
 
 
+    'classe_moy' => 'متوسط القسم',
+
+
 
 
 

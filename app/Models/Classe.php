@@ -48,4 +48,28 @@ class Classe extends Model
     {
         return $this->hasMany(Result::class, 'class_id', 'id');
     }
+
+    public function avg($matId)
+    {
+        // Get all etuds (students) for this class and material
+        $etuds = $this->etuds()->with('results')->get();
+
+        // Calculate the total and count of notes
+        $totalNote = 0;
+        $noteCount = 0;
+
+        foreach ($etuds as $etud) {
+            $result = $etud->results->where('mat_id', $matId)->first();
+
+            if ($result) {
+                $totalNote += floatval($result->note);
+                $noteCount++;
+            }
+        }
+
+        // Calculate the average note
+        $averageNote = ($noteCount > 0) ? ($totalNote / $noteCount) : 0;
+
+        return $averageNote;
+    }
 }

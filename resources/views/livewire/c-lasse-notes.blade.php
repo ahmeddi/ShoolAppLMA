@@ -71,65 +71,72 @@
                                 <th scope="col" class="px-6 py-2">
                                     {{ __('result.note') }}
                                 </th>
+                                <th scope="col" class="px-6 py-2">
+                                    {{ __('result.classe_moy') }}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse ($results as  $result)
                                 @if ($result->note > 0)
-                                <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-800 dark:even:bg-gray-800/70 border-b  dark:border-gray-700">
-                                    <th scope="row" class="px-6 py-2 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
-                                        @if (app()->getLocale() == 'ar')
-                                            <div class=" flex flex-col ">
-                                                <span>
-                                                    {{ $result->examen->nom }}
-                                                </span>
-                                                <span class=" text-gray-600 dark:text-gray-300 text-xs">
-                                                    {{ $result->examen->sem->nom }}
-                                                </span>
+                                    <tr class="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-800 dark:even:bg-gray-800/70 border-b  dark:border-gray-700">
+                                        <th scope="row" class="px-6 py-2 font-semibold text-gray-900 whitespace-nowrap dark:text-white">
+                                            @if (app()->getLocale() == 'ar')
+                                                <div class=" flex flex-col ">
+                                                    <span>
+                                                        {{ $result->examen->nom }}
+                                                    </span>
+                                                    <span class=" text-gray-600 dark:text-gray-300 text-xs">
+                                                        {{ $result->examen->sem->nom }}
+                                                    </span>
+                                                </div>
+                                            @else
+                                                <div class=" flex flex-col ">
+                                                        <span>
+                                                            {{ $result->examen->nomfr }}
+                                                        </span>
+                                                        <span class=" text-gray-600 dark:text-gray-300 text-xs">
+                                                            {{ $result->examen->sem->nomfr }}
+                                                        </span>
+                                                </div>
+                                            @endif
+                                        </th>
+                                        <th scope="row" class="px-6 py-2 break-words font-semibold text-gray-900  dark:text-white">
+                                            <a wire:navigate.hover href="{{url(app()->getLocale().'/Etudiant'.'/'.$result->etudiant->id) }}" class=" hover:underline" >
+                                                @if (app()->getLocale() == 'ar')
+                                                    {{ $result->etudiant->nom }}
+                                                @else
+                                                    {{ $result->etudiant->nomfr }}
+                                                @endif
+                                            </a>
+                                        </th>
+                                        <th scope="row" class="px-6 py-2 w-40 break-words font-semibold text-gray-900  dark:text-white">
+                                            {{ $result->mat->nom }}
+                                        </th>
+                                        @php
+                                        $note = $result->note;
+                                        $notecalsse = round($classe->avg($result->mat->id),2) ;
+                                        $tot = $result->proportions->tot*2;
+                                        $color = 0;
+                                        if ( $note < $notecalsse) {
+                                            $color = 1;
+                                        }
+                                        @endphp
+                                        <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <div @class(['my-1 rllt font-bold text-sm print:text-xs flex rtl:flex-row-reverse ltr:flex rtl:justify-end ', 
+                                            'text-teal-600 dark:text-teal-300' => !$color,
+                                            'text-red-600 dark:text-red-300' => $color,
+                                            ])>
+                                                <div>{{ $note }}</div>
                                             </div>
-                                        @else
-                                            <div class=" flex flex-col ">
-                                                <span>
-                                                    {{ $result->examen->nomfr }}
-                                                </span>
-                                                <span class=" text-gray-600 dark:text-gray-300 text-xs">
-                                                    {{ $result->examen->sem->nomfr }}
-                                                </span>
+                                        </th>
+                                        <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            <div @class(['text-teal-600 dark:text-teal-300 my-1 rllt font-bold text-sm print:text-xs flex rtl:flex-row-reverse ltr:flex rtl:justify-end ', ])>
+                                                <div>{{ $notecalsse }}</div>
                                             </div>
-                                        @endif
-                                    </th>
-                                    <th scope="row" class="px-6 py-2 break-words font-semibold text-gray-900  dark:text-white">
-                                        @if (app()->getLocale() == 'ar')
-                                            {{ $result->etudiant->nom }}
-                                        @else
-                                            {{ $result->etudiant->nomfr }}
-                                        @endif
-                                    </th>
-                                    <th scope="row" class="px-6 py-2 w-40 break-words font-semibold text-gray-900  dark:text-white">
-                                        {{ $result->mat->nom }}
-                                    </th>
-                                    @php
-                                       $note = $result->note;
-                                       $tot = $result->proportions->tot*2;
-                                       $color = 0;
-                                       if ( $note < $tot/2) {
-                                        $color = 1;
-                                       }
-                                    @endphp
-                                    <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <div @class(['my-1 rllt font-bold text-sm print:text-xs flex rtl:flex-row-reverse ltr:flex rtl:justify-end ', 
-                                        'text-teal-600 dark:text-teal-300' => !$color,
-                                        'text-red-600 dark:text-red-300' => $color,
-                                        ])>
-                                              
-                                            <div>{{ $note }}</div>
-                                           
-                                        </div>
-                                    </th>
-                                </tr>
-                                    
+                                        </th>
+                                    </tr>
                                 @endif
-                                
                             @empty
                             @endforelse
                         </tbody>
