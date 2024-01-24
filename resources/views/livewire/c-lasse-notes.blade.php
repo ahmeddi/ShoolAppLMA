@@ -115,7 +115,8 @@
                                         </th>
                                         @php
                                         $note = $result->note;
-                                        $notecalsse = round($classe->avg($result->mat->id),2) ;
+                                      //  $notecalsse = round($classe->avg($result->mat->id),2) ;
+                                        $notecalsse = $classMatAverages[$result->mat->id]; ;
                                         $tot = $result->proportions->tot*2;
                                         $color = 0;
                                         if ( $note < $notecalsse) {

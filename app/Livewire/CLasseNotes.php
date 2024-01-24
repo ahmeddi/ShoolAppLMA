@@ -19,17 +19,23 @@ class CLasseNotes extends Component
     public $mat;
     public $score;
 
+    public $classMatAverages = [];
+
     public function mount()
     {
         $this->results = $this->classe->results;
 
 
 
-        //  dd($this->results);
+
 
         $this->sems = Semestre::all('id', 'nom', 'nomfr');
         $this->mats = $this->classe->mats;
         $this->devs = $this->classe->devs;
+
+        foreach ($this->mats as $mat) {
+            $this->classMatAverages[$mat->id] = round($this->classe->avg($mat->id), 2);
+        }
     }
 
     public function filterResults()
