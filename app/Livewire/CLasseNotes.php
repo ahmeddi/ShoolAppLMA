@@ -13,9 +13,17 @@ class CLasseNotes extends Component
     public $devs;
     public $exams;
     public $results = [];
+    public $moys = [];
+    public $moy_sem = 1;
+    public $etuds = [];
+    public $moy_etud;
+    public $filts_moy;
+
+
+
     public $filts = 1;
 
-    public $sem;
+    public $sem = 1;
     public $mat;
     public $score;
 
@@ -23,11 +31,16 @@ class CLasseNotes extends Component
 
     public function mount()
     {
-        $this->results = $this->classe->results;
+        $this->results = $this->classe->results->sortByDesc('note')
+            ->take(5);
 
+        //  dd($this->results);
 
+        $this->moys = $this->classe->moys;
 
-
+        $this->etuds = $this->classe->etuds->each(function ($etud) {
+            $etud->moy = $etud->moys($this->moy_sem);
+        });
 
         $this->sems = Semestre::all('id', 'nom', 'nomfr');
         $this->mats = $this->classe->mats;
@@ -41,7 +54,6 @@ class CLasseNotes extends Component
     public function filterResults()
     {
         $this->results = $this->classe->results;
-
 
         if (!empty($this->score)) {
             if ($this->results) {
@@ -85,6 +97,36 @@ class CLasseNotes extends Component
         //         });
         //     }
         // }
+    }
+
+    public function filterMoy()
+    {
+        //  dd($this->moy_etud);
+        $this->etuds = $this->classe->etuds->each(function ($etud) {
+            $etud->moy = $etud->moys($this->moy_sem);
+        });
+
+        if ($this->moy_etud) {
+            if ($this->etuds) {
+                if ($this->filts_moy == 1) {
+                    $this->etuds = $this->etuds->filter(function ($etud) {
+                        return $etud->moy >= $this->moy_etud;
+                    });
+                } else if ($this->filts_moy == 2) {
+                    $this->etuds = $this->etuds->filter(function ($etud) {
+                        return $etud->moy <  $this->moy_etud;
+                    });
+                }
+            }
+        }
+
+        // Filter by semester
+        if ($this->moy_sem) {
+            $sem = (int) $this->moy_sem;
+            $this->etuds = $this->etuds->filter(function ($etud) use ($sem) {
+                return $etud->moys($sem) > 0;
+            });
+        }
     }
 
     public function render()

@@ -48,6 +48,8 @@ return [
 
     'filtre' => 'Filtrer',
 
+    'moy' => 'Moyenne',
+
 
 
 

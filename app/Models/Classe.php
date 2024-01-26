@@ -49,6 +49,11 @@ class Classe extends Model
         return $this->hasMany(Result::class, 'class_id', 'id');
     }
 
+    public function moys()
+    {
+        return $this->hasMany(Classement::class, 'classe_id', 'id');
+    }
+
     public function avg($matId)
     {
         // Get all etuds (students) for this class and material

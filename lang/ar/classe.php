@@ -52,6 +52,8 @@ return [
 
     'filtre' => 'تصفية',
 
+    'moyenne' => 'المعدل',
+
 
 
 

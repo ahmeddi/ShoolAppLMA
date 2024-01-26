@@ -17,4 +17,9 @@ class Classement extends Model
         'moy',
         'mat_id',
     ];
+
+    public function etud()
+    {
+        return $this->belongsTo(Etudiant::class, 'etudiant_id', 'id');
+    }
 }
