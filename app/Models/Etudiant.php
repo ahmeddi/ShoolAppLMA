@@ -76,4 +76,9 @@ class Etudiant extends Model
         $notes = $notes->sum('note');
         return  $count > 0 ? round($notes / $count, 1) : 0;
     }
+
+    public function moy($semestre_id)
+    {
+        return $this->hasMany(Moy::class)->where('semestre_id', $semestre_id)->sum('moy');
+    }
 }

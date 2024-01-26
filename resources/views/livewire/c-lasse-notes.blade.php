@@ -98,9 +98,7 @@
                                             <th scope="col" class="px-6 py-2">
                                                 {{ __('result.note') }}
                                             </th>
-                                            <th scope="col" class="px-6 py-2">
-                                                {{ __('result.classe_moy') }}
-                                            </th>
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -142,11 +140,8 @@
                                                     </th>
                                                     @php
                                                     $note = $result->note;
-                                                  //  $notecalsse = round($classe->avg($result->mat->id),2) ;
-                                                    $notecalsse = $classMatAverages[$result->mat->id]; ;
-                                                    $tot = $result->proportions->tot*2;
                                                     $color = 0;
-                                                    if ( $note < $notecalsse) {
+                                                    if ( $note < 10) {
                                                         $color = 1;
                                                     }
                                                     @endphp
@@ -158,11 +153,7 @@
                                                             <div>{{ $note }}</div>
                                                         </div>
                                                     </th>
-                                                    <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        <div @class(['text-teal-600 dark:text-teal-300 my-1 rllt font-bold text-sm print:text-xs flex rtl:flex-row-reverse ltr:flex rtl:justify-end ', ])>
-                                                            <div>{{ $notecalsse }}</div>
-                                                        </div>
-                                                    </th>
+                                                    
                                                 </tr>
                                             @endif
                                         @empty
@@ -239,7 +230,9 @@
                                             </td>
                                             <td scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                 <div @class(['text-teal-600 dark:text-teal-300 my-1 rllt font-bold text-sm print:text-xs flex rtl:flex-row-reverse ltr:flex rtl:justify-end ', ])>
-                                                    <div>{{ $etud->moy }}</div>
+                                                    @if ($moy_sem)
+                                                        <div>{{ $etud->moy($moy_sem) }}</div>
+                                                    @endif
                                                 </div>
                                             </td>
                                         </tr>

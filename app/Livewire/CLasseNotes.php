@@ -31,24 +31,19 @@ class CLasseNotes extends Component
 
     public function mount()
     {
-        $this->results = $this->classe->results->sortByDesc('note')
-            ->take(5);
+        $this->results = $this->classe->results->sortByDesc('note')->take(5);
 
-        //  dd($this->results);
+        // dd($this->results);
 
-        $this->moys = $this->classe->moys;
-
-        $this->etuds = $this->classe->etuds->each(function ($etud) {
-            $etud->moy = $etud->moys($this->moy_sem);
-        });
+        if ($this->moy_sem) {
+            $this->etuds = $this->classe->etuds->each(function ($etud) {
+                $etud->moy = $etud->moy(1);
+            });
+        }
 
         $this->sems = Semestre::all('id', 'nom', 'nomfr');
         $this->mats = $this->classe->mats;
         $this->devs = $this->classe->devs;
-
-        foreach ($this->mats as $mat) {
-            $this->classMatAverages[$mat->id] = round($this->classe->avg($mat->id), 2);
-        }
     }
 
     public function filterResults()
@@ -84,24 +79,10 @@ class CLasseNotes extends Component
                 return $result->mat_id == $this->mat;
             });
         }
-
-        // Filter by score
-        // if ($this->score && $this->score !== '*') {
-        //     if ($this->score == 1) {
-        //         $this->results = $this->results->filter(function ($result) {
-        //             return $result->note >= 10;
-        //         });
-        //     } else {
-        //         $this->results = $this->results->filter(function ($result) {
-        //             return $result->note < 10;
-        //         });
-        //     }
-        // }
     }
 
     public function filterMoy()
     {
-        //  dd($this->moy_etud);
         $this->etuds = $this->classe->etuds->each(function ($etud) {
             $etud->moy = $etud->moys($this->moy_sem);
         });

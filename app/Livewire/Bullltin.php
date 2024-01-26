@@ -9,6 +9,7 @@ use Livewire\Component;
 use App\Models\Etudiant;
 use App\Models\Semestre;
 use App\Models\Classement;
+use App\Models\Moy;
 use App\Models\Proportion;
 use App\Models\Recomadation;
 
@@ -110,6 +111,7 @@ class Bullltin extends Component
                 $moys = !$this->classmoy ? ($devs ? round((floatval($arrs)) / ($devs), 2) : '') : floatval($exan);
 
 
+
                 $moy_classe = Classement::where('semestre_id', $this->sem->id)
                     ->where('classe_id', $this->classe)
                     ->where('mat_id', $nom['id'])
@@ -120,7 +122,9 @@ class Bullltin extends Component
 
                 $moy_classe = $moy_classe / $this->etuds;
 
-                // dd($moy_classe);
+                //  dd($moy_classe);
+
+
 
 
 
@@ -136,6 +140,16 @@ class Bullltin extends Component
                     'moy_classe' => $moy_classe,
                 ];
             });
+
+            // dd(round(floatval($this->tot), 2));
+
+            Moy::updateOrCreate(
+                [
+                    'semestre_id' => $this->sem->id,
+                    'etudiant_id' => $this->etud->id,
+                ],
+                ['moy' => $this->tot]
+            );
         }
     }
 

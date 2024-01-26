@@ -16,14 +16,14 @@ use App\Models\Proportion;
 class CalculBulttin
 {
 
-    
+
     protected $classeId;
     protected $semId;
-    protected $tot = 0, $totmat =0, $moy, $classmoy, $sem, $classe, $moy_classe;
+    protected $tot = 0, $totmat = 0, $moy, $classmoy, $sem, $classe, $moy_classe;
 
 
 
-    public function handle($classeId, $semId,$matId)
+    public function handle($classeId, $semId, $matId)
     {
 
         $this->classeId = $classeId;
@@ -42,14 +42,57 @@ class CalculBulttin
         }
     }
 
- 
+    public function comment($etudiantId, $semId, $matId)
+    {
+        $this->StudentResult($etudiantId, $semId);
+    }
+
+
+    private function StudentResult(Etudiant $etudiant, Semestre $sem)
+    {
+        $mats = Classe::find($this->classeId)->mats;
+
+
+
+        if ($sem->examens->isNotEmpty()) {
+
+            $tots = 0;
+            foreach ($mats as $mat) {
+
+                $nom = $mat->only('nom', 'id');
+                $arrn = [];
+                $arrs = 0;
+                $exan = 0;
+                $devs = 0;
+
+                foreach ($sem->examens as $dev) {
+
+                    $exam = $this->getDevResult($etudiant->id, $nom['id'], $dev->id);
+
+                    if ($exam && $exam->note) {
+                        $arrn[] = $exam->note;
+                        $arrs += (float) $exam->note;
+                        $devs++;
+                    }
+                }
+
+                $devm = $devs ? $arrs / $devs : 0;
+
+                $this->addNote($devm, $etudiant->id, $mat->id);
+            };
+        }
+    }
+
+
+
+
     private function calculateStudentResults(Etudiant $etudiant)
     {
         $mats = Classe::find($this->classeId)->mats;
-    
+
         if ($this->sem->examens->isNotEmpty()) {
 
-        $tots = 0;
+            $tots = 0;
             foreach ($mats as $mat) {
 
                 $nom = $mat->only('nom', 'id');
@@ -68,7 +111,7 @@ class CalculBulttin
 
                     if ($exam && $exam->note) {
                         $arrn[] = $exam->note;
-                        $arrs += (double) $exam->note;
+                        $arrs += (float) $exam->note;
                         $devs++;
                     }
                 }
@@ -78,8 +121,8 @@ class CalculBulttin
 
                 $devm = $devs ? $arrs / $devs : 0;
 
-                $this->addNote($devm,$etudiant->id, $mat->id);
-                
+                $this->addNote($devm, $etudiant->id, $mat->id);
+
                 /*
                 //total point
                 $tot = !$this->classmoy ? ($devs ? round(((floatval($arrs) + floatval($exan)) / ($devs + 1)) * $foix, 2) : '') : floatval($exan);
@@ -87,13 +130,8 @@ class CalculBulttin
                 $tots += intval($tot) ;
 
                 */
-                
             };
-
-          
-
         }
-
     }
 
 
@@ -126,7 +164,7 @@ class CalculBulttin
 
 
 
-    private function addNote($tots,$etudiantId, $matId)
+    private function addNote($tots, $etudiantId, $matId)
     {
         $classement = Classement::firstOrCreate([
             'etudiant_id' => $etudiantId,
@@ -138,7 +176,7 @@ class CalculBulttin
         $classement->note = $tots;
         $classement->save();
     }
-/*
+    /*
     private function calculateTotals()
     {
         $competitors = Classement::where('semestre_id', $this->sem->id)
