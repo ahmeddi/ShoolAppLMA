@@ -77,8 +77,14 @@ class Etudiant extends Model
         return  $count > 0 ? round($notes / $count, 1) : 0;
     }
 
-    public function moy($semestre_id)
+    public function moysMat($semestre_id, $matiere_id)
     {
-        return $this->hasMany(Moy::class)->where('semestre_id', $semestre_id)->sum('moy');
+        $notes = Classement::where('semestre_id', $semestre_id)
+            ->where('etudiant_id', $this->id)
+            ->where('mat_id', $matiere_id)
+            ->where('note', '>=', 0)
+            ->value('note');
+
+        return  $notes;
     }
 }

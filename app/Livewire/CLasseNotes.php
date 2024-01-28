@@ -33,14 +33,6 @@ class CLasseNotes extends Component
     {
         $this->results = $this->classe->results->sortByDesc('note')->take(5);
 
-        // dd($this->results);
-
-        if ($this->moy_sem) {
-            $this->etuds = $this->classe->etuds->each(function ($etud) {
-                $etud->moy = $etud->moy(1);
-            });
-        }
-
         $this->sems = Semestre::all('id', 'nom', 'nomfr');
         $this->mats = $this->classe->mats;
         $this->devs = $this->classe->devs;
@@ -79,39 +71,5 @@ class CLasseNotes extends Component
                 return $result->mat_id == $this->mat;
             });
         }
-    }
-
-    public function filterMoy()
-    {
-        $this->etuds = $this->classe->etuds->each(function ($etud) {
-            $etud->moy = $etud->moys($this->moy_sem);
-        });
-
-        if ($this->moy_etud) {
-            if ($this->etuds) {
-                if ($this->filts_moy == 1) {
-                    $this->etuds = $this->etuds->filter(function ($etud) {
-                        return $etud->moy >= $this->moy_etud;
-                    });
-                } else if ($this->filts_moy == 2) {
-                    $this->etuds = $this->etuds->filter(function ($etud) {
-                        return $etud->moy <  $this->moy_etud;
-                    });
-                }
-            }
-        }
-
-        // Filter by semester
-        if ($this->moy_sem) {
-            $sem = (int) $this->moy_sem;
-            $this->etuds = $this->etuds->filter(function ($etud) use ($sem) {
-                return $etud->moys($sem) > 0;
-            });
-        }
-    }
-
-    public function render()
-    {
-        return view('livewire.c-lasse-notes');
     }
 }

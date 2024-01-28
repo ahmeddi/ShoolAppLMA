@@ -48,7 +48,13 @@ return [
 
     'filtre' => 'Filtrer',
 
-    'moy' => 'Moyenne',
+    'moy' => 'Moy générale',
+
+    'moy-mat' => 'Moy matière',
+
+    'etuds' => 'Etudiants',
+    'males' => 'Mâles',
+    'femms' => 'Femelles',
 
 
 
