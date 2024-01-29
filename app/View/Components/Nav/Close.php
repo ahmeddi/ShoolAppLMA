@@ -21,6 +21,6 @@ class Close extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.Nav.Close');
+        return view('components.nav.close');
     }
 }
