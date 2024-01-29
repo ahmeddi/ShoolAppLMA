@@ -11,7 +11,7 @@
     : 'text-sm font-medium text-gray-700 hover:bg-primary-50 hover:text-primary-900  dark:text-gray-200' }}
     ">
     @if($icon == 'clipboard')
-        {{-- <x-icon.clipboard/> --}}
+        <x-icon.clipboard/>
     @elseif ($icon == 'user')
         
     @endif
