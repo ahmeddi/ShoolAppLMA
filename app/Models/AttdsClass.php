@@ -23,8 +23,8 @@ class AttdsClass extends Model
         return $this->belongsTo(Classe::class);
     }
 
-    public function time()
+    public function times()
     {
-        return $this->belongsTo(Time::class);
+        return $this->belongsTo(Time::class, 'time', 'id');
     }
 }

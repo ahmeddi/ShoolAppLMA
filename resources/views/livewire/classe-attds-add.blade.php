@@ -48,6 +48,7 @@
                                 <option value="{{ $Time['id'] }}"> {{$Time['time']}} </option>
                             @empty
                             @endforelse
+                                <option value="7H">{{ __('att.day') }} </option>
                           </select>       
                     </div>
                 </div>

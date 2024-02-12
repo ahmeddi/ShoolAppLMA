@@ -66,12 +66,12 @@
                         <td class="px-6 py-2">
                             <a wire:navigate href="{{url(app()->getLocale().'/Attds/Classe/'.$attd->id) }}"  class=" hover:underline dark:decoration-white">
                                 <div class="w-full text-sm font-semibold text-gray-900 dark:text-gray-200">
-                                        @if ($attd->time == 1)
-                                            8H - 10H
-                                        @elseif($attd->time == 2)
-                                            10H - 12H
-                                        @elseif($attd->time == 3)
-                                            12H - 14H
+                                       
+
+                                        @if ($attd->times)
+                                        {{ $attd->times->time}}
+                                        @else
+                                        {{ __('att.day') }}
                                         @endif
                                 </div>
                             </a>

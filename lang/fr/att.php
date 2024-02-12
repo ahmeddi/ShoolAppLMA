@@ -32,5 +32,7 @@ return [
 
     'det' => 'Détails',
 
+    'day' => 'Journée complète'
+
 
 ];

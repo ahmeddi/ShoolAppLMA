@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use Carbon\Carbon;
+use App\Models\Time;
 use Livewire\Component;
 use App\Models\AttdsClass;
 use Livewire\Attributes\On;
@@ -171,13 +172,17 @@ class ClasseAttds extends Component
     #[On('refresh')]
     public function render()
     {
-      $attds = AttdsClass::whereBetween('date', $this->date)
+      $attds = AttdsClass::with('times')
+      ->whereBetween('date', $this->date)
       ->orderBy('date', 'desc')
       ->get();
+
+      $Times = Time::select('id', 'time')->get()->map->only(['id', 'time']);
 
 
         return view('livewire.classe-attds',[
             'attds' => $attds,
+            'Times' => $Times,
         ]);
     }
 }

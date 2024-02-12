@@ -19,6 +19,8 @@ class ClasseAttdsList extends Component
     public $att_class_id;
     public $attds = [];
 
+    public $nbh;
+
     public $textColors = []; 
 
 
@@ -44,6 +46,9 @@ class ClasseAttdsList extends Component
         $this->att_class_id = $this->ids;
 
         $this->date = $atd->date;
+
+        $this->nbh = $atd->time;
+
 
         $this->classe = Classe::with('etuds')->find( $atd->classe_id);
 
@@ -96,8 +101,13 @@ class ClasseAttdsList extends Component
             }
 
 
+            if ($this->nbh == '7H') {
+                $note->update(['nbh' => ($this->attds[$index]) ? 7 : 0]);
+            } else {
+                $note->update(['nbh' => ($this->attds[$index]) ? 1 : 0]);
+            }
             
-            $note->update(['nbh' => ($this->attds[$index]) ? 2 : 0]);
+          
         }
     }
 
