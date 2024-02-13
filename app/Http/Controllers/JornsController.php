@@ -89,7 +89,7 @@ class JornsController extends Controller
 
     public function showp($locale, $ids)
     {
-        if (auth()->user()->parent_id or auth()->user()->role == 'prof') {
+        if (auth()->user()->parent_id) {
             abort(403);
         }
 

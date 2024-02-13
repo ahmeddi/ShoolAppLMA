@@ -6,6 +6,7 @@ use App\Models\Parentt;
 use App\Models\Etudiant;
 use App\Models\AttdsClass;
 use App\Models\DepanceEnt;
+use App\Models\WhatsappGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -526,6 +527,27 @@ Route::middleware([
 
             return view('Whatsapp');
         })->name('Whatsapp');
+
+
+        Route::get('/Whatsapp/Groups', function () {
+            if (auth()->user()->role != 'admin') {
+                abort(403);
+            }
+            return view('WhatsappGroups');
+        })->name('WhatsappGroups');
+
+        Route::get('/Whatsapp/Group/{id}', function ($locale, $id) {
+            if (auth()->user()->role != 'admin') {
+                abort(403);
+            }
+
+            $group = WhatsappGroup::find($id);
+            if ($group) {
+                return view('WhatsappGroup', ['group' => $group]);
+            } else {
+                abort(404);
+            }
+        })->name('WhatsappGroup');
 
 
         #Devoirs --------------------------------------------------------
