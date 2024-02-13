@@ -40,7 +40,7 @@
                     <tr @class(['h-4', 'w-full', 'text-center', 'bg-red-500/20' => $etudiant->list, 'dark:bg-red-900/30' => $etudiant->list])>
                         <td class="px-2 md:px-6 py-3 md:w-1/2 whitespace-nowrap">
                             <div class="flex items-center w-full">
-                                <div class="flex h-fit w-fit lg:h-10 lg:w-10 lg:mx-2 text-gray-300 dark:text-gray-600 rounded-full overflow-hidden">
+                                <div class="flex-shrink-0 h-10 w-10 mx-2 md:mx-4 text-gray-300 dark:text-gray-600 rounded-full overflow-hidden">
                                     @if ($etudiant->image)
                                         <img class="object-cover h-full w-full" src="{{ asset('storage'.'/'.$etudiant->image) }}" />
                                     @else
