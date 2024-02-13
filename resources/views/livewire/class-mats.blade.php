@@ -1,15 +1,15 @@
 <div >
     <table class="table-auto w-full divide-y divide-gray-200 dark:divide-gray-600 rounded-t-xl overflow-hidden">
         <thead>
-            <tr>
-                <td class="flex space-x-10 w-fit py-2 text-gray-900 dark:text-gray-50">
-                    <div class="px-2 w-72">
+            <tr class=" w-full">
+                <td class="flex justify-end w-fit py-2 text-gray-900 dark:text-gray-50">
+                    <div class="px-2 w-32">
                         {{ __('classe.mat-mat') }} 
                     </div>
                     @if (!$ClsseMoy)
-                        <div class="w-60">{{ __('classe.mat-foix') }} </div>
+                        <div class=" mx-16">{{ __('classe.mat-foix') }} </div>
                     @else
-                        <div> {{ __('classe.mat-pts') }}</div>
+                        <div class=" mx-16"> {{ __('classe.mat-pts') }}</div>
                     @endif
                 </td>
                 <td></td>
@@ -22,10 +22,10 @@
                         <td class="px-2 py-2  flex ">
                             <div class=" flex space-x-2 items-center">
                                 <input id="mats{{ $index }}" wire:model.defer='mats.{{ $index }}' type="checkbox" value="" class=" peer check " >
-                                <label for="mats{{ $index }}"  class="flex items-center  w-56">
-                                    <div class="flex space-x-2 mx-4 ">
+                                <label for="mats{{ $index }}"  class="flex items-center">
+                                    <div class="flex space-x-2 mx-2 ">
                                         <div class="flex flex-col">
-                                            <div class="text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                            <div class="w-32 break-words text-sm font-semibold text-gray-900 dark:text-gray-200">
                                                 <span class=""> </span>
                                                      {{ $Matt->nom   }} 
                                             </div>
@@ -33,9 +33,9 @@
                                     </div>
                                 </label>
                                 @if (!$ClsseMoy)
-                                     <input   wire:model.defer='valeursFoix.{{ $index }}' class="inputs h-8 opacity-0  peer-checked:opacity-100  @error('foix') reds @enderror" type="text"   required  />           
+                                     <input   wire:model.defer='valeursFoix.{{ $index }}' class="inputs w-28 lg:w-40 h-8 opacity-0  peer-checked:opacity-100  @error('foix') reds @enderror" type="text"   required  />           
                                 @else
-                                    <input   wire:model.defer='valeursTot.{{ $index }}' class="inputs h-8 opacity-0  peer-checked:opacity-100  @error('foix') reds @enderror" type="text"   required  />  
+                                    <input   wire:model.defer='valeursTot.{{ $index }}' class="inputs w-28 lg:w-40 h-8 opacity-0  peer-checked:opacity-100  @error('foix') reds @enderror" type="text"   required  />  
                                 @endif
                             </div>
                         </td>

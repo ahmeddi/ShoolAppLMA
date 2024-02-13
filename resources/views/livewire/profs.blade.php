@@ -2,20 +2,20 @@
     <div class= "flex justify-between mb-3">
             @can('dir')
                 <button wire:click="$dispatchTo('prof-add','open')" class='focus:outline-none px-4 py-1 dark:text-gray-900 dark:bg-gray-100 text-white rounded-md hover:outline-none bg-teal-600 hover:bg-teal-800' >
-                    {{ __('prof.add') }}
+                    {{ __('navlink.add-New') }}
                 </button>
             @endcan
         
         
 
-        <div class="relative w-80 ">
-            <div class=" absolute top-2.5 left-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
+            <div class="relative lg:w-80 w-52 ">
+                <div class=" absolute top-2.5 left-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+                <input wire:model.live="search" id="find" class="inputs rounded-md h-10 w-full pl-8" type="text" name="find"  />   
             </div>
-            <input wire:model.live="search" id="find" class="inputs rounded-md h-10 w-full pl-8" type="text" name="find"  />   
-        </div>
          
     </div>
 
@@ -28,13 +28,13 @@
                 <th scope="col" class="px-6 py-3  rtl:text-right ltr:text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                     {{ __('prof.tel') }}
                 </th>
-                <th scope="col" class="px-6 py-3  rtl:text-right ltr:text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3 hidden lg:table-cell  rtl:text-right ltr:text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                     {{ __('prof.nni') }}
                 </th>
-                <th scope="col" class="px-6 py-3 rtl:text-right ltr:text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th scope="col" class="px-6 py-3  hidden lg:table-cell rtl:text-right ltr:text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                     {{ __('prof.nc') }}
                 </th>
-                <th scope="col" class="  px-6 py-3 rtl:text-right ltr:text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th scope="col" class="hidden lg:table-cell  px-6 py-3 rtl:text-right ltr:text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                     
                 </th>
 
@@ -45,9 +45,9 @@
     
         @foreach ($Profs as $Prof)
             <tr class="">
-                <td class="px-6 py-3 whitespace-nowrap">
+                <td class="px-3 py-3 whitespace-nowrap">
                     <div class="flex items-center">
-                        <div class="flex-shrink-0 mx-3 h-10 w-10 text-gray-300 dark:text-gray-600 rounded-full overflow-hidden">
+                        <div class="flex-shrink-0 mx-1 h-10 w-10 text-gray-300 dark:text-gray-600 rounded-full overflow-hidden">
                             @if ($Prof->image)
                                 <img  class=" object-cover h-full w-full" src="{{ asset('storage'.'/'.$Prof->image) }}" />
                             @else
@@ -80,14 +80,14 @@
                     <div   class="rtl:text-right ltr:text-left text-sm text-gray-900 dark:text-gray-300"> {{  chunk_split($Prof->tel1, 2, ' ')  }}</div>
                     <div   class="rtl:text-right ltr:text-left text-sm text-gray-900 dark:text-gray-300"> {{  chunk_split($Prof->tel2, 2, ' ')  }}</div>
                 </td>
-                <td class="rtl:text-right ltr:text-left px-6 py-3 whitespace-nowrap">
+                <td class="  hidden lg:table-cell rtl:text-right ltr:text-left px-6 py-3 whitespace-nowrap">
                     <div  class="rtl:text-right ltr:text-left text-sm text-gray-900 dark:text-gray-300"> {{ $Prof->nni }}</div>
                 </td>
-                <td class="px-6 py-3 whitespace-nowrap  text-sm font-medium">
+                <td class="  hidden lg:table-cell px-6 py-3 whitespace-nowrap  text-sm font-medium">
                     <div  class="rtl:text-right ltr:text-left text-sm text-gray-900 dark:text-gray-400"> {{ $Prof->se }}</div>
 
                 </td>
-                <td class="px-6 py-3 whitespace-nowrap  text-sm font-medium">
+                <td class="hidden lg:table-cell px-6 py-3 whitespace-nowrap  text-sm font-medium">
                     <a wire:navigate.hover  href="{{url(app()->getLocale().'/Profs'.'/'.$Prof->id) }}" class="h-full w-full">
                         <div  class="rtl:text-right ltr:text-left font-bold text-sm text-teal-600 dark:text-teal-200"
                                 x-data="{ tooltip: false }" 

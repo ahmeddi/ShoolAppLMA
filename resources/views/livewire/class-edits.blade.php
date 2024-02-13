@@ -2,7 +2,7 @@
     <div class=" relative w-full h-full  p-2  ">
         <div class="w-full  ">
             <div class="flex p-2 w-auto  mb-4  ">
-                <div class="flex w-full  justify-between text-teal-900">
+                <div class="flex flex-col md:flex-col lg:flex-row w-full  justify-between text-teal-900">
                     <div class=" w-full p-3">
                         <div class="w-full flex flex-col mx-3 space-y-1">
 
@@ -38,7 +38,7 @@
                         </div>
     
                     </div>
-                    <div class=" w-1/3 p-1 "> 
+                    <div class=" w-full  lg:w-1/3 p-1 "> 
                         @can('dir')
                             <button  wire:click="$dispatchTo('class-edit','open')"   class="flex mb-2 bg-teal-500 text-teal-50 p-2 rounded w-full ">
                                 <div class="flex">

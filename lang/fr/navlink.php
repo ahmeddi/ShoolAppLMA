@@ -56,6 +56,9 @@ return [
     'wh-text' => 'Message',
     'wh-send' => 'Envoyer le message',
 
+    'add-New' => 'Ajouter',
+
+
 
 
 

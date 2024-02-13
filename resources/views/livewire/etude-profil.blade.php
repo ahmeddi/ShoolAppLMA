@@ -1,10 +1,10 @@
 <div  class="" class="flex m-3 h-full space-x-2  ">
     <div class=" relative p-2  ">
         <div class="w-full  ">
-            <div class="flex p-2 w-auto  mb-4  ">
+            <div class="flex flex-col lg:flex-row p-2 w-auto  mb-4  ">
                 @cannot('parent')
-                        <div class=" w-40 ">
-                            <button  wire:click="$dispatch('pic')" class=" relative flex justify-center object-cover items-center w-full h-36 mt-2  rounded-full overflow-hidden bg-gray-300 dark:bg-gray-500">
+                        <div class=" w-full lg:w-40 flex justify-center items-center lg:items-start ">
+                            <button  wire:click="$dispatch('pic')" class=" relative flex justify-center object-cover items-center w-40 h-40 mt-2  rounded-full overflow-hidden bg-gray-300 dark:bg-gray-500">
                                 <div class=" absolute bg-gray-600/50 dark:bg-gray-200/50 w-full h-full opacity-0 hover:opacity-100">
                                     <div class="w-full h-2/3"></div>
                                     <div class=" text-sm font-semibold h-1/3 w-full bg-gray-900/50 dark:bg-gray-700/50 text-center pt-2 text-white"> {{ __('etudiants.profil-photo') }}</div>
@@ -59,7 +59,7 @@
                                 @endif
                                 
                                 @forelse ($badges as $item)
-                                    <div>
+                                    <div class=" m-2">
                                         <img wire:model='image' src="{{ asset('storage/Badges/'. $item->badge->id.'.png') }}" class="h-28 w-auto object-cover "    />
                                     </div>
                                 @empty
