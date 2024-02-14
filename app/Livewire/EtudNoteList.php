@@ -81,10 +81,11 @@ class EtudNoteList extends Component
     {
 
 
-        $this->table_col_id =  'etudiant_id';
+     // dd($this->ids);
+        $this->table_col_id =  'all';
         $this->table_col_date = 'date';
     
-        $notes = Note::orderBy('date', 'desc');
+        $notes = Note::where('etudiant_id', $this->ids);
     
         $notes = $this->updatedSelectedRange($notes);
       

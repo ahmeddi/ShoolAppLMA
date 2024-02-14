@@ -52,11 +52,12 @@ class EtudAttList extends Component
     #[On('refresh')]
     public function render()
     {
-      $this->table_col_id =  'etudiant_id';
+
+      $this->table_col_id =  'all';
       $this->table_col_date = 'date';
   
-      $attds = Attande::where('nbh' ,'>' ,0)
-                             ->orderBy('date', 'desc');
+  
+      $attds = Attande::where('etudiant_id', $this->ids);
   
       $attds = $this->updatedSelectedRange($attds);
     

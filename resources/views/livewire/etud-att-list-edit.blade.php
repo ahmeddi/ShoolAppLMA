@@ -3,7 +3,7 @@
         <x-slot name='title'>
             <div class='relative w-full px-12 text-lg font-bold text-green-900 dark:text-gray-50 '>
               <div>
-                {{ __('classe.classes-add') }}
+                
                </div> 
                <button wire:click="close" class="absolute top-0 rtl:left-2 ltr:right-2 z-20 flex items-center justify-center w-8 h-8 text-green-700 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 dark:text-gray-50">
                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6"  viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -29,12 +29,8 @@
                           <label for="eid"  class="labels"> {{ __('att.hours') }}   :</label>
                           @error('nbh') <span class="danger ">{{ $message }}</span> @enderror  
                         </div>
-                        <select    wire:model.defer="nbh"   class="inputs  @error('nbh') reds @enderror">
-                            <option value="">-----</option>
-                             <option value="2"> 2 </option>
-                             <option value="4"> 4 </option>
-                             <option value="6"> 6 </option>
-                          </select>       
+                        <input wire:model.defer='nbh' class="inputs  col-span-2 @error('nbh') reds @enderror" type="number"   required  />       
+       
                     </div>
                 </div>
 
