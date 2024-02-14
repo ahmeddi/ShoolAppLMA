@@ -3,15 +3,15 @@
 return [
 
 
-    'notes' => 'Rapports',
-    'add' => 'Ajouter un Rapport',
+    'notes' => 'Observations',
+    'add' => 'Ajouter une observation',
     'nb' => 'Matricule',
     'etud' => 'Étudiant',
     'classe' => 'Classe',
-    'note' => 'Rapport',
+    'note' => 'Observation',
     'date' => 'Date',
-    'titr' => 'Titre du Rapport',
-    'text' => 'Texte du Rapport',
+    'titr' => 'Titre de l\'observation',
+    'text' => 'Texte de l\'observation',
     'prof' => 'Professeur',
     'emp' => 'Professeur',
     'son' => 'Auteur',

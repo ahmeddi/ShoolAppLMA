@@ -20,7 +20,7 @@ return [
     'atdds-etuds' => 'Étudiants',
     'atdds-profs' => 'Professeurs',
     'atdds-emps' => 'Employés',
-    'atdds-notes' => 'Rapports',
+    'atdds-notes' => 'Observations',
     'atdds-class' => 'Classes',
 
     'parametres' => 'Paramètres',
