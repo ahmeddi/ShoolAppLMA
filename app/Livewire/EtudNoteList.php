@@ -3,120 +3,43 @@
 namespace App\Livewire;
 
 use Carbon\Carbon;
+use App\Enums\Dates;
 use App\Models\Note;
 use Livewire\Component;
+use App\Traits\Rangables;
 use Livewire\Attributes\On;
 use App\Services\WhatsappApiService;
 
 class EtudNoteList extends Component
 {
-    public $day1;
-    public $day2;
-    public $date;
-    public $etud;
-    
 
-
-    public $t_month = false;
-    public $p_month = false;
-    public $t_week = false;
-
-    public $all = false;
-    
      
-    public function mount()
-    {
-        $now = Carbon::now();
-        $from = Carbon::parse('1-1-2000')->format('Y-m-d') ;
-        $to = $now->format('Y-m-d') ;
-        $this->date =[$from, $to];
+  use Rangables;
 
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = true;
-        $this->t_week = false;
-    }
-      public function thisMonth()
+  public $etud;
+  public $ids;
+
+    
+      public function mount()
       {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
 
 
+            $this->ranges = Dates::cases();
 
-        $this->date =[$from, $to];
+            $this->rangeName = Dates::All_Time->label();
         
-        $this->reset(['day1','day2',]);
+        
+            $casesToKeep = ['month', 'today','week', 'past_month', 'all', 'custom'];
+        
+            $this->ranges = array_filter($this->ranges, function ($case) use ($casesToKeep) {
+              return in_array($case->value, $casesToKeep);
+            });
 
-        $this->t_month = true;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
+            $this->selectedRange = 'all';
 
-      }
+            $this->rangeName =  __('calandar.tous');
 
-      public function thisWeek()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfWeek()->format('Y-m-d') ;
-        $to = $now->endOfWeek()->format('Y-m-d') ;
-
-
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = true;
-
-      }
-
-      public function randday()
-      {
-        $from = Carbon::parse($this->day1)->format('Y-m-d');
-        $to = Carbon::parse($this->day2)->format('Y-m-d');
-
-
-        $this->date =[$from, $to];
-
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function pastMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->subMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
-
-
-
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-
-        $this->t_month = false;
-        $this->p_month = true;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function alls()
-      {
-          $now = Carbon::now();
-          $from = Carbon::parse('1-1-2000')->format('Y-m-d') ;
-          $to = $now->format('Y-m-d') ;
-          $this->date =[$from, $to];
-  
-          $this->t_month = false;
-          $this->p_month = false;
-          $this->all = true;
-          $this->t_week = false;
+            $this->ids = $this->etud->id;
       }
 
       #[On('delete')]
@@ -156,8 +79,16 @@ class EtudNoteList extends Component
     #[On('refresh')]
     public function render()
     {
-       // dd();
-        $notes = $this->etud->notes->whereBetween('date',$this->date);
+
+
+        $this->table_col_id =  'etudiant_id';
+        $this->table_col_date = 'date';
+    
+        $notes = Note::orderBy('date', 'desc');
+    
+        $notes = $this->updatedSelectedRange($notes);
+      
+        $notes =  $notes->get();
        
         return view('livewire.etud-note-list',[
             'notes' => $notes,

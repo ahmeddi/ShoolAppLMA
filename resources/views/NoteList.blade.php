@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class=" bg-white shadow-md p-3 dark:bg-gray-900 rounded-md mx-2 mt-4">
+    <div class="  p-3  mx-2 mt-4">
         @livewire('etud-note-list', ['etud' => $etud])
         @livewire('etud-note-list-add', ['etud' => $etud->id])
         @livewire('etud-note-list-edit')

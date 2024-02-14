@@ -17,6 +17,8 @@ return [
     'hours' => 'Heures',
     'classe' => 'Classe',
 
+    'custom' => 'Personnalisé',
+
     
 
 

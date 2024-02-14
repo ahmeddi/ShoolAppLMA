@@ -8,7 +8,6 @@
                     <th class=" px-2 text-sm">{{ __('etudiants.obs') }}</th>
                 </tr>
             </thead>
-    
                 @foreach ($classe->etuds as $index => $Etud)
                     <tr class="h-10 w-full py-2">
                         <td>
@@ -21,7 +20,6 @@
                                             {{ $Etud->nom }}
                                         @else
                                             {{ $Etud->nomfr   }}
-                                            
                                         @endif 
                                         </div>
                                     </div>
@@ -37,7 +35,6 @@
                         </td>      
                     </tr>
                 @endforeach
-  
         </tbody>
     </table>
     <div class='px-10  flex space-x-3 justify-end items-center w-full'>
