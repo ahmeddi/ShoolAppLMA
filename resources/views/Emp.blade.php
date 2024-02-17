@@ -10,7 +10,7 @@
             <div class="flex flex-col space-y-2 bg-white dark:bg-gray-900 overflow-hidden shadow-md p-4 sm:rounded-lg">
                  @livewire('emp-profil', ['emp' => $emp]) 
                 @livewire('emp-edit')
-                @livewire('emp-pic', ['empId' => $emp->id]) 
+                {{-- @livewire('emp-pic', ['empId' => $emp->id])  --}}
                 @livewire('emp-del')
             </div>
         </div>
