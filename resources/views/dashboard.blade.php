@@ -9,7 +9,7 @@
         @can('sur_or_dir')    
             <div class="max-w-7xl flex flex-col space-y-2 mx-4 md:mx-8 my-2">
     
-                <div class="my-3 mx-4 md:mx-8 text-xl text-gray-800 dark:text-gray-50">
+                <div class="my-1 mx-4 md:mx-2 text-xl text-gray-800 dark:text-gray-50">
                     {{ __('navlink.ges-scol') }}
                 </div>
     
@@ -139,7 +139,7 @@
     
         @can('comps')
             <div class="max-w-7xl flex flex-col space-y-2 mx-4 md:mx-8 mt-8">
-                <div class="my-3 mx-4 md:mx-8 text-xl text-gray-800 dark:text-gray-50">
+                <div class="my-1 mx-4 md:mx-2 text-xl text-gray-800 dark:text-gray-50">
                     {{ __('navlink.comps') }}
                 </div>
     

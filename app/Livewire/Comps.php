@@ -2,151 +2,66 @@
 
 namespace App\Livewire;
 
-use App\Console\Commands\ProfSalaire;
-use App\Models\DetteEch;
-use App\Models\DettePaiement;
-use App\Models\Etudiant;
-use App\Models\Fraisetud;
 use Carbon\Carbon;
+use App\Enums\Dates;
 use App\Models\Note;
-use Livewire\Component;
-use Livewire\Attributes\On;
-use App\Livewire\ParentPaiements;
-use App\Models\Depance;
 use App\Models\Dette;
 use App\Models\EmpHon;
 use App\Models\EmpSal;
-use App\Models\PaiementParent;
+use App\Models\Depance;
 use App\Models\ProfHon;
-use App\Models\ProfPaiement;
+use Livewire\Component;
+use App\Models\DetteEch;
+use App\Models\Etudiant;
+use App\Models\Fraisetud;
+use App\Traits\Rangables;
 use App\Models\RemisParent;
+use Livewire\Attributes\On;
+use App\Models\ProfPaiement;
+use App\Models\DettePaiement;
+use App\Models\PaiementParent;
+use App\Livewire\ParentPaiements;
+use App\Console\Commands\ProfSalaire;
 
 class Comps extends Component
 {
-    public $day1;
-    public $day2;
-    public $date;
+    use Rangables;
+
     public $etud;
-    
-
-
-    public $t_month = false;
-    public $p_month = false;
-    public $t_week = false;
-
-    public $all = false;
-    
-     
+    public $ids;
+  
+      
     public function mount()
     {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
+        $this->ranges = Dates::cases();
 
+        $this->rangeName = Dates::All_Time->label();
+    
+    
+        $casesToKeep = ['month', 'today','week', 'past_month', 'all', 'custom'];
+    
+        $this->ranges = array_filter($this->ranges, function ($case) use ($casesToKeep) {
+          return in_array($case->value, $casesToKeep);
+        });
 
+        $this->selectedRange = 'month';
 
-        $this->date =[$from, $to];
-        
-        $this->reset(['day1','day2',]);
+        $this->rangeName =  __('calandar.month');
 
-        $this->t_month = true;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
     }
-      public function thisMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
+    
+     
 
-
-
-        $this->date =[$from, $to];
-        
-        $this->reset(['day1','day2',]);
-
-        $this->t_month = true;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function thisWeek()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfWeek()->format('Y-m-d') ;
-        $to = $now->endOfWeek()->format('Y-m-d') ;
-
-
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = true;
-
-      }
-
-      public function randday()
-      {
-        $from = Carbon::parse($this->day1)->format('Y-m-d');
-        $to = Carbon::parse($this->day2)->format('Y-m-d');
-
-
-        $this->date =[$from, $to];
-
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function pastMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->subMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
-
-
-
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-
-        $this->t_month = false;
-        $this->p_month = true;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function alls()
-      {
-          $now = Carbon::now();
-          $from = Carbon::parse('1-1-2000')->format('Y-m-d') ;
-          $to = $now->format('Y-m-d') ;
-          $this->date =[$from, $to];
-  
-          $this->t_month = false;
-          $this->p_month = false;
-          $this->all = true;
-          $this->t_week = false;
-      }
 
 
 
     #[On('refresh')]
     public function render()
     {
+
+      /*
         $frais = Fraisetud::whereBetween('date', $this->date)->sum('montant');
         $payed = PaiementParent::whereBetween('date', $this->date)->sum('montant');
-        $remis = RemisParent::whereBetween('date', $this->date)->sum('montant');
-
-        
 
         $recet = $payed;
 
@@ -171,6 +86,62 @@ class Comps extends Component
       //  $comps = $recet - $depances  - $peis +  $dettes - $sal ;
 
         $comps = $recet + $dettes - $sal - $depances - $peis;
+
+*/
+        $this->table_col_id =  'all';
+        $this->table_col_date = 'date';
+
+        $frais = Fraisetud::orderBy('date', 'desc');
+        $payed = PaiementParent::orderBy('date', 'desc');
+
+        $peis = DettePaiement::orderBy('date', 'desc');
+        $dettes = Dette::orderBy('date', 'desc');
+        $dette = DetteEch::orderBy('date', 'desc');
+
+        $prof_hon = ProfHon::orderBy('date', 'desc');
+        $prof_sal = ProfPaiement::orderBy('date', 'desc');
+
+        $emp_hon = EmpHon::orderBy('date', 'desc');
+        $emp_sal = EmpSal::orderBy('date', 'desc');
+
+        $depances = Depance::orderBy('date', 'desc');
+
+        $frais = $this->updatedSelectedRange($frais);
+        $payed = $this->updatedSelectedRange($payed);
+        $peis = $this->updatedSelectedRange($peis);
+        $dettes = $this->updatedSelectedRange($dettes);
+        $dette = $this->updatedSelectedRange($dette);
+
+        $prof_hon = $this->updatedSelectedRange($prof_hon);
+        $prof_sal = $this->updatedSelectedRange($prof_sal);
+
+        $emp_hon = $this->updatedSelectedRange($emp_hon);
+        $emp_sal = $this->updatedSelectedRange($emp_sal);
+
+        $depances = $this->updatedSelectedRange($depances);
+
+        $frais =  $frais->sum('montant');
+        $payed =  $payed->sum('montant');
+        $peis =  $peis->sum('montant');
+        $dettes =  $dettes->sum('montant');
+        $dette =  $dette->sum('montant');
+        $prof_hon =  $prof_hon->sum('montant');
+        $prof_sal =  $prof_sal->sum('montant');
+        $emp_hon =  $emp_hon->sum('montant');
+        $emp_sal =  $emp_sal->sum('montant');
+        $depances =  $depances->sum('montant');
+
+        $sal = $prof_sal + $emp_sal;
+        $hon = $prof_hon + $emp_hon;
+
+        $recet = $payed;
+
+
+        $comps = $recet + $dettes - $sal - $depances - $peis;
+
+
+     //   $payed = PaiementParent::whereBetween('date', $this->date)->sum('montant');
+
 
         return view('livewire.comps',[
             

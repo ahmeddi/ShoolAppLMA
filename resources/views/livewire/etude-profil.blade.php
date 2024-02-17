@@ -2,153 +2,178 @@
     <div class=" relative p-2  ">
         <div class="w-full  ">
             <div class="flex flex-col lg:flex-row p-2 w-auto  mb-4  ">
-                @cannot('parent')
-                        <div class=" w-full lg:w-40 flex justify-center items-center lg:items-start ">
-                            <button  wire:click="$dispatch('pic')" class=" relative flex justify-center object-cover items-center w-40 h-40 mt-2  rounded-full overflow-hidden bg-gray-300 dark:bg-gray-500">
-                                <div class=" absolute bg-gray-600/50 dark:bg-gray-200/50 w-full h-full opacity-0 hover:opacity-100">
-                                    <div class="w-full h-2/3"></div>
-                                    <div class=" text-sm font-semibold h-1/3 w-full bg-gray-900/50 dark:bg-gray-700/50 text-center pt-2 text-white"> {{ __('etudiants.profil-photo') }}</div>
-                                </div>
-                                @if ($etud->image)
-                                    <img wire:model='image' src="{{ asset('storage/'.$etud->image) }}" class="h-full w-auto object-cover "    />
-                                @else 
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-full text-gray-100 dark:text-gray-800" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
-                                    </svg>
-                                @endif
-                            </button> 
-
-                        </div>
-                @endcannot
                 <div class="flex flex-col lg:flex-row md:flex-row w-full  justify-between text-teal-900">
+                    <div class="w-full lg:w-2/3 my-2 md:my-2 lg:my-1 px-4">
+                        <div class="max-w-4xl  bg-white dark:bg-transparent w-full rounded-lg">
+                            <div class="p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
+                                <div class=" flex flex-col lg:flex-row gap-2  items-center">
+                                    @can('parent')
+                                    <div class=" w-auto lg:w-40 h-40 flex justify-center items-center lg:items-start relative ">
+                                        <div class=" @if($etud->card ==1) ring ring-yellow-300 @endif @if($etud->card ==2) ring ring-orange-500 @endif @if($etud->card ==3) ring ring-red-700 @endif   shadow-lg relative flex justify-center object-cover items-center w-40 h-40 mt-2  rounded-full overflow-hidden bg-gray-300 dark:bg-gray-500">
+                                            @if ($etud->image)
+                                                <img wire:model='image' src="{{ asset('storage/'.$etud->image) }}" class="h-full w-auto object-cover "    />
+                                            @else 
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-full text-gray-100 dark:text-gray-800" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
+                                                </svg>
+                                            @endif
+                                        </div> 
 
-                    <div class=" w-full p-3">
-                        <div class="w-full flex flex-col mx-3 space-y-1">
-
-                            <div class="capitalize w-full mx-2 mb-4 flex flex-col lg:flex-row md:flex-col text-xl items-center  font-bold dark:text-teal-50">
-                                <div class="m-2">{{ $etud->nom }}</div>
-                                <div class="m-2">{{ $etud->nomfr  }}</div>
-                            </div>
-
-                            <div class="flex">
-                                @if ($etud->card == 1)
-                                   <div class=" flex">
-                                        <div class=" fill-yellow-400 rotate-180">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-yellow-500 ">
-                                                <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
-                                            </svg>
-                                        </div>
-                                   </div>
-                                @elseif ($etud->card == 2)
-                                <div class="flex">
-                                    <div class=" fill-orange-500 rotate-180">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-orange-500 ">
-                                            <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                               </div>
-                                @elseif ($etud->card == 3)
-                                <div class="flex">
-                                    <div class=" fill-red-500 rotate-180">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-red-500 ">
-                                            <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    
-                                 </div>
-                                @endif
-                                
-                                @forelse ($badges as $item)
-                                    <div class=" m-2">
-                                        <img wire:model='image' src="{{ asset('storage/Badges/'. $item->badge->id.'.png') }}" class="h-28 w-auto object-cover "    />
-                                    </div>
-                                @empty
-                                @endforelse
-                            </div>
-
-                            <table>
-                                <tr class="py-2 my-2">
-                                    <td class="w-2/12">                                                                                 
-                                            <div  class=" text-sm font-semibold dark:text-teal-100 ">
-                                                {{ __('etudiants.add-nb') }}:
-                                            </div>    
-                                    </td>
-                                    <td class="w-fit  dark:text-teal-100 font-bold flex justify-center items-center">
-                                            <div class=" dark:text-teal-100">{{ $etud->nb }} - {{ $etud->classe->nom  }}</div>
-                                    </td>
-                                </tr>
-                                @cannot('parent')
-                                    <tr class="py-2 my-2">
-                                        <td class="w-2/12">                                                                                 
-                                                <div  class=" text-sm font-semibold dark:text-teal-100 ">
-                                                    {{ __('etudiants.profil-prent') }}
-                                                </div>    
-                                        </td>
-                                        <td class="w-fit dark:text-teal-100 font-bold flex justify-center items-center">
-                                            <a wire:navigate class=" hover:underline dark:decoration-slate-50"  href="{{url(app()->getLocale().'/Parent/'.$etud->parent->id)}}">
-                                                <div  class=" dark:text-teal-100">
-                                                    {{  app()->getLocale() == 'ar' ? $etud->parent->nom : $etud->parent->nomfr }} -
-                                                    <span dir="ltr">
-                                                        {{  chunk_split($etud->parent->telephone, 2, ' ') }}
-                                                    </span> 
+                                        <div class=" absolute -bottom-4 ">
+                                            @if ($etud->card == 1)
+                                                <div class=" flex">
+                                                        <div class=" fill-yellow-300 rotate-180">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-yellow-300 ">
+                                                                <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </div>
                                                 </div>
-                                            </a>
-                                        </td>
-                                    </tr> 
-                                @endcannot
-                                
+                                            @elseif ($etud->card == 2)
+                                                <div class="flex">
+                                                    <div class=" fill-orange-500 rotate-180">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-orange-500 ">
+                                                            <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            @elseif ($etud->card == 3)
+                                                <div class="flex">
+                                                    <div class=" fill-red-700 rotate-180">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-red-700 ">
+                                                            <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                    
+                                                </div>
+                                            @endif
+                                       </div>
+                                    </div>
+                                    @endcan
+                                    @cannot('parent')
+                                        <div class=" w-auto lg:w-40 h-40 flex justify-center items-center lg:items-start relative ">
+                                            <button  wire:click="$dispatch('pic')" class=" @if($etud->card ==1) ring ring-yellow-300 @endif @if($etud->card ==2) ring ring-orange-500 @endif @if($etud->card ==3) ring ring-red-600 @endif   shadow-lg relative flex justify-center object-cover items-center w-40 h-40 mt-2  rounded-full overflow-hidden bg-gray-300 dark:bg-gray-500">
+                                                <div class=" absolute bg-gray-600/50 dark:bg-gray-200/50 w-full h-full opacity-0 hover:opacity-100">
+                                                    <div class="w-full h-2/3"></div>
+                                                    <div class=" text-sm font-semibold h-1/3 w-full bg-gray-900/50 dark:bg-gray-700/50 text-center pt-2 text-white"> {{ __('etudiants.profil-photo') }}</div>
+                                                </div>
+                                                @if ($etud->image)
+                                                    <img wire:model='image' src="{{ asset('storage/'.$etud->image) }}" class="h-full w-auto object-cover "    />
+                                                @else 
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-full text-gray-100 dark:text-gray-800" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
+                                                    </svg>
+                                                @endif
+                                            </button> 
+
+                                            <div class=" absolute -bottom-4 ">
+                                                @if ($etud->card == 1)
+                                                    <div class=" flex">
+                                                            <div class=" fill-yellow-300 rotate-180">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-yellow-300 ">
+                                                                    <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
+                                                                </svg>
+                                                            </div>
+                                                    </div>
+                                                @elseif ($etud->card == 2)
+                                                    <div class="flex">
+                                                        <div class=" fill-orange-500 rotate-180">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-orange-500 ">
+                                                                <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                @elseif ($etud->card == 3)
+                                                    <div class="flex">
+                                                        <div class=" fill-red-600 rotate-180">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10  text-red-600 ">
+                                                                <path fill-rule="evenodd" d="M10.5 3A1.501 1.501 0 0 0 9 4.5h6A1.5 1.5 0 0 0 13.5 3h-3Zm-2.693.178A3 3 0 0 1 10.5 1.5h3a3 3 0 0 1 2.694 1.678c.497.042.992.092 1.486.15 1.497.173 2.57 1.46 2.57 2.929V19.5a3 3 0 0 1-3 3H6.75a3 3 0 0 1-3-3V6.257c0-1.47 1.073-2.756 2.57-2.93.493-.057.989-.107 1.487-.15Z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                @endif
+                                           </div>
+                                        </div>
+                                    @endcannot
+                                    <div class="  m-2 flex flex-col w-full text-center text-gray-800 dark:text-gray-100 justify-center items-centre">
+                                        <div class="  m-2 flex flex-col w-full text-center text-gray-800 dark:text-gray-100 justify-center items-centre">
+                                            <div> 
+                                                <h2 class="text-2xl ">
+                                                    {{  app()->getLocale() == 'ar' ? $etud->nom : $etud->nomfr }}
+                                                </h2>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm my-1 ">
+                                                    {{  app()->getLocale() == 'ar' ? $etud->nomfr : $etud->nom }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="flex w-full justify-center">
+                                            @forelse ($badges as $item)
+                                                <div class=" m-2">
+                                                    <img wire:model='image' src="{{ asset('storage/Badges/'. $item->badge->id.'.png') }}" class="h-28 w-auto object-cover "    />
+                                                </div>
+                                            @empty
+                                            @endforelse
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                        {{ __('etudiants.add-nb') }}:
+                                    </p>
+                                    <p>
+                                        {{ $etud->nb }} - {{ $etud->classe->nom  }}
+                                    </p>
+                                </div>
+                                <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                        {{ __('etudiants.profil-prent') }}
+                                    </p>
+                                    <a wire:navigate class=" hover:underline dark:decoration-slate-50"  href="{{url(app()->getLocale().'/Parent/'.$etud->parent->id)}}">
+                                            {{  app()->getLocale() == 'ar' ? $etud->parent->nom : $etud->parent->nomfr }} -
+                                        <span dir="ltr">
+                                            {{  chunk_split($etud->parent->telephone, 2, ' ') }}
+                                        </span> 
+                                    </a>
+                                </div>
                                 @if ($etud->ddn)
-                                <tr class="py-2 my-2">
-                                    <td class="w-2/6">                                                                                 
-                                            <div  class=" w-fit text-sm font-semibold dark:text-teal-100 ">
-                                                {{ __('etudiants.profil-ddn') }}
-                                            </div>    
-                                    </td>
-                                    <td class="w-fit dark:text-teal-100 font-bold flex justify-center items-center">
-                                        <div class=" dark:text-teal-100">{{ $etud->ddn  }} </div>
-
-                                    </td>
-                                </tr>
+                                <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                        {{ __('etudiants.profil-ddn') }}
+                                    </p>
+                                    <p>
+                                        {{ $etud->ddn  }}  @if($etud->ldn) - {{ $etud->ldn  }}  @endif
+                                    </p>
+                                </div>
                                 @endif
-                                
                                 @if ($etud->nni)
-                                <tr class="py-2 my-2">
-                                    <td class="w-2/12">                                                                                 
-                                            <div  class=" text-sm font-semibold dark:text-teal-100 ">
-                                                {{ __('etudiants.profil-nni') }}
-                                            </div>    
-                                    </td>
-                                    <td class="w-fit dark:text-teal-100 font-bold flex justify-center items-center">
-                                        <div class=" dark:text-teal-100">{{ $etud->nni  }} </div>
-
-                                    </td>
-                                </tr>
+                                <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                        {{ __('etudiants.profil-nni') }}
+                                    </p>
+                                    <p>
+                                        {{ $etud->nni  }}
+                                    </p>
+                                </div>
                                 @endif
-                                
                                 @if ($etud->nc)
-                                <tr class="py-2 my-2">
-                                    <td class="w-2/12">                                                                                 
-                                            <div  class=" text-sm font-semibold dark:text-teal-100 ">
-                                               
-                                                {{ __('etudiants.profil-ns') }}
-                                            </div>    
-                                    </td>
-                                    <td class="w-fit dark:text-teal-100 font-bold flex justify-center items-center">
-                                        <div class=" dark:text-teal-100">{{ $etud->nc  }} </div>
-
-                                    </td>
-                                </tr>
+                                <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
+                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                        {{ __('etudiants.profil-ns') }} (RIM)
+                                    </p>
+                                    <p>
+                                        {{ $etud->nc  }}
+                                    </p>
+                                </div>
                                 @endif
-                                
-                            </table>
-    
+                            </div>
                         </div>
-                        <div>
-    
-                        </div>
-    
+                
                     </div>
-                    <div class=" lg:w-2/3 md:w-2/3 p-1 "> 
+                    <div class=" lg:w-1/3 md:w-1/3 p-1 "> 
                             @can('dir')
                                 <button wire:click="$dispatchTo('etud-edit','open',{ id: {{ $etud->id }} })"   class="  mb-2 bg-teal-500 text-teal-50 p-2 rounded w-full ">
                                     <div class="flex ">

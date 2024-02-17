@@ -1,16 +1,16 @@
 <div class="w-full h-full px-2  ">
   
-    <div class=" w-full flex my-2 justify-between items-center px-2">
-        <div class= "flex justify-between my-1">
+    <div class=" my-2 w-full flex flex-col lg:flex-row gap-y-1  justify-between items-center ">
+        <div class= "flex w-full justify-start">
             @cannot('parent')
-                <div class= "flex justify-between my-3">
+                <div class= "flex justify-between my-1">
                     <button wire:click="$dispatch('pattl')" class='focus:outline-none px-4 py-2 dark:text-gray-900 dark:bg-gray-100 text-white rounded-md hover:outline-none bg-teal-600 hover:bg-teal-800' >
                         {{ __('att.add') }}
                     </button>   
                 </div>
             @endcannot
         </div>    
-        <div>
+        <div class="flex w-full justify-end">
             <x-Dropdown.dropdown-menu :$ranges :$selectedRange :$rangeName :$customRangeStart :$customRangeEnd/> 
         </div>
     </div>

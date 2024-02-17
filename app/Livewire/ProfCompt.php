@@ -3,121 +3,67 @@
 namespace App\Livewire;
 
 use Carbon\Carbon;
+use App\Enums\Dates;
 use App\Models\Prof;
 use App\Models\Attandp;
 use App\Models\ProfHon;
-use App\Models\ProfPaiement;
-use App\Models\ProfRemise;
 use Livewire\Component;
+use App\Traits\Rangables;
+use App\Models\ProfRemise;
+use App\Models\ProfPaiement;
 
 class ProfCompt extends Component
 {
-    public $hons;
-    public $paiements; 
-    public $remises;
-    public $compts;
-
-    public $day1;
-    public $day2;
-    public $date;
     public $ids;
-
-    public $all,$t_month,$p_month,$t_week;
-    
-    protected $listeners = ['refresh' => 'render',];
      
+    use Rangables;
+
     public function mount()
     {
-      $this->all = 0;
-      $this->t_month = 1;
-      $this->p_month = 0;
-      $this->t_week = 0;
+      $this->ranges = Dates::cases();
 
-        $now = Carbon::now();
-        $from = "2015-1-1" ;
-        $to = $now->format('Y-m-d') ;
-        $this->date =[$from, $to];
+      $this->rangeName = Dates::All_Time->label();
+  
+  
+      $casesToKeep = ['month', 'today','week', 'past_month', 'all', 'custom'];
+  
+      $this->ranges = array_filter($this->ranges, function ($case) use ($casesToKeep) {
+        return in_array($case->value, $casesToKeep);
+      });
+
+      $this->selectedRange = 'month';
+
+      $this->rangeName =  __('calandar.month');
     }
-
-
-      public function thisMonth()
-      {
-        $this->all = 0;
-        $this->t_month = 1;
-        $this->p_month = 0;
-        $this->t_week = 0;
-
-        
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-      }
-
-      public function thisWeek()
-      {
-        $this->all = 0;
-        $this->t_month = 0;
-        $this->p_month = 0;
-        $this->t_week = 1;
-
-        $now = Carbon::now();
-        $from = $now->startOfWeek()->format('Y-m-d') ;
-        $to = $now->endOfWeek()->format('Y-m-d') ;
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-      }
-
-      public function alls()
-      {
-        $this->all = 1;
-        $this->t_month = 0;
-        $this->p_month = 0;
-        $this->t_week = 0;
-
-        $now = Carbon::now();
-        $from = "2015-1-1" ;
-        $to = $now->format('Y-m-d') ;
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-      }
-
-      public function randday()
-      {
-        $this->all = 0;
-        $this->t_month = 0;
-        $this->p_month = 0;
-        $this->t_week = 0;
-
-        $from = Carbon::parse($this->day1)->format('Y-m-d');
-        $to = Carbon::parse($this->day2)->format('Y-m-d');
-        $this->date =[$from, $to];
-
-      }
-
-      public function pastMonth()
-      {
-        $this->all = 0;
-        $this->t_month = 0;
-        $this->p_month = 1;
-        $this->t_week = 0;
-
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->subMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-      }
 
 
 
     public function render()
     {
+        $this->table_col_id =  'all';
+        $this->table_col_date = 'date';
+
+        $hons = ProfHon::where('prof_id',$this->ids);
+        $hons = $this->updatedSelectedRange($hons);
+        $hons = $hons->sum('montant');
+
+        $paiements = ProfPaiement::where('prof_id',$this->ids);
+        $paiements = $this->updatedSelectedRange($paiements);
+        $paiements = $paiements->sum('montant');
+
+
+        $remises = ProfRemise::where('prof_id',$this->ids);
+        $remises = $this->updatedSelectedRange($remises);
+        $remises = $remises->sum('montant');
+
+        $nonbonis = ProfPaiement::where('prof_id',$this->ids)->whereNot('motif',3);
+        $nonbonis = $this->updatedSelectedRange($nonbonis);
+        $nonbonis = $nonbonis->sum('montant');
+
+        $compts = $hons - $remises - $nonbonis ?? 0;
+
+
+/*
         $attds = Attandp::where('prof_id',$this->ids)
         ->whereBetween('date',$this->date)
         ->sum('nbh');
@@ -130,8 +76,8 @@ class ProfCompt extends Component
         $nonbonis = ProfPaiement::where('prof_id',$this->ids)->whereNot('motif',3)->whereBetween('date',  $this->date )->sum('montant') ?? 0;
 
         $this->compts =   $this->hons - $this->remises - $nonbonis ?? 0;
-
+*/
         
-        return view('livewire.prof-compt');
+        return view('livewire.prof-compt', ['hons' => $hons, 'paiements' => $paiements, 'remises' => $remises, 'compts' => $compts]);
     }
 }

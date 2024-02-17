@@ -231,13 +231,13 @@
             <!-- Page Header -->
             <header
             id="page-header"
-            class="fixed print:hidden end-0 start-0 top-0 z-30 flex h-16 flex-none items-center bg-white shadow-sm transition-all duration-300 ease-out dark:bg-gray-900 lg:ps-64"
+            class="fixed print:hidden end-0 start-0 top-0 z-30 flex h-16 flex-none items-center bg-white shadow-sm transition-all duration-300 ease-out dark:bg-gray-900  lg:ps-64"
             x-bind:class="{ 'lg:ps-64': desktopSidebarOpen }"
             >
 
            
             <div
-                class="mx-auto flex w-full max-w-7xl justify-between px-4 lg:px-8"
+                class="mx-auto flex w-full max-w-7xl justify-between px-4 lg:px-8 bg-background/95 supports-[backdrop-filter]:bg-background/60"
             >
                 <!-- Left Section -->
                 <div class="flex items-center">
@@ -294,7 +294,7 @@
                    
                 
                 </div>
-                <div class="max-w-7xl  mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl  mx-auto py-6 px-4 sm:px-6 lg:px-8 ">
                    <div class="text-primary-500">
                         {{ $header }} 
                     </div> 

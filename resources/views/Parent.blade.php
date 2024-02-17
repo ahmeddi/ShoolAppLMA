@@ -10,7 +10,7 @@
     </x-slot>
 
     <div class="py-2 w-full ">
-        <div class="w-fit lg:w-full ">
+        <div class="w-full ">
             <div class="flex flex-col space-y-2  overflow-hidden sm:rounded-lg">
                 <div> @livewire('parent-profil',[ 'Parent' => $Parent ]) </div>
                 <div> @livewire('etud-par-add',[ 'prId' => $Parent->id ]) </div> 
