@@ -2,11 +2,13 @@
 
 namespace App\Livewire;
 
-use App\Models\Parentt;
 use Carbon\Carbon;
+use App\Enums\Dates;
+use App\Models\Parentt;
 use Livewire\Component;
-use Livewire\Attributes\On;
 use App\Models\Fraisetud;
+use App\Traits\Rangables;
+use Livewire\Attributes\On;
 
 class ParentFrais extends Component
 {
@@ -14,113 +16,26 @@ class ParentFrais extends Component
 
     public $ids;
 
-    public $day1;
-    public $day2;
-    public $date;
-
-    public $t_month = false;
-    public $p_month = false;
-    public $t_week = false;
-
-    public $all = false;
-    
+    use Rangables;
      
     public function mount()
     {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
+      $this->ranges = Dates::cases();
 
-
-        $this->date =[$from, $to];
-
-        $this->t_month = true;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
-    }
-      public function thisMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
-
-
-
-        $this->date =[$from, $to];
-        
-        $this->reset(['day1','day2',]);
-
-        $this->t_month = true;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function thisWeek()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfWeek()->format('Y-m-d') ;
-        $to = $now->endOfWeek()->format('Y-m-d') ;
-
-
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = true;
-
-      }
-
-      public function randday()
-      {
-        $from = Carbon::parse($this->day1)->format('Y-m-d');
-        $to = Carbon::parse($this->day2)->format('Y-m-d');
-
-
-        $this->date =[$from, $to];
-
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function pastMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->subMonth()->format('Y-m-d') ;
-        $to = $now->endOfMonth()->format('Y-m-d') ;
-
-
-
-        $this->date =[$from, $to];
-        $this->reset(['day1','day2',]);
-
-
-        $this->t_month = false;
-        $this->p_month = true;
-        $this->all = false;
-        $this->t_week = false;
-
-      }
-
-      public function alls()
-      {
-          $now = Carbon::now();
-          $from = Carbon::parse('1-1-2000')->format('Y-m-d') ;
-          $to = $now->format('Y-m-d') ;
-          $this->date =[$from, $to];
+      $this->rangeName = Dates::All_Time->label();
   
-          $this->t_month = false;
-          $this->p_month = false;
-          $this->all = true;
-          $this->t_week = false;
-      }
+  
+      $casesToKeep = ['month', 'today','week', 'past_month', 'all', 'custom'];
+  
+      $this->ranges = array_filter($this->ranges, function ($case) use ($casesToKeep) {
+        return in_array($case->value, $casesToKeep);
+      });
+
+      $this->selectedRange = 'all';
+
+      $this->rangeName =  __('calandar.tous');
+    }
+
 
       #[On('delete')]
       function delete($idkey)  
@@ -135,9 +50,13 @@ class ParentFrais extends Component
     #[On('refresh')] 
     public function render()
     {
-        $par = Parentt::find($this->ids);
 
-        $frais = $par->frais->whereBetween('date', $this->date)->sortByDesc('date');
+        $this->table_col_id =  'all';
+        $this->table_col_date = 'date';
+
+        $frais = Fraisetud::where('parent_id',$this->ids);
+        $frais = $this->updatedSelectedRange($frais);
+        $frais = $frais->get();
 
         return view('livewire.parent-frais',['frais' => $frais]);
     }
