@@ -21,14 +21,14 @@
                                 </div>
                             @endcan
                             
-                            {{-- @cannot('parent') --}}
+                            @cannot('parent')
                                 <div class=" w-full border border-gray-200 dark:border-gray-800 shadow grid grid-cols-1 divide-x-0 lg:divide-x divide-y lg:divide-y-0  md:divide-x md:divide-y  divide-gray-200 dark:divide-gray-600 rtl:divide-x-reverse sm:grid-cols-2 lg:grid-cols-4 rounded-md overflow-hidden">
                                     <x-My.card :label="__('etudiants.cot')" :montant="$frais" :exp="'no'" :border="1" :url="'/Parent'.'/'.$ids.'/Frais'" />
                                     <x-My.card :label="__('home.reccet')" :montant="$paiements" :exp="'no'" :border="1" :url="'/Parent'.'/'.$ids.'/Paiements'" />
                                     <x-My.card :label="__('home.disc')" :montant="$remises" :exp="'no'" :border="1" :url="'/Parent'.'/'.$ids.'/Remises'" />
                                     <x-My.card :label="__('home.compt')" :montant="$compts" :exp="'no'" :border="1" :url="'#'" />
                                 </div>
-                            {{-- @endcannot --}}
+                           @endcannot 
 
                             <!-- Table Section -->
                             <div class="w-full my-2">
