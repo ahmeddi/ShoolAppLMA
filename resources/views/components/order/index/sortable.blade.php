@@ -1,8 +1,8 @@
 @props(['column', 'sortCol', 'sortAsc', 'types'])
 
-<button wire:click="sortBy('{{ $column }}')" {{ $attributes->merge(['class' => 'flex w-full items-center gap-2 group']) }}>
+<button wire:click="sortBy('{{ $column }}')" {{ $attributes->merge(['class' => 'flex  text-right ltr: flex-row rtl:flex-row-reverse items-center gap-2 group']) }}>
     @if ($sortCol === $column)
-        <div class="text-gray-400">
+        <div class="text-gray-400 flex-row-reverse">
             @if ($sortAsc)
                 <x-icon.arrow-long-up />
             @else

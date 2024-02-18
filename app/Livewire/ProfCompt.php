@@ -63,20 +63,7 @@ class ProfCompt extends Component
         $compts = $hons - $remises - $nonbonis ?? 0;
 
 
-/*
-        $attds = Attandp::where('prof_id',$this->ids)
-        ->whereBetween('date',$this->date)
-        ->sum('nbh');
 
-        $saleur = Prof::find($this->ids);
-
-        $this->hons = ProfHon::where('prof_id',$this->ids)->whereBetween('date',  $this->date )->sum('montant') ?? 0;
-        $this->paiements = ProfPaiement::where('prof_id',$this->ids)->whereBetween('date',  $this->date )->sum('montant') ?? 0;
-        $this->remises = ProfRemise::where('prof_id',$this->ids)->whereBetween('date',  $this->date )->sum('montant') ?? 0;
-        $nonbonis = ProfPaiement::where('prof_id',$this->ids)->whereNot('motif',3)->whereBetween('date',  $this->date )->sum('montant') ?? 0;
-
-        $this->compts =   $this->hons - $this->remises - $nonbonis ?? 0;
-*/
         
         return view('livewire.prof-compt', ['hons' => $hons, 'paiements' => $paiements, 'remises' => $remises, 'compts' => $compts]);
     }

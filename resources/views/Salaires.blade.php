@@ -7,7 +7,7 @@
 
     <div class="p-4">
         <div class="">
-            <div class="flex flex-col  space-y-2 overflow-hidden sm:rounded-lg">
+            <div class="">
                 @livewire('salaires')
             </div>
         </div>

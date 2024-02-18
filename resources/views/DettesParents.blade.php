@@ -6,10 +6,8 @@
     </x-slot>
 
     <div class="py-2 ">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-4">
-
+        <div class="max-w-7xl m-2 lg:m-6">
             @livewire('parents-dettes')
-            
         </div>
     </div>
 </x-app-layout>

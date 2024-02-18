@@ -45,7 +45,7 @@
     
         @foreach ($Profs as $Prof)
             <tr class="">
-                <td class="px-3 py-3 whitespace-nowrap">
+                <td class="px-2 py-3 whitespace-nowrap">
                     <div class="flex items-center">
                         <div class="flex-shrink-0 mx-1 h-10 w-10 text-gray-300 dark:text-gray-600 rounded-full overflow-hidden">
                             @if ($Prof->image)
@@ -56,7 +56,7 @@
                             </svg>    
                             @endif
                         </div>
-                        <div class="ml-2 flex space-x-2 ">
+                        <div class=" flex space-x-2 ">
                             <div class="flex flex-col">
                                 <div class="text-sm font-semibold text-gray-900 dark:text-gray-200">
                                     <span class=""> </span>
@@ -76,7 +76,7 @@
                         </div>
                     </div>
                 </td>
-                <td dir="ltr" class="px-6 py-3 whitespace-nowrap ">
+                <td dir="ltr" class="px-2 py-3 whitespace-nowrap ">
                     <div   class="rtl:text-right ltr:text-left text-sm text-gray-900 dark:text-gray-300"> {{  chunk_split($Prof->tel1, 2, ' ')  }}</div>
                     <div   class="rtl:text-right ltr:text-left text-sm text-gray-900 dark:text-gray-300"> {{  chunk_split($Prof->tel2, 2, ' ')  }}</div>
                 </td>
@@ -87,7 +87,7 @@
                     <div  class="rtl:text-right ltr:text-left text-sm text-gray-900 dark:text-gray-400"> {{ $Prof->se }}</div>
 
                 </td>
-                <td class="hidden lg:table-cell px-6 py-3 whitespace-nowrap  text-sm font-medium">
+                <td class="hidden lg:table-cell px-2 py-3 whitespace-nowrap  text-sm font-medium">
                     <a wire:navigate.hover  href="{{url(app()->getLocale().'/Profs'.'/'.$Prof->id) }}" class="h-full w-full">
                         <div  class="rtl:text-right ltr:text-left font-bold text-sm text-teal-600 dark:text-teal-200"
                                 x-data="{ tooltip: false }" 

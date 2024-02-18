@@ -6,8 +6,8 @@
     </x-slot>
 
     <div class="py-2 ">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col space-y-2 bg-white dark:bg-gray-900 overflow-hidden shadow-md p-4 sm:rounded-lg">
+        <div class="max-w-7xl px-2 mx-auto ">
+            <div class="flex flex-col space-y-2 overflow-hidden shadow-md  sm:rounded-lg">
                 @livewire('prof-profil', ['prof' => $prof])
                 @livewire('prof-edit')
                 @livewire('prof-del')

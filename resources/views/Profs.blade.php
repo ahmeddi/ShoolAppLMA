@@ -7,8 +7,8 @@
     </x-slot>
 
     <div class="py-2 ">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-4">
-            <div class="flex flex-col space-y-2 bg-white dark:bg-gray-900 overflow-hidden shadow-md p-4 sm:rounded-lg">
+        <div class="max-w-7xl mx-auto sm:px-2 lg:px-4">
+            <div class="flex flex-col space-y-2 bg-white dark:bg-gray-900 overflow-hidden shadow-md py-2 sm:rounded-lg">
                  <div> @livewire('prof-add')   </div>  
                <div> @livewire('profs')   </div> 
             </div>

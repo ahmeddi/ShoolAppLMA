@@ -3,13 +3,19 @@
 namespace App\Livewire;
 
 use Carbon\Carbon;
+use App\Enums\Dates;
 use App\Models\Classe;
-use App\Models\PaiementParent;
 use App\Models\Parentt;
 use Livewire\Component;
+use App\Traits\Rangables;
+use Livewire\Attributes\Url;
+use App\Models\PaiementParent;
 
 class ParentsDettes extends Component
 {
+
+  use Rangables;
+
   public $Dettes = [];
 
   public $date;
@@ -21,22 +27,42 @@ class ParentsDettes extends Component
 
   public $classes = [];
 
+  #[Url]
   public $selectedClasseId;
 
   public $orderByOption;
 
   public $sortBy = '1';
 
-  public $parents = [];
+ // public $parents = [];
 
   public $dateSelected;
 
 
 
-
-
-
   public function mount()
+    {
+        $this->selectedClasseId = '*';
+
+      $this->ranges = Dates::cases();
+
+      $this->rangeName = Dates::All_Time->label();
+  
+  
+      $casesToKeep = ['month', 'today','week', 'past_month', 'all', 'custom'];
+  
+      $this->ranges = array_filter($this->ranges, function ($case) use ($casesToKeep) {
+        return in_array($case->value, $casesToKeep);
+      });
+
+      $this->selectedRange = 'all';
+
+      $this->rangeName =  __('calandar.tous');
+    }
+
+
+
+  public function mounts()
   {
 
 
@@ -48,77 +74,6 @@ class ParentsDettes extends Component
     $this->thisMonth();
   }
 
-
-
-
-
-  public function thisMonth()
-  {
-    $now = Carbon::now();
-    $from = $now->startOfMonth()->format('Y-m-d');
-    $to = $now->copy()->endOfMonth()->format('Y-m-d');
-
-
-
-    $this->date = [$from, $to];
-
-    $this->reset(['day1', 'day2',]);
-
-    $this->t_month = true;
-    $this->p_month = false;
-    $this->all = false;
-
-    $this->fetchData();
-  }
-
-
-
-  public function randday()
-  {
-    $from = Carbon::parse($this->day1)->format('Y-m-d');
-    $to = Carbon::parse($this->day2)->format('Y-m-d');
-
-
-    $this->date = [$from, $to];
-
-    $this->t_month = false;
-    $this->p_month = false;
-    $this->all = false;
-
-    $this->fetchData();
-  }
-
-  public function pastMonth()
-  {
-    $now = Carbon::now();
-    $from = $now->copy()->subMonthNoOverflow()->startOfMonth()->format('Y-m-d');
-    $to = $now->copy()->subMonthNoOverflow()->endOfMonth()->format('Y-m-d');
-
-
-    $this->date = [$from, $to];
-
-    $this->reset(['day1', 'day2']);
-
-    $this->t_month = false;
-    $this->p_month = true;
-    $this->all = false;
-
-    $this->fetchData();
-  }
-
-  public function alls()
-  {
-    $now = Carbon::now();
-    $from = Carbon::parse('1-1-2000')->format('Y-m-d');
-    $to = $now->format('Y-m-d');
-    $this->date = [$from, $to];
-
-    $this->t_month = false;
-    $this->p_month = false;
-    $this->all = true;
-
-    $this->fetchData();
-  }
 
   /*
       public function solde()
@@ -195,7 +150,7 @@ class ParentsDettes extends Component
       $parents = $parents->sortBy('solde');
     }
 
-    $this->parents = $parents;
+   // $this->parents = $parents;
   }
 
 
@@ -207,27 +162,44 @@ class ParentsDettes extends Component
 
   public function render()
   {
+    $this->table_col_id =  'all';
+    $this->table_col_date = 'date';
 
     $this->classes = Classe::select('id', 'nom')->get();
-    /*
-        $query = [];
-        Paiement::whereBetween('date', $this->date);
+    
+     $query = Parentt::with(['etuds.frais', 'remises', 'paiements']);
 
-        if ($this->selectedOption !== '*') {
-            $query->where('type_de_paiement', $this->selectedOption);
-        }
+    if ($this->selectedClasseId != '*') {
 
+      $query->whereHas('etuds.classe', function ($subQuery) {
+        $subQuery->where('id', $this->selectedClasseId);
+      });
+    }
 
-        $query->orderByRaw("CAST($this->orderByOption AS SIGNED) DESC");
+    $parents = $query->get();
 
-        $this->Dettes = $query->get();
+    $parents = $parents->map(function ($parent) {
+      $paiementsSum = $parent->paiements->sum('montant');
 
-    */
+      $totalFrais = $parent->etuds->flatMap(function ($etudiant) {
+        return $etudiant->frais;
+      })->sum('montant');
 
+      $totalRemises = $parent->remises->sum('montant');
+      $solde = -$totalFrais + $totalRemises + $paiementsSum;
 
+      $paiments = PaiementParent::where('parent_id', $parent->id);
+      $paiments = $this->updatedSelectedRange($paiments);
+      $paiments = $paiments->sum('montant');
 
+      $parent->setAttribute('paiements_sum', $paiments)->setAttribute('solde', $solde);
 
+      return $parent;
 
-    return view('livewire.parents-dettes');
+    });
+
+    return view('livewire.parents-dettes', [
+      'parents' => $parents,
+    ]);
   }
 }

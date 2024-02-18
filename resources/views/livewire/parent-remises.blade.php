@@ -1,4 +1,4 @@
-<div class="w-full h-full px-4 my-8 ">
+<div class="w-full h-full my-8 ">
 
     <div class=" my-2 w-full flex flex-col lg:flex-row gap-y-1  justify-between items-center ">
         @cannot('parent')

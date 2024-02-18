@@ -3,145 +3,88 @@
 namespace App\Livewire;
 
 use Carbon\Carbon;
+use App\Enums\Dates;
 use App\Models\EmpSal;
 use Livewire\Component;
+use App\Traits\Rangables;
 use App\Models\ProfPaiement;
+use Livewire\Attributes\Url;
 
 class Salaires extends Component
 {
 
     public $date;
-    public $salaries;
 
-    public $day1, $day2;
+    public $tots;
 
-    public $t_month;
-    public $p_month;
-    public $all;
+    use Rangables;
 
-    public $filter = '*';
+   
 
+    #[Url]
+    public $filter_sal = '*';
 
+    public function mount()
+    {
+      $this->ranges = Dates::cases();
 
+      $this->rangeName = Dates::All_Time->label();
+  
+  
+      $casesToKeep = ['month', 'today','week', 'past_month', 'all', 'custom'];
+  
+      $this->ranges = array_filter($this->ranges, function ($case) use ($casesToKeep) {
+        return in_array($case->value, $casesToKeep);
+      });
 
+      $this->selectedRange = 'all';
 
-
-
-   public function mount()
-   {
-      
-
-
-
-      $this->thisMonth();
-
-      
-
-      
- 
+      $this->rangeName =  __('calandar.tous');
     }
 
 
-
-
-
-      public function thisMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->startOfMonth()->format('Y-m-d') ;
-        $to = $now->copy()->endOfMonth()->format('Y-m-d') ;
-
-
-
-        $this->date =[$from, $to];
+    public function render()
+    { 
+      
+      $this->table_col_id =  'all';
+      $this->table_col_date = 'date';
         
-        $this->reset(['day1','day2',]);
+        if ($this->filter_sal == 1 ) {
+          $profSalaries = ProfPaiement::with('prof');
+          $profSalaries = $this->updatedSelectedRange($profSalaries);
+          $profSalaries = $this->applySorting($profSalaries, true);
+          $profSalaries = $profSalaries->get();
 
-        $this->t_month = true;
-        $this->p_month = false;
-        $this->all = false;
+          $this->tots = $profSalaries->sum('montant');
 
-        
+          $salariesCollection = collect([]);
 
-
-      }
-
-
-
-      public function randday()
-      {
-        $from = Carbon::parse($this->day1)->format('Y-m-d');
-        $to = Carbon::parse($this->day2)->format('Y-m-d');
-
-
-        $this->date =[$from, $to];
-
-        $this->t_month = false;
-        $this->p_month = false;
-        $this->all = false;
-
-        
-
-
-      }
-
-      public function pastMonth()
-      {
-        $now = Carbon::now();
-        $from = $now->copy()->subMonthNoOverflow()->startOfMonth()->format('Y-m-d');
-        $to = $now->copy()->subMonthNoOverflow()->endOfMonth()->format('Y-m-d');
-
-
-        $this->date = [$from, $to];
-
-        $this->reset(['day1', 'day2']);
-
-        $this->t_month = false;
-        $this->p_month = true;
-        $this->all = false;
-
-        
-
-
-      }
-
-      public function alls()
-      {
-          $now = Carbon::now();
-          $from = Carbon::parse('1-1-2000')->format('Y-m-d') ;
-          $to = $now->format('Y-m-d') ;
-          $this->date =[$from, $to];
-  
-          $this->t_month = false;
-          $this->p_month = false;
-          $this->all = true;
+          foreach ($profSalaries as $profSalary) {
+              $salariesCollection->push([
+                  'id' => $profSalary->prof->id, 
+                  'nom' => $profSalary->prof->nom,
+                  'nomfr' => $profSalary->prof->nomfr,
+                  'type' => 1,
+                  'motif' => $profSalary->motif,
+                  'montant' => $profSalary->montant,
+                  'date' => $profSalary->date,
+              ]);
+          }
 
           
-
-      }
-
-
-    public function render()
-    {
-        $profSalaries = ProfPaiement::with('prof')->whereBetween('date', $this->date)->get();
-        $empSalaries = EmpSal::with('emp')->whereBetween('date', $this->date)->get();
-
-        // Create a custom collection with the desired structure
-        $salariesCollection = collect([]);
-
-        foreach ($profSalaries as $profSalary) {
-            $salariesCollection->push([
-                'id' => $profSalary->prof->id, 
-                'nom' => $profSalary->prof->nom,
-                'nomfr' => $profSalary->prof->nomfr,
-                'type' => 1,
-                'motif' => $profSalary->motif,
-                'montant' => $profSalary->montant,
-                'date' => $profSalary->date,
-            ]);
         }
+        else if ($this->filter_sal == 2) {
+            
+          $empSalaries = EmpSal::with('emp');
+          $empSalaries = $this->updatedSelectedRange($empSalaries);
+          $empSalaries = $this->applySorting($empSalaries, true);
+          $empSalaries = $empSalaries->get();
 
-        foreach ($empSalaries as $empSalary) {
+          $this->tots = $empSalaries->sum('montant');
+
+          $salariesCollection = collect([]);
+
+          foreach ($empSalaries as $empSalary) {
             $salariesCollection->push([
                 'id' => $empSalary->emp->id,
                 'nom' =>  $empSalary->emp->nom, 
@@ -152,18 +95,53 @@ class Salaires extends Component
                 'date' => $empSalary->date,
             ]);
         }
+        }
+        else if ($this->filter_sal == '*'){
+          $profSalaries = ProfPaiement::with('prof');
+          $profSalaries = $this->updatedSelectedRange($profSalaries);
+          $profSalaries = $profSalaries->get();
+
+          $empSalaries = EmpSal::with('emp');
+          $empSalaries = $this->updatedSelectedRange($empSalaries);
+          $empSalaries = $empSalaries->get();
+
+          $salariesCollection = collect([]);
+
+          foreach ($profSalaries as $profSalary) {
+              $salariesCollection->push([
+                  'id' => $profSalary->prof->id, 
+                  'nom' => $profSalary->prof->nom,
+                  'nomfr' => $profSalary->prof->nomfr,
+                  'type' => 1,
+                  'motif' => $profSalary->motif,
+                  'montant' => $profSalary->montant,
+                  'date' => $profSalary->date,
+              ]);
+          }
+
+          foreach ($empSalaries as $empSalary) {
+              $salariesCollection->push([
+                  'id' => $empSalary->emp->id,
+                  'nom' =>  $empSalary->emp->nom, 
+                  'nomfr' =>  $empSalary->emp->nomfr, 
+                  'type' => 0,
+                  'motif' => $empSalary->motif,
+                  'montant' => $empSalary->montant,
+                  'date' => $empSalary->date,
+              ]);
+          }
+
+              $salariesCollection = $salariesCollection->sortByDesc('date');         
+              $salariesCollection = $this->applySorting($salariesCollection, false);
+              $salariesCollection = $salariesCollection->values()->all();
+              
 
 
-        if ($this->filter !== '*') {
-            $salariesCollection = $salariesCollection->where('type', $this->filter);
+          $this->tots = $profSalaries->sum('montant') + $empSalaries->sum('montant');
+
+          
         }
 
-        $this->salaries = $salariesCollection;
-
-        
-
-       // dd($this->salaries);
-
-        return view('livewire.salaires');
+        return view('livewire.salaires',['salaries'=>$salariesCollection]);
     }
 }

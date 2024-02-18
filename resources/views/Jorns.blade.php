@@ -41,7 +41,7 @@
                                     <td class="px-3 py-2 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <a wire:navigate.hover href="{{ route('Jorn',$Class->id) }}"  class="h-full w-full">
-                                                <div style="direction:ltr" class="text-right font-bold text-sm text-teal-600 dark:text-teal-200">
+                                                <div style="direction:ltr" class="rllt font-bold text-sm text-teal-600 dark:text-teal-200">
                                                      {{ __('jorns.emploi') }}
                                                 </div>
                                             </a>
@@ -50,7 +50,7 @@
                                     <td class="px-3 py-2 whitespace-nowrap">
                                         <div class="flex items-center">
                                             <a wire:navigate.hover href="{{ route('Classlist',$Class->id) }}"  class="h-full w-full">
-                                                <div style="direction:ltr" class="text-right font-bold text-sm text-teal-600 dark:text-teal-200">
+                                                <div style="direction:ltr" class="rllt font-bold text-sm text-teal-600 dark:text-teal-200">
                                                      {{ __('jorns.list') }}
                                                 </div>
                                             </a>
