@@ -44,18 +44,15 @@ trait Rangables
         if ($regular) {
             if ($this->sortCol) {
                 if ($this->sortCol == 'montant') {
-                    // dd('hi');
                     $query->orderBy(DB::raw('CAST(montant AS DECIMAL(10, 2))'), $this->sortAsc ? 'asc' : 'desc');
                 } else {
                     $query->orderBy($this->sortCol, $this->sortAsc ? 'asc' : 'desc');
                 }
             }
-    
             return $query;
         }
         else{
             if ($this->sortCol) {
-                dd($this->sortCol);
                 if ($this->sortCol == 'montant' or $this->sortCol == 'paiements_sum' or $this->sortCol == 'sold') {
                     $query = $query->sortBy(function ($item) {
                         return (float) $item[$this->sortCol];

@@ -154,28 +154,21 @@ Ce message est considéré comme un reçu numérique de paiement
         $ecoleNomfr = $this->ecoleNomfr;
 
         $phone = $code . $phoneId;
+
+        /*
+        Votre enfant a reçu une nouvelle observation, merci de bien vouloir signer son carnet
+         */
     
-        $messageFr = "Cher $etud_nomprfr,
+        $messageFr = "Bonjour,
     
-Nous aimerions partager avec vous une nouvelle observation concernant votre enfant $etud_nomfr. 
-            
-$note
-            
-Nous sommes impatients de discuter de cette observation avec vous si vous êtes disponible.
-            
-Cordialement,
+        Votre enfant $etud_nomfr a reçu une nouvelle observation $note, merci de bien vouloir signer son carnet. 
 
 *$ecoleNomfr*";
     
-        $messageAr = " عزيزي $etud_nompr,
+        $messageAr = "مرحبًا
                 
-نود مشاركتكم ملاحظة جديدة بخصوص ابنكم $etud_nom.
-            
-$note
-            
-نتطلع إلى مناقشة هذه الملاحظة معكم إذا كنتم متاحين.
-            
-مع أطيب التحيات
+        لقد تلقى ابنكم $etud_nomfr ملاحظة جديدة $note, يرجى مراجعة دفتره.            
+
 
 *$ecoleNom*";
     
@@ -244,7 +237,7 @@ Nous sommes impatients de collaborer avec vous. Si vous avez des questions tout 
  
      }
 
-     public function attd($studentName, $studentNamefr, $recipientPhone ,$code,$studentGender, $time) : int
+     public function attd($studentName, $studentNamefr, $recipientPhone ,$code,$studentGender, $time, $date) : int
      {
 
         $ecoleNom = $this->ecoleNom;
@@ -252,27 +245,25 @@ Nous sommes impatients de collaborer avec vous. Si vous avez des questions tout 
 
         $phone = $code . $recipientPhone;
        $studentTitle = ($studentGender == 1) ? 'il' : 'elle';
+
+       /*
+               Votre enfant est absent ce matin le ........  
+               Si vous avez une raison pour cette absence, merci de nous transmettre les informations
+
+       */
  
        $messageDataFR = "Bonjour,
 
-Nous sommes désolés de vous informer que votre enfant  $studentNamefr, est absent aujourd'hui $time. 
-Nous espérons qu'$studentTitle sera de retour à l'école rapidement.
+Votre enfant  $studentNamefr,  est absent ce matin le $date -  $time. 
        
-Si vous avez une raison pour cette absence, veuillez nous fournir les informations nécessaires. Merci pour votre compréhension et votre coopération.
+Si vous avez une raison pour cette absence, merci de nous transmettre les informations
        
-Cordialement,
-
 *$ecoleNomfr*";
 
-        $messageDataAR = "مرحبا،
+        $messageDataAR = "مرحبًا،
 
-نأسف لإبلاغكم بأن طفلكم $studentName غائب اليوم $time.
-نأمل أن يعود إلى المدرسة قريبا.
-
-إذا كان لديكم سبب لهذا الغياب، يرجى تزويدنا بالمعلومات اللازمة. شكرا لتفهمكم وتعاونكم.
-
-مع أطيب التحيات،
-
+        طفلك، $studentName, غائب هذا الصباح في $date - $time. إذا كان لديك سبب لغيابه، فالرجاء تزويدنا بالمعلومات.
+        
 *$ecoleNom*";
 
         $msgar = $this->sendCurlRequest($phone, $messageDataAR);

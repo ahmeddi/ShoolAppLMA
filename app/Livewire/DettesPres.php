@@ -42,15 +42,18 @@ class DettesPres extends Component
     #[On('refresh')] 
     public function render()
     {
+
         $this->table_col_id =  'all';
         $this->table_col_date = 'date';
         
-        $detts = Dette::orderBy('date','desc');
+        $detts = Dette::where('id','!=',null);
+
         $detts = $this->updatedSelectedRange($detts);
+        $detts = $this->applySorting($detts, true);
+
         $detts = $detts->get();
 
         $this->tots = $detts->sum('montant');
-
 
         return view('livewire.dettes-pres',['detts'=>$detts]);
     }

@@ -27,10 +27,14 @@
                     {{ __('compt.lib') }}  
                 </th>
                 <th scope="col" class="px-6 py-3  text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                    {{ __('compt.mont') }}  
+                    <x-order.index.sortable types='montant' column="montant" class=" " :$sortCol :$sortAsc>
+                        <div dir="ltr"  class="" > {{ __('ent.montnat') }}   </div>
+                    </x-order.index.sortable>
                 </th>
                 <th scope="col" class="px-6 py-3 rllt   text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                    {{ __('compt.date') }}  
+                    <x-order.index.sortable column="date" :$sortCol :$sortAsc>
+                        <div > {{ __('ent.date') }}  </div>
+                    </x-order.index.sortable>
                 </th>
                 <th>
 
@@ -79,7 +83,7 @@
                             </td>
                             <td class="px-6 py-2">
                                 <div class="w-full text-sm font-semibold text-gray-900 dark:text-gray-200">
-                                        {{ $dep->created_at->format('Y-m-d')  }} 
+                                        {{ $dep->date }} 
                                 </div>
                             </td>
 

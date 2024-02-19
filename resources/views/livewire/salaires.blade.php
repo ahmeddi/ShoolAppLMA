@@ -29,7 +29,7 @@
                         {{ __('compt.motif') }}
                     </th>
                     <th scope="col" class="px-2 flex rtl:justify-start ltr:justify-end lg:px-6 text-right py-3 text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
-                        <x-order.index.sortable types='montant' column="montant" class=" " :$sortCol :$sortAsc>
+                        <x-order.index.sortable types='montant' column="montant"  :$sortCol :$sortAsc>
                             <div dir="ltr"  class="" >{{ __('compt.mont') }} </div>
                         </x-order.index.sortable>
                     </th>

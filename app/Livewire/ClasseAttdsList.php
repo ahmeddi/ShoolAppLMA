@@ -136,6 +136,7 @@ class ClasseAttdsList extends Component
                     $parent->whcode,
                     $etud->sexe,
                     $this->time,
+                    $this->date,
                     ) ;
 
                 if ($msg) 

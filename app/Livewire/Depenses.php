@@ -53,8 +53,9 @@ class Depenses extends Component
         $this->table_col_id =  'all';
         $this->table_col_date = 'date';
         
-        $deps = Depance::orderBy('date','desc');
+        $deps = Depance::where('id','!=',null);
         $deps = $this->updatedSelectedRange($deps);
+        $deps = $this->applySorting($deps, true);
         $deps = $deps->get();
 
 

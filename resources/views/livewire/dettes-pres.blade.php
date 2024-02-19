@@ -12,11 +12,15 @@
                     <th scope="col" class="rllt px-2 lg:px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                         {{ __('ent.entreprise') }}  
                     </th>
-                    <th scope="col" class="text-right px-2 lg:px-3 py-2  text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                        {{ __('ent.montnat') }}  
+                    <th scope="col" class="px-2 flex rtl:justify-start ltr:justify-end lg:px-6 text-right py-3 text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                        <x-order.index.sortable types='montant' column="montant" class=" " :$sortCol :$sortAsc>
+                            <div dir="ltr"  class="" > {{ __('ent.montnat') }}   </div>
+                        </x-order.index.sortable>
                     </th>
-                    <th scope="col" class="text-right px-2 lg:px-3 py-2  text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                        {{ __('ent.date') }} 
+                    <th scope="col" class=" text-right px-2 lg:px-6 py-3 text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                        <x-order.index.sortable column="date" :$sortCol :$sortAsc>
+                            <div > {{ __('ent.date') }}  </div>
+                        </x-order.index.sortable>
                     </th>
                 </tr>
             </thead>
