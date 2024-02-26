@@ -209,7 +209,7 @@ class Bullltin extends Component
 
         $moy_classe = Moy::where('semestre_id', $this->sem->id)
             ->where('classe_id', $this->classe)
-            ->sum('note');
+            ->sum('moy');
 
         // $this->classMats
 
