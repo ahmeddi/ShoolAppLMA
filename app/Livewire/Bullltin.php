@@ -293,14 +293,15 @@ class Bullltin extends Component
 
     function addMoy($class_id, $sem_id, $etud_id, $moy)
     {
-        $moyModel = Moy::firstOrCreate([
-            'classe_id' => $class_id,
-            'semestre_id' => $sem_id,
-            'etudiant_id' => $etud_id,
-        ]);
+        Moy::updateOrCreate(
+            [
+                'classe_id' => $class_id,
+                'semestre_id' => $sem_id,
+                'etudiant_id' => $etud_id,
+            ],
+            ['moy' => $moy]
+        );
 
-        $moyModel->moy = $moy;
-        $moyModel->save();
     }
 
     public function render()
