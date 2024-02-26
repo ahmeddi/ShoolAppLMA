@@ -137,7 +137,7 @@ class Bullltin extends Component
                 ];
             });
 
-        $this->addMoy($this->classe, $this->sem->id, $this->etud->id, $this->tot);
+        $this->addMoy( $this->etud->classe->id, $this->sem->id, $this->etud->id, $this->tot);
 
             // dd(round(floatval($this->tot), 2));
 /*
@@ -293,13 +293,38 @@ class Bullltin extends Component
 
     function addMoy($class_id, $sem_id, $etud_id, $moy)
     {
-        Moy::updateOrCreate(
+
+
+       $moy = Moy::updateOrCreate(
+        [
+            'classe_id' => $class_id,
+            'semestre_id' => $sem_id,
+            'etudiant_id' => $etud_id,
+        ],
+        ['moy' => $moy]
+    );
+    
+        
+
+       /* Moy::updateOrCreate(
             [
                 'classe_id' => $class_id,
                 'semestre_id' => $sem_id,
                 'etudiant_id' => $etud_id,
             ],
             ['moy' => $moy]
+        );*/
+      //  dd($class_id, $sem_id, $etud_id, $moy);
+
+        Moy::firstorCreate(
+            [
+               
+                'semestre_id' => $sem_id,
+                'etudiant_id' => $etud_id,
+            ],
+            ['moy' => $moy,
+            'classe_id' => $class_id,
+            ]
         );
 
     }

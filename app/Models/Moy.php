@@ -12,6 +12,7 @@ class Moy extends Model
     protected $fillable = [
         'etudiant_id',
         'semestre_id',
+        'classe_id',
         'moy',
     ];
 }
