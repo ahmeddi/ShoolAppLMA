@@ -5,6 +5,7 @@ namespace App\Jobs;
 
 namespace App\Services;
 
+use App\Models\Moy;
 use App\Models\Classe;
 use App\Models\Result;
 use App\Models\Etudiant;
@@ -52,8 +53,6 @@ class CalculBulttin
     {
         $mats = Classe::find($this->classeId)->mats;
 
-
-
         if ($sem->examens->isNotEmpty()) {
 
             $tots = 0;
@@ -78,7 +77,12 @@ class CalculBulttin
 
                 $devm = $devs ? $arrs / $devs : 0;
 
+              //  $moys = !$this->classmoy ? ($devs ? round((floatval($arrs)) / ($devs), 2) : '') : floatval($exan);
+
+
                 $this->addNote($devm, $etudiant->id, $mat->id);
+
+
             };
         }
     }
@@ -118,10 +122,17 @@ class CalculBulttin
 
                 $foix = $this->getProportionFoix($nom['id']);
 
+            //    $moys = !$this->classmoy ? ($devs ? round((floatval($arrs)) / ($devs), 2) : '') : floatval($exan);
+
 
                 $devm = $devs ? $arrs / $devs : 0;
 
                 $this->addNote($devm, $etudiant->id, $mat->id);
+
+          //      $this->addMoy($this->classeId, $this->semId, $etudiant->id, $moys);
+
+
+
 
                 /*
                 //total point
@@ -132,6 +143,18 @@ class CalculBulttin
                 */
             };
         }
+    }
+
+    function addMoy($class_id, $sem_id, $etud_id, $moy)
+    {
+        $moyModel = Moy::firstOrCreate([
+            'classe_id' => $class_id,
+            'semestre_id' => $sem_id,
+            'etudiant_id' => $etud_id,
+        ]);
+
+        $moyModel->moy = $moy;
+        $moyModel->save();
     }
 
 

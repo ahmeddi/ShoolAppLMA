@@ -66,6 +66,9 @@ class ClasseAttds extends Component
       $attds = $this->updatedSelectedRange($attds);
     
       $attds =  $attds->get();
+      /*
+     
+      */
 
         return view('livewire.classe-attds',[
             'attds' => $attds,

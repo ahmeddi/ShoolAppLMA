@@ -65,6 +65,6 @@ class EmpCompt extends Component
 
      
 
-        return view('livewire.emp-compt', ['hons' => $hons, 'paiements' => $paiements, 'remises' => $remises, 'compts' => $compts]);
+        return view('livewire.emp-compt',);
     }
 }

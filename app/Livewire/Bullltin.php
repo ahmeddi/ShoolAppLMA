@@ -122,10 +122,6 @@ class Bullltin extends Component
 
                 $moy_classe = $moy_classe / $this->etuds;
 
-                //  dd($moy_classe);
-
-
-
 
 
                 return [
@@ -141,8 +137,10 @@ class Bullltin extends Component
                 ];
             });
 
-            // dd(round(floatval($this->tot), 2));
+        $this->addMoy($this->classe, $this->sem->id, $this->etud->id, $this->tot);
 
+            // dd(round(floatval($this->tot), 2));
+/*
             Moy::updateOrCreate(
                 [
                     'semestre_id' => $this->sem->id,
@@ -150,6 +148,7 @@ class Bullltin extends Component
                 ],
                 ['moy' => $this->tot]
             );
+            */
         }
     }
 
@@ -208,15 +207,15 @@ class Bullltin extends Component
         $this->tot = $tots / $this->classMats;
         //  dd($this->tot);
 
-        $moy_classe = Classement::where('semestre_id', $this->sem->id)
+        $moy_classe = Moy::where('semestre_id', $this->sem->id)
             ->where('classe_id', $this->classe)
             ->sum('note');
 
         // $this->classMats
 
-        $this->moy_classe = $moy_classe / $this->classMats;
+        $this->moy_classe = $moy_classe / $this->etuds;
 
-        $this->moy_classe = $this->moy_classe / $this->etuds;
+      //  $this->moy_classe = $this->moy_classe / $this->etuds;
     }
 
     private function calculateTotals()
@@ -290,6 +289,18 @@ class Bullltin extends Component
                 }
             }
         }
+    }
+
+    function addMoy($class_id, $sem_id, $etud_id, $moy)
+    {
+        $moyModel = Moy::firstOrCreate([
+            'classe_id' => $class_id,
+            'semestre_id' => $sem_id,
+            'etudiant_id' => $etud_id,
+        ]);
+
+        $moyModel->moy = $moy;
+        $moyModel->save();
     }
 
     public function render()

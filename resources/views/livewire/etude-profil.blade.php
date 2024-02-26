@@ -121,7 +121,7 @@
                             </div>
                             <div>
                                 <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
-                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                    <p class="text-gray-600 dark:text-gray-300">
                                         {{ __('etudiants.add-nb') }}:
                                     </p>
                                     <p>
@@ -129,7 +129,7 @@
                                     </p>
                                 </div>
                                 <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
-                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                    <p class="text-gray-600 dark:text-gray-300">
                                         {{ __('etudiants.profil-prent') }}
                                     </p>
                                     <a wire:navigate class=" hover:underline dark:decoration-slate-50"  href="{{url(app()->getLocale().'/Parent/'.$etud->parent->id)}}">
@@ -141,7 +141,7 @@
                                 </div>
                                 @if ($etud->ddn)
                                 <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
-                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                    <p class="text-gray-600 dark:text-gray-300">
                                         {{ __('etudiants.profil-ddn') }}
                                     </p>
                                     <p>
@@ -151,7 +151,7 @@
                                 @endif
                                 @if ($etud->nni)
                                 <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
-                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                    <p class="text-gray-600 dark:text-gray-300">
                                         {{ __('etudiants.profil-nni') }}
                                     </p>
                                     <p>
@@ -161,7 +161,7 @@
                                 @endif
                                 @if ($etud->nc)
                                 <div class="md:grid md:grid-cols-2  md:space-y-0 space-y-1 p-4 border-b text-gray-800 dark:text-gray-200 dark:border-gray-700">
-                                    <p class="text-gray-600 dark:text-gray-300 text-sm lg:text-base font-bold lg:font-semibold ">
+                                    <p class="text-gray-600 dark:text-gray-300">
                                         {{ __('etudiants.profil-ns') }} (RIM)
                                     </p>
                                     <p>
