@@ -141,6 +141,10 @@ class ResultAdd extends Component
 
     public function render()
     {
+       if (auth()->user()->role == 'prof') {
+            $this->sem =2;
+            $this->exams =  Semestre::find($this->sem)->examens;
+        }
         return view('livewire.result-add');
     }
 }

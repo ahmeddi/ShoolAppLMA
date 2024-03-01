@@ -30,17 +30,30 @@
             <label for="eid"  class="labels">{{ __('result.sem') }} :</label>
             @error('sem') <span class="danger ">{{ $message }}</span> @enderror  
             </div>
-            <select wire:change='update' wire:model="sem"   class="inputs w-full @error('sem') reds @enderror">
-                <option value="">-----</option>
+            <select @if (auth()->user()->prof_id ) disabled @endif   wire:change='update' wire:model="sem"   class="inputs w-full @error('sem') reds @enderror">
+                <option  value="">-----</option>
                     @foreach ($sems as $sem)
-                        <option value="{{ $sem->id }}">
-                            @if ( app()->getLocale() == 'ar')
-                                {{ $sem->nom }}
-                            @else
-                                {{ $sem->nomfr }} 
-                            @endif 
-                        </option>
+                        @if (auth()->user()->prof_id )
+                            @if ($sem->id == 2)
+                                <option selected value="{{ $sem->id }}">
+                                    @if ( app()->getLocale() == 'ar')
+                                        {{ $sem->nom }}
+                                    @else
+                                        {{ $sem->nomfr }} 
+                                    @endif 
+                                </option>
+                            @endif
+                        @else
+                            <option value="{{ $sem->id }}">
+                                @if ( app()->getLocale() == 'ar')
+                                    {{ $sem->nom }}
+                                @else
+                                    {{ $sem->nomfr }} 
+                                @endif 
+                            </option>
+                        @endif
                     @endforeach 
+               
             </select>     
         </div>
         <div class="flex flex-col space-y-1 w-full ">
