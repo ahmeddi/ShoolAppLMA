@@ -128,7 +128,7 @@ class ClasseAttdsList extends Component
             {
               //  $msg = $this->msg($parent->whatsapp, $etud->nom, $etud->sexe);
 
-              if ($this->time == '7H') {
+              if ($this->nbh == '7H' ) {
                 $this->time = '8H-15H';
               }
 
