@@ -1,4 +1,4 @@
-<div  class="" class="flex m-3 h-full space-x-2  ">
+<div  class="" class="flex m-3 h-full space-x-2   ">
     <div class=" relative p-2  ">
         <div class="w-full  ">
             <div class="flex flex-col lg:flex-row p-2 w-auto  mb-4  ">
