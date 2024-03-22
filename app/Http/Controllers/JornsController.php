@@ -101,6 +101,21 @@ class JornsController extends Controller
         }
     }
 
+    public function classes($locale, $ids)
+    {
+        if (auth()->user()->parent_id) {
+            abort(403);
+        }
+
+        $id = Prof::find($ids);
+        if ($id) {
+            return view('ProfCLassesNotes', ['prof' => $id]);
+        } else {
+            abort(404);
+        }
+    }
+
+
 
     public function class($locale, $ids)
     {
@@ -186,8 +201,16 @@ class JornsController extends Controller
 
     public function results($locale, $ids)
     {
-        if (auth()->user()->parent_id or auth()->user()->role == 'prof') {
+        if (auth()->user()->parent_id) {
             abort(403);
+        }
+
+        if (auth()->user()->role == 'prof') {
+
+           $class = Prof::find(auth()->user()->prof_id)->classes->find($ids);
+              if(!$class){
+                abort(403);
+              }
         }
 
         $Classs = Classe::with('results', 'mats')->find($ids);

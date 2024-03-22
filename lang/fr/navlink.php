@@ -41,6 +41,9 @@ return [
 
     'parametres' => 'Paramètres',
 
+    'class-res' => 'Résultats de classe',
+
+
     'recet' => 'Frais d\'inscription',
     'mois' => 'Nombre de mois',
 

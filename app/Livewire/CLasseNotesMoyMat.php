@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Prof;
 use Livewire\Component;
 use App\Models\Semestre;
 use Livewire\Attributes\On;
@@ -29,6 +30,11 @@ class CLasseNotesMoyMat extends Component
         $this->sems = Semestre::all('id', 'nom', 'nomfr');
 
         $this->mats = $this->classe->mats;
+
+        if (auth()->user()->role == 'prof') {
+            $this->mats = Prof::find(auth()->user()->prof_id)->mats;
+            
+        }
 
         $this->mat = $this->mats->first()->id;
 

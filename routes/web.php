@@ -204,6 +204,9 @@ Route::middleware([
 
         Route::get('/Prof/{Profs}/Classes', [JornsController::class, "class"]);
 
+        Route::get('/Profs/{Profs}/Classes/Notes', [JornsController::class, "classes"]);
+
+
         Route::get('/Atdds/Profs/', function () {
             if (auth()->user()->parent_id) {
                 abort(403);

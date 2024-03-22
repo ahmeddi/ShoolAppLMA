@@ -21,10 +21,13 @@ class ParentEdit extends Component
     #[Rule('required', as:'')] 
     public $telephone;
 
-    public $whatsapp;
+    public $whatsapp, $whatsapp2;
 
     #[Rule('required_if:whatsapp,!=,null', as:'')] 
     public $whcode ;
+
+    #[Rule('required_if:whatsapp2,!=,null', as:'')] 
+    public $whcode2 ;
 
     #[Rule('required|not_in:0')] 
     public $psexe;
@@ -53,9 +56,12 @@ class ParentEdit extends Component
         $this->prnamefr = $parent->nomfr;
         $this->telephone = $parent->telephone;
         $this->whatsapp = $parent->whatsapp;
+        $this->whatsapp2 = $parent->whatsapp2;
         $this->psexe = $parent->sexe;
         $this->pass = $parent->password;
         $this->whcode = $parent->whcode;
+        $this->whcode2 = $parent->whcode2;
+
 
         $user = User::where('parent_id', $parent->id)->first();
 
@@ -74,6 +80,9 @@ class ParentEdit extends Component
         if ( $this->whatsapp) {
             $this->whatsapp = Str::replace(' ', '', $this->whatsapp);
         }
+        if ( $this->whatsapp2) {
+            $this->whatsapp2 = Str::replace(' ', '', $this->whatsapp2);
+        }
         
         $create = new WhatsappApiService();
 
@@ -82,6 +91,13 @@ class ParentEdit extends Component
         $this->whcode,
         $this->whatsapp,
         $this->pass);
+
+        $create->sentPass(
+        $this->telephone,
+        $this->whcode2,
+        $this->whatsapp2,
+        $this->pass);
+        
         
     }
 
@@ -96,6 +112,9 @@ class ParentEdit extends Component
         if ( $this->whatsapp) {
             $this->whatsapp = Str::replace(' ', '', $this->whatsapp);
         }
+        if ( $this->whatsapp2) {
+            $this->whatsapp2 = Str::replace(' ', '', $this->whatsapp2);
+        }
 
         $this->resetErrorBag();
         $this->resetValidation();
@@ -105,10 +124,12 @@ class ParentEdit extends Component
         $parent = Parentt::find($this->pid);
         $parent->nom = $this->prname;
         $parent->whatsapp = $this->whatsapp;
+        $parent->whatsapp2 = $this->whatsapp2;
         $parent->telephone = $this->telephone;
         $parent->sexe = intval($this->psexe);
         $parent->nomfr = $this->prnamefr;
         $parent->whcode = $this->whcode;
+        $parent->whcode2 = $this->whcode2;
         $parent->save();
 
         $user = User::where('parent_id', $parent->id)->first();
@@ -161,7 +182,9 @@ class ParentEdit extends Component
 
         return <<<'JS'
         whatsapp = '';
+        whatsapp2 = '';
         telephone = '';
+
 
     JS;
 
@@ -176,6 +199,7 @@ class ParentEdit extends Component
         return <<<'JS'
             $wire.visible = false;
             whatsapp = '';
+            whatsapp2 = '';
             telephone = '';
 
         JS;

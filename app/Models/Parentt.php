@@ -17,6 +17,8 @@ class Parentt extends Model
         'telephone',
         'whatsapp',
         'whcode',
+        'whatsapp2',
+        'whcode2',
         'telephone2',
         'nni',
         'sexe',

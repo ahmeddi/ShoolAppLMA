@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\Prof;
 use Livewire\Component;
 use App\Models\Semestre;
+use Illuminate\Support\Arr;
 
 class CLasseNotes extends Component
 {
@@ -33,8 +35,24 @@ class CLasseNotes extends Component
     {
         $this->results = $this->classe->results->sortByDesc('note')->take(5);
 
+
+
         $this->sems = Semestre::all('id', 'nom', 'nomfr');
         $this->mats = $this->classe->mats;
+
+        if (auth()->user()->role == 'prof') {
+            $this->mats = Prof::find(auth()->user()->prof_id)->mats;
+
+            $matIds = $this->mats->pluck('id')->toArray();
+
+            $this->results = $this->classe->results()
+                ->orderByDesc('note')
+                ->whereIn('mat_id', $matIds)
+                ->take(5)
+                ->get();
+
+        }
+
         $this->devs = $this->classe->devs;
     }
 
